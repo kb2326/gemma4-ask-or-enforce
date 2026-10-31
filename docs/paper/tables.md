@@ -2,13 +2,15 @@
 
 ## Table 1. Development set, 30 tasks per run
 
-| Arm (runs) | Solved | Source-first / writing tasks | Scratch-first under /tmp | Unsolved, no source edit | Unsolved, wrong files only | Timeouts | Localizer median |
-|---|---|---|---|---|---|---|---|
-| Reference (3) | 11, 12, 13 | 18/70 (26%) | 0/52 (0%) | 12, 10, 11 | 1, 2, 2 | 15, 11, 15 | - |
-| E3.1 (2) | 15, 13 | 19/50 (38%) | 31/31 (100%) | 7, 10 | 3, 2 | 12, 14 | - |
-| E5 (1) | 10 | 10/13 (77%) | 0/3 (0%) | 18 | 0 | 18 | 176.6 s |
-| E5b (2) | 12, 11 | 24/44 (55%) | 0/20 (0%) | 14, 13 | 1, 1 | 16, 17 | 11.2 s, 11.2 s |
-| ORACLE (2) | 14, 13 | 22/50 (44%) | 0/28 (0%) | 6, 9 | 0, 0 | 14, 14 | - |
+| Arm (runs) | Solved | Source-first (all tasks) | Source-first / writing tasks | Scratch-first under /tmp | Unsolved, no source edit | Unsolved, wrong files only | Timeouts | Localizer median |
+|---|---|---|---|---|---|---|---|---|
+| Reference (3) | 11, 12, 13 | 18/90 (20%) | 18/70 (26%) | 0/52 (0%) | 12, 10, 11 | 1, 2, 2 | 15, 11, 15 | - |
+| E3.1 (2) | 15, 13 | 19/60 (32%) | 19/50 (38%) | 31/31 (100%) | 7, 10 | 3, 2 | 12, 14 | - |
+| E5 (1) | 10 | 10/30 (33%) | 10/13 (77%) | 0/3 (0%) | 18 | 0 | 18 | 176.6 s |
+| E5b (2) | 12, 11 | 24/60 (40%) | 24/44 (55%) | 0/20 (0%) | 14, 13 | 1, 1 | 16, 17 | 11.2 s, 11.2 s |
+| ORACLE (2) | 14, 13 | 22/60 (37%) | 22/50 (44%) | 0/28 (0%) | 6, 9 | 0, 0 | 14, 14 | - |
+
+Task-level comparison with the reference (each task counted once: per-task share of runs that were source-first, paired by task; mean difference, 95% bootstrap CI, one-sided sign-flip permutation p): E3.1 +11.7 pp [+0.0, +23.9], p = 0.051; E5 +13.3 pp [-6.7, +33.3], p = 0.124; E5b +20.0 pp [+5.6, +35.0], p = 0.009; ORACLE +16.7 pp [+5.0, +29.4], p = 0.010.
 
 ## Table 2. Held-out set, 41 tasks, one run per arm (confirmatory)
 
@@ -24,7 +26,7 @@
 | Claim | Statistic | Status |
 |---|---|---|
 | C1 /tmp compliance | E3.1 100% vs E2 0%; one-sided Fisher p = 3.2e-13 | pass |
-| C2 structure raises source-first | E5b 11 vs E2 10 of 41; b = 5, c = 4; one-sided McNemar p = 0.50; writers-only Fisher p = 0.37; localizer median 13.8 s | fail |
+| C2 structure raises source-first | E5b 11 vs E2 10 of 41; b = 5, c = 4; one-sided McNemar p = 0.50; writers-only Fisher p = 0.37; manipulation check (localizer median 13.8 s <= 60 s) met; per repo fastapi 6 vs 4, rich 5 vs 6 | fail |
 | C3 location bound < +15 pp | ORACLE - E2 = -4.9 pp, one-sided upper bound +2.4 pp | not tested (sequence stopped at C2) |
 
 Estimates (source-first difference, 95% bootstrap CI): E5b-E3.1 -4.9 pp [-22.0, +12.2]; E5b-ORACLE -2.4 pp [-14.6, +9.8]; E3.1-E2 +7.3 pp [-7.3, +22.0].

@@ -1,6 +1,6 @@
 """Checks for analysis/paper_tables.py. Run: python analysis/test_paper_tables.py"""
 
-from paper_tables import arm_row, dev_rows, fill_draft, heldout_rows
+from paper_tables import arm_row, dev_rows, dev_task_level, fill_draft, heldout_rows, sign_flip_greater
 
 
 def stat(solved=False, first='', tmp='', overlap='', finder=''):
@@ -39,6 +39,21 @@ def test_fill_draft_replaces_only_marked_blocks():
     assert out == ('x\n<!-- TABLE 1 -->\n**Table 1. One**\n\n| a |\n<!-- /TABLE 1 -->\ny\n'
                    '<!-- TABLE 2 -->\n**Table 2. Two**\n\n| b |\n<!-- /TABLE 2 -->\n')
     assert fill_draft(out, tables) == out                  # rerunning changes nothing
+
+
+def test_sign_flip_is_one_sided_and_seeded():
+    assert sign_flip_greater([1.0] * 12) < 0.001                  # all tasks favour the new arm
+    assert sign_flip_greater([-1.0] * 12) > 0.99
+    assert sign_flip_greater([0.0] * 5) == 1.0                    # no difference at all
+    assert sign_flip_greater([1, -1, 0.5, 0]) == sign_flip_greater([1, -1, 0.5, 0])
+
+
+def test_dev_task_level_averages_runs_per_task():
+    """Each task counts once: per-task mean over an arm's runs, then paired against the reference's per-task mean."""
+    r = dev_task_level(['e5b', 'e5b_r2'], ['practice30-baseline', 'e0', 'e2'])
+    assert r['tasks'] == 30
+    assert abs(r['diff'] - (24 / 60 - 18 / 90)) < 1e-9            # same 30 tasks, so the mean difference is exact
+    assert r['ci95'][0] <= r['diff'] <= r['ci95'][1] and 0 <= r['p'] <= 1
 
 
 if __name__ == '__main__':
