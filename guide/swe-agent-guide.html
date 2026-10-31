@@ -1,0 +1,1273 @@
+<title>Gemma Coding Agent Field Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with wide breakout figures; sticky chapter rail on desktop. Diff green/red are semantic only. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#17202b; --muted:#5a6676; --line:#d9dee6;
+  --accent:#1d5fd1; --accent-soft:#e6eefc;
+  --add:#1a7f45; --add-soft:#e3f4ea; --del:#b4322a; --del-soft:#fbe7e5; --warn:#9a6200; --warn-soft:#fdf3dc;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:0}.rail{display:none}}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px}
+.rail p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+.rail p:first-child{margin-top:0}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.rail a{display:block;padding:3px 8px;border-radius:6px;color:var(--muted);text-decoration:none}
+.rail a:hover,.rail a:focus-visible{background:var(--accent-soft);color:var(--fg);outline:none}
+main{min-width:0}
+main > section{max-width:70ch;margin-bottom:60px}
+main > section.wide{max-width:none}
+main > section.wide > :not(figure):not(.table-wrap):not(.grid2){max-width:70ch}
+.part{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:8px;margin:0 0 36px}
+
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.2rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.75rem;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700;margin:28px 0 8px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 14px}
+ul{padding-left:20px;margin:0 0 14px}
+li{margin-bottom:4px}
+a{color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+:not(pre)>code{background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+.lede{font-size:1.2rem;color:var(--muted);max-width:60ch;margin-top:14px}
+
+header.hero{grid-column:1/-1;margin-bottom:36px;max-width:900px}
+.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+@media (max-width:640px){.goals{grid-template-columns:minmax(0,1fr)}}
+.goal{border-top:3px solid var(--accent);padding-top:10px}
+.goal b{font-family:var(--display);font-size:1.05rem;display:block}
+.goal span{color:var(--muted);font-size:15px}
+
+figure{margin:22px 0 26px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 16px 14px}
+figure .scroll{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:620px;color:var(--fg)}
+figcaption{font-size:14.5px;color:var(--muted);margin-top:12px;max-width:75ch}
+figcaption b{color:var(--fg)}
+
+.callout{border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0;font-size:16px}
+.callout.tip{border-color:var(--add);background:var(--add-soft)}
+.callout.info{border-color:var(--accent);background:var(--accent-soft)}
+.callout b:first-child{display:block;font-family:var(--display)}
+
+.verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+@media (max-width:760px){.verdict{grid-template-columns:minmax(0,1fr)}}
+.verdict div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.verdict .lbl{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.verdict .val{font-family:var(--display);font-size:1.35rem;font-weight:700;margin:2px 0 4px}
+.verdict .val.g{color:var(--add)} .verdict .val.y{color:var(--warn)}
+.verdict p{font-size:15px;margin:0;color:var(--muted)}
+
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td:first-child{font-weight:700}
+table.matrix td:not(:first-child),table.matrix th:not(:first-child){text-align:center;width:17%}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid var(--accent);vertical-align:-2px}
+.dot.f{background:var(--accent)} .dot.h{background:linear-gradient(90deg,var(--accent) 50%,transparent 50%)}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.hi{background:var(--add-soft);color:var(--add)} .md{background:var(--warn-soft);color:var(--warn)} .lo{background:var(--accent-soft);color:var(--accent)}
+
+pre{font-family:var(--mono);font-size:13.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto;margin:16px 0}
+pre .c{color:var(--muted)} pre .k{color:var(--accent)}
+
+.diff{font-family:var(--mono);font-size:13.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0 4px;background:var(--surface)}
+.diff div{padding:1px 14px;white-space:pre;overflow-x:auto}
+.diff .h{color:var(--muted);background:var(--bg)} .diff .p{background:var(--add-soft);color:var(--add)} .diff .m{background:var(--del-soft);color:var(--del)}
+.note{font-size:14px;color:var(--muted)}
+
+.bars{display:grid;gap:8px;margin:16px 0;max-width:620px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 40px;gap:10px;align-items:center;font-size:15px}
+.bar .track{height:14px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{height:100%;background:var(--accent)}
+.bar .n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.stats{display:flex;flex-wrap:wrap;gap:12px 32px;margin:16px 0}
+.stat b{display:block;font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--muted)}
+
+.lineage{display:grid;margin:18px 0;border-left:2px solid var(--line);padding-left:20px}
+.lineage .item{position:relative;padding:0 0 16px}
+.lineage .item::before{content:"";position:absolute;left:-27px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.lineage .yr{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.lineage .t{font-weight:700}
+.lineage .why{font-size:15.5px;color:var(--muted)}
+.lineage .why b{color:var(--fg);font-weight:400}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+@media (max-width:700px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.card h3{margin-top:0}
+.card ul{margin:0;font-size:15.5px}
+
+dl.gloss{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;margin:0}
+@media (max-width:600px){dl.gloss{grid-template-columns:minmax(0,1fr)} dl.gloss dd{margin-bottom:10px}}
+dl.gloss dt{font-family:var(--mono);font-size:14px;font-weight:600}
+dl.gloss dd{margin:0;font-size:15.5px}
+footer{grid-column:1/-1;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+footer a{color:var(--muted)}
+.keyidea{background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin:0 0 20px;font-size:16px;max-width:70ch}
+.keyidea b{font-family:var(--display)}
+.keyidea .q{display:block;margin-top:8px;font-size:14.5px;color:var(--muted)}
+.keyidea .q::before{content:"Check yourself: ";font-weight:700;color:var(--fg)}
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+@media (max-width:700px){.howto{grid-template-columns:minmax(0,1fr)}}
+.howto div{border-left:3px solid var(--line);padding-left:12px;font-size:15px;color:var(--muted)}
+.howto b{color:var(--fg);display:block;font-family:var(--display)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.callout.stop{border-color:var(--del);background:var(--del-soft)}
+.ok{background:var(--add-soft);color:var(--add)} .no{background:var(--del-soft);color:var(--del)} .mid{background:var(--warn-soft);color:var(--warn)}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <p class="kicker">Kaggle · Google DeepMind · Oct 2026</p>
+  <h1>Teaching Gemma to fix real bugs</h1>
+  <p class="lede">A guide from the basics up to the Gemma 4 Developer Agent competition and its Paper Track: how coding agents work, how this competition grades them, and whether it is worth your time.</p>
+  <div class="goals">
+    <div class="goal"><b>Learn</b><span>Understand how modern coding agents work and why they fail.</span></div>
+    <div class="goal"><b>Compete</b><span>Get on the leaderboard with Kaggle's free GPUs, then climb.</span></div>
+    <div class="goal"><b>Publish</b><span>Turn real experiments into a short research paper.</span></div>
+  </div>
+  <p class="note" style="margin-top:18px">This guide explains the concepts. For what we actually set up and ran, day by day, see the <a href="https://claude.ai/artifact/B8hG3gwZNfYi41Mva8EmQD">Week 1 field notes</a>. For the experiment plan as pictures, see the <a href="https://claude.ai/artifact/KHCVq6UnMYXgGpLk3SAQ3T">experiment plan diagrams</a>.</p>
+  <div class="howto">
+    <div><b>Part 1 · Basics</b>How models, tools and agents work, and what fixing a bug means. Start here if anything feels fuzzy.</div>
+    <div><b>Part 2 · The competition</b>The rules, the grading, the research it builds on, and what you can change.</div>
+    <div><b>Parts 3–4 · You and the road ahead</b>Our results so far, the experiment plan, and what happens until December.</div>
+  </div>
+  <p class="note" style="margin-top:14px">Every chapter opens with a <b>key idea</b> box: one plain sentence and a question to check yourself. If you can answer the question, you understood the chapter.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 900 190" role="img" aria-label="Project roadmap from Oct 17 to Dec 2: setup and baseline, experiments E0 to E3.1 until Oct 24, E5, ORACLE and E6 until Oct 31, the held-out check and paper writing until the Nov 12 deadline, then final tuning and submissions until Dec 2. In parallel from November: learning model training, then a LoRA for Gemma.">
+      <line x1="40" y1="150" x2="860" y2="150" stroke="currentColor" stroke-opacity=".4" stroke-width="2"/>
+      <g fill="none" stroke-width="1.5">
+        <rect x="40" y="30" width="18" height="34" rx="4" stroke="currentColor"/>
+        <rect x="58" y="30" width="107" height="34" rx="4" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="165" y="30" width="125" height="34" rx="4" stroke="var(--accent)"/>
+        <rect x="290" y="30" width="213" height="34" rx="4" stroke="var(--del)" stroke-width="2"/>
+        <rect x="503" y="30" width="357" height="34" rx="4" stroke="var(--add)" stroke-width="2"/>
+        <rect x="290" y="80" width="570" height="34" rx="4" stroke="var(--warn)" stroke-dasharray="5 4"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11.5" fill="currentColor" text-anchor="middle">
+        <text x="111" y="52" fill="var(--accent)" font-weight="600">E0–E3.1</text>
+        <text x="227" y="52">E5 · ORACLE · E6</text>
+        <text x="396" y="52" fill="var(--del)" font-weight="600">held-out check + paper</text>
+        <text x="681" y="52" fill="var(--add)" font-weight="600">final tuning + daily submissions</text>
+        <text x="575" y="102" fill="var(--warn)">Phase 2: learn training → LoRA for Gemma (uses our own successful runs)</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" text-anchor="middle">
+        <circle cx="40" cy="150" r="5" fill="var(--accent)"/><text x="40" y="172" text-anchor="start">Oct 17</text>
+        <circle cx="165" cy="150" r="4" fill="var(--surface)" stroke="currentColor"/><text x="165" y="172">Oct 24</text>
+        <circle cx="290" cy="150" r="4" fill="var(--surface)" stroke="currentColor"/><text x="290" y="172">Oct 31</text>
+        <circle cx="503" cy="150" r="6" fill="var(--del)"/><text x="503" y="172" fill="var(--del)">Nov 12 paper</text>
+        <circle cx="735" cy="150" r="4" fill="var(--surface)" stroke="currentColor"/><text x="735" y="172">Nov 25 merge</text>
+        <circle cx="860" cy="150" r="6" fill="var(--add)"/><text x="860" y="172" fill="var(--add)" text-anchor="end">Dec 2 final</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>The whole journey on one line.</b> Experiments first (October), the paper next (due Nov 12), and the training phase running alongside in November, feeding the final submissions by Dec 2.</figcaption>
+  </figure>
+</header>
+
+<nav class="rail" aria-label="Chapters">
+  <p>Part 1 · Basics</p>
+  <ol>
+    <li><a href="#llm">1. A language model</a></li>
+    <li><a href="#tools">2. A tool call</a></li>
+    <li><a href="#agent">3. An agent</a></li>
+    <li><a href="#bugfix">4. A bug fix</a></li>
+  </ol>
+  <p>Part 2 · The competition</p>
+  <ol>
+    <li><a href="#overview">5. The two tracks</a></li>
+    <li><a href="#grading">6. How grading works</a></li>
+    <li><a href="#machine">7. The scoring machine</a></li>
+    <li><a href="#lineage">8. The research behind it</a></li>
+    <li><a href="#levers">9. What you control</a></li>
+    <li><a href="#sample">10. The sample submission</a></li>
+    <li><a href="#data">11. The data</a></li>
+    <li><a href="#methods">12. Proven methods</a></li>
+  </ol>
+  <p>Part 3 · You</p>
+  <ol>
+    <li><a href="#worth">13. Is it worth it?</a></li>
+    <li><a href="#kaggle-gpu">14. Working on Kaggle GPUs</a></li>
+    <li><a href="#paper">15. The paper</a></li>
+    <li><a href="#plan">16. Plan and dates</a></li>
+    <li><a href="#results">17. What our first runs taught us</a></li>
+  </ol>
+  <p>Part 4 · The road ahead</p>
+  <ol>
+    <li><a href="#exp-plan">18. The experiment plan</a></li>
+    <li><a href="#e5e6">19. E5 and E6, explained</a></li>
+    <li><a href="#after">20. After E6: to December</a></li>
+    <li><a href="#skills-map">21. What you will learn</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ol>
+</nav>
+
+<main>
+<p class="part">Part 1 · The basics, one idea at a time</p>
+
+<section id="llm" class="wide">
+  <p class="kicker">Chapter 1</p>
+  <h2>A language model only turns text into text</h2>
+  <div class="keyidea"><b>Key idea:</b> Gemma only predicts the next words. It cannot open files, run code or remember anything unless we give it a way to.<span class="q">Why can Gemma not fix a bug on its own, even if it knows Python well?</span></div>
+  <p>Gemma, like every large language model, does one thing: it reads some text and writes more text, one word at a time, predicting what comes next. On its own it cannot open a file, run a program or remember yesterday. Everything else in this guide is about giving it those abilities safely.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 720 150" role="img" aria-label="A language model takes text in and produces text out; it has no access to files or programs by itself.">
+      <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="20" y="40" width="190" height="70" rx="8"/>
+        <rect x="270" y="30" width="180" height="90" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="510" y="40" width="190" height="70" rx="8"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <text x="115" y="68" font-weight="600">Text in</text><text x="115" y="88" font-size="11" opacity=".7">"Why does this fail?"</text>
+        <text x="360" y="62" font-weight="600" fill="var(--accent)">Language model</text><text x="360" y="82" font-size="11" opacity=".7">predicts the next word,</text><text x="360" y="97" font-size="11" opacity=".7">again and again</text>
+        <text x="605" y="68" font-weight="600">Text out</text><text x="605" y="88" font-size="11" opacity=".7">"Line 42 compares..."</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" marker-end="url(#a1)"><line x1="210" y1="75" x2="266" y2="75"/><line x1="450" y1="75" x2="506" y2="75"/></g>
+      <text x="360" y="145" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">no files · no internet · no memory between calls</text>
+    </svg>
+    </div>
+    <figcaption><b>The starting point.</b> A model alone can only produce text. To fix a bug it needs a way to act on the world.</figcaption>
+  </figure>
+</section>
+
+<section id="tools" class="wide">
+  <p class="kicker">Chapter 2</p>
+  <h2>A tool call is text that a program runs</h2>
+  <div class="keyidea"><b>Key idea:</b> The model only asks; the harness acts. Everything Gemma knows about the code comes from tool results it has read.<span class="q">When Gemma "reads a file", which program actually opens it, and where?</span></div>
+  <p>The trick is simple. We tell the model, "if you want to read a file, write a small JSON request in this exact format." A normal program, the <b>harness</b>, watches for those requests, runs them, and pastes the result back into the conversation. The model never runs anything itself. It only asks.</p>
+  <p>You likely already do this in your e-commerce agents, for example a model calling <code>search_products</code> or <code>get_order_status</code>. Here the tools are developer tools instead.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 220" role="img" aria-label="Tool call: the model writes a JSON request, the harness executes it in a sandbox, and the result is added back to the conversation for the model to read.">
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="20" y="30" width="220" height="110" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="300" y="30" width="170" height="110" rx="8"/>
+        <rect x="530" y="30" width="210" height="110" rx="8"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" text-anchor="middle">
+        <text x="130" y="54" font-size="13" font-weight="600" fill="var(--accent)">1 · Gemma writes</text>
+        <text x="130" y="82" font-size="11.5">{"tool": "read_file",</text><text x="130" y="100" font-size="11.5">"filepath": "app.py"}</text>
+        <text x="385" y="54" font-size="13" font-weight="600">2 · Harness runs it</text>
+        <text x="385" y="82" font-size="11" opacity=".7">opens app.py</text><text x="385" y="98" font-size="11" opacity=".7">inside the sandbox</text>
+        <text x="635" y="54" font-size="13" font-weight="600">3 · Result returns</text>
+        <text x="635" y="82" font-size="11.5">{"status": "ok",</text><text x="635" y="100" font-size="11.5">"content": "def ..."}</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#a2)">
+        <line x1="240" y1="85" x2="296" y2="85"/><line x1="470" y1="85" x2="526" y2="85"/>
+        <path d="M635,140 C635,200 130,200 130,145"/>
+      </g>
+      <text x="382" y="194" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11.5" text-anchor="middle">added to the conversation; Gemma reads it next turn</text>
+    </svg>
+    </div>
+    <figcaption><b>One tool call, three steps.</b> The model writes a request, the harness executes it, and the output becomes new text the model can read. This competition gives the agent exactly 9 such tools.</figcaption>
+  </figure>
+</section>
+
+<section id="agent" class="wide">
+  <p class="kicker">Chapter 3</p>
+  <h2>An agent is that, in a loop</h2>
+  <div class="keyidea"><b>Key idea:</b> Agent = model + tools + loop. How well it works depends on what it reads, how long it thinks before each action, and when it stops.<span class="q">Why does reading a very long file early on make later steps worse?</span></div>
+  <p>One tool call is not enough to fix a bug. The agent needs to look around, read, try, test and try again. So we repeat chapter 2 in a loop: think, act, look at the result, think again. This pattern is called <b>ReAct</b> (reason + act, Yao et al., 2022). It is the backbone of nearly every coding agent.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 300" role="img" aria-label="The agent loop: a bug report goes to the Gemma model, which emits tool calls that run in the sandbox; results return to the model until it calls submit_patch, which produces a git diff.">
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="20" y="96" width="130" height="64" rx="8"/>
+        <rect x="220" y="86" width="170" height="84" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="460" y="86" width="120" height="84" rx="8"/>
+        <rect x="630" y="86" width="115" height="84" rx="8" stroke-dasharray="5 4"/>
+        <rect x="220" y="226" width="170" height="54" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <text x="85" y="124" font-weight="600">Bug report</text><text x="85" y="143" font-size="11" opacity=".7">+ repo layout</text>
+        <text x="305" y="120" font-weight="600" fill="var(--accent)">Gemma 4</text><text x="305" y="140" font-size="11" opacity=".7">reads history,</text><text x="305" y="155" font-size="11" opacity=".7">picks next action</text>
+        <text x="520" y="124" font-weight="600">Tool layer</text><text x="520" y="143" font-size="11" opacity=".7">9 fixed tools</text>
+        <text x="687" y="120" font-weight="600">Sandbox</text><text x="687" y="139" font-size="11" opacity=".7">/workspace</text><text x="687" y="154" font-size="11" opacity=".7">offline, 4 GB</text>
+        <text x="305" y="250" font-weight="600" fill="var(--add)">submit_patch()</text><text x="305" y="268" font-size="11" opacity=".7">git diff = the answer</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#a3)">
+        <line x1="150" y1="128" x2="216" y2="128"/>
+        <path d="M330,86 C330,40 500,40 515,82"/>
+        <path d="M515,174 C500,214 410,214 360,174"/>
+        <line x1="580" y1="118" x2="626" y2="118"/>
+        <line x1="630" y1="140" x2="584" y2="140"/>
+        <line x1="270" y1="170" x2="270" y2="222" stroke="var(--add)"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11.5" text-anchor="middle">
+        <text x="183" y="120">prompt</text>
+        <text x="425" y="40">tool call</text>
+        <text x="440" y="226">result</text>
+        <text x="606" y="110">runs</text>
+        <text x="606" y="156">output</text>
+        <text x="236" y="202" text-anchor="end">when done</text>
+      </g>
+      <text x="425" y="20" fill="var(--accent)" font-family="JetBrains Mono, monospace" font-size="11.5" text-anchor="middle">repeats until submit, time-out, or budget runs out</text>
+    </svg>
+    </div>
+    <figcaption><b>The loop you are configuring.</b> The task ends when the model calls <code>submit_patch</code>. Its answer is the <code>git diff</code> of every file it changed.</figcaption>
+  </figure>
+  <p>Three facts explain most of what makes agents hard:</p>
+  <ul>
+    <li><b>Memory is just the transcript.</b> Every file the agent reads stays in its context, and the context here holds <b>32,768 tokens</b> (roughly 2,500 lines of code). Read carelessly and the bug report gets pushed out.</li>
+    <li><b>One wrong step compounds.</b> If the agent opens the wrong file at step 3, steps 4–20 are wasted. Good agents find the right place first, then edit.</li>
+    <li><b>The tools shape the thinking.</b> SWE-agent (2024) showed that tool design, such as how many lines a file view shows or how clear an edit error is, changes success rates about as much as a better model does.</li>
+  </ul>
+</section>
+
+<section id="bugfix" class="wide">
+  <p class="kicker">Chapter 4</p>
+  <h2>What "fixing a bug" means here</h2>
+  <div class="keyidea"><b>Key idea:</b> Every task is a real past fix with the answer hidden. The agent sees only the bug report and the old code, and must rediscover the fix.<span class="q">What is the difference between the gold patch and the test patch, and who sees each?</span></div>
+  <p>On GitHub, a user opens an issue ("the progress bar crashes when..."). A developer changes a few lines, adds a test that proves the fix, and the change is merged as a <b>commit</b>. Benchmarks like this one are built by rewinding history to the commit <i>just before</i> that fix.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 220" role="img" aria-label="Git history: the repository is cut at base_commit, where the agent starts. The real fix commit, which contains the gold patch and the test patch, lies in the hidden future.">
+      <rect x="440" y="28" width="300" height="150" rx="10" fill="var(--bg)" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="5 4"/>
+      <text x="590" y="48" fill="currentColor" opacity=".7" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">THE FUTURE · removed from the repo</text>
+      <line x1="30" y1="95" x2="730" y2="95" stroke="currentColor" stroke-width="2" stroke-opacity=".5"/>
+      <g fill="var(--surface)" stroke="currentColor" stroke-width="2">
+        <circle cx="70" cy="95" r="9"/><circle cx="170" cy="95" r="9"/><circle cx="270" cy="95" r="9"/>
+        <circle cx="530" cy="95" r="11" stroke="var(--add)" stroke-dasharray="3 2" stroke-width="2.5"/><circle cx="680" cy="95" r="9" stroke-opacity=".5"/>
+      </g>
+      <circle cx="370" cy="95" r="12" fill="var(--accent)"/>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">
+        <text x="170" y="128" opacity=".7">older commits</text>
+        <text x="370" y="72" font-weight="600" fill="var(--accent)">base_commit</text>
+        <text x="370" y="128" font-size="11">agent starts here</text>
+        <text x="530" y="72" font-weight="600" fill="var(--add)">the real fix</text>
+        <text x="680" y="128" opacity=".5" font-size="11">later work</text>
+      </g>
+      <g fill="none" stroke="var(--add)" stroke-width="1.5"><rect x="455" y="140" width="130" height="28" rx="6"/><rect x="595" y="140" width="130" height="28" rx="6"/></g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="520" y="158">gold patch: answer</text><text x="660" y="158">test patch: grader</text>
+      </g>
+      <text x="30" y="205" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11.5">The agent gets: the issue text + the code at base_commit. Nothing from the future.</text>
+    </svg>
+    </div>
+    <figcaption><b>Where the agent stands in time.</b> The real fix is split in two. The <b>gold patch</b> (the developer's code change) is the reference answer. The <b>test patch</b> (the tests they added) becomes the hidden grader.</figcaption>
+  </figure>
+  <p>The agent's answer is a <b>patch</b>, also called a diff. Read it line by line: <code>---</code> and <code>+++</code> name the file before and after, <code>@@</code> gives the location, a line starting with <code>-</code> is removed (red), a line starting with <code>+</code> is added (green), and unmarked lines are unchanged context.</p>
+  <h3>A real task: <code>rich_4077</code></h3>
+  <p><b>The whole bug report:</b> <i>"proxy isatty. Fixes https://github.com/Textualize/rich/issues/4041"</i></p>
+  <p>Rich has a <code>FileProxy</code>, a stand-in that sits in front of a real file and passes requests through to it. Programs often ask a file "are you a terminal screen?" by calling <code>isatty()</code>. The proxy did not pass that question on.</p>
+  <p><b>The gold patch (the answer key)</b> adds three lines: "when asked, ask the real file and return its answer".</p>
+  <div class="diff" aria-label="Gold patch for rich_4077">
+    <div class="h">--- a/rich/file_proxy.py</div><div class="h">+++ b/rich/file_proxy.py</div><div class="h">@@ -55,3 +55,6 @@ def flush(self) -> None:</div>
+    <div>     def fileno(self) -> int:</div>
+    <div>         return self.__file.fileno()</div>
+    <div class="p">+</div>
+    <div class="p">+    def isatty(self) -> bool:</div>
+    <div class="p">+        return self.__file.isatty()</div>
+  </div>
+  <p><b>The test patch (the grader)</b> builds a fake file that says "yes, I am a terminal", wraps it in the proxy, and checks that the proxy also says yes. It fails before the fix and passes after it, so it is a FAIL_TO_PASS test.</p>
+  <div class="callout"><b>The lesson in this example</b>The report is three words and a link, and the agent is offline, so it cannot open the link. It has to find <code>FileProxy</code> in the code and notice the missing method by itself. This is why finding the right code first matters so much.</div>
+</section>
+
+<p class="part">Part 2 · The competition</p>
+
+<section id="overview">
+  <p class="kicker">Chapter 5</p>
+  <h2>Two competitions that feed each other</h2>
+  <div class="keyidea"><b>Key idea:</b> The leaderboard ranks how many hidden bugs your agent fixes; the paper track judges what you learned and how well you show it. One set of experiments feeds both.<span class="q">Which deadline comes first, and why does that decide the order of our work?</span></div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Developer Agent</th><th>Paper Track</th></tr></thead>
+    <tbody>
+      <tr><td>Prizes</td><td>$37,000 / $18,000 / $10,000 for places 1–3</td><td>Best Paper $15,000, Best New Resource $10,000, Best New Application $10,000</td></tr>
+      <tr><td>You submit</td><td>A zip of YAML configs, prompts and optional LoRA weights</td><td>A Kaggle Writeup, max 3,000 words</td></tr>
+      <tr><td>Judged by</td><td>Share of hidden bug-fix tasks solved</td><td>Judges, on five equally weighted criteria (chapter 15)</td></tr>
+      <tr><td>Deadline</td><td>Dec 2, 2026 (team merge Nov 25)</td><td>Nov 12, 2026</td></tr>
+      <tr><td>Limits</td><td>1 submission a day, teams up to 5</td><td>5 submissions a day, teams up to 5</td></tr>
+      <tr><td>Teams</td><td>about 3,040</td><td>about 240</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout tip"><b>The useful mental model</b>You are not writing a program that fixes bugs. You are writing the <i>job description, toolbox and working habits</i> for a model that fixes bugs. Every lever in this competition is one of those three.</div>
+</section>
+
+<section id="grading" class="wide">
+  <p class="kicker">Chapter 6</p>
+  <h2>How one task is graded</h2>
+  <div class="keyidea"><b>Key idea:</b> Hidden tests decide pass or fail, with no partial credit. A fix in the right place that behaves slightly differently, such as a reworded error message, still scores zero.<span class="q">Why does editing the test files never help the agent pass?</span></div>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 230" role="img" aria-label="Grading: the old code plus the agent's patch plus the hidden tests are run with pytest; fail-to-pass tests must now pass and pass-to-pass tests must still pass for the task to count as resolved.">
+      <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="70" width="130" height="64" rx="8"/>
+        <rect x="170" y="70" width="130" height="64" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="330" y="70" width="130" height="64" rx="8" stroke-dasharray="5 4"/>
+        <rect x="490" y="70" width="110" height="64" rx="8"/>
+        <rect x="630" y="20" width="120" height="70" rx="8" stroke="var(--add)" stroke-width="2"/>
+        <rect x="630" y="118" width="120" height="70" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <text x="75" y="98" font-weight="600">Old code</text><text x="75" y="117" font-size="11" opacity=".7">at base_commit</text>
+        <text x="235" y="98" font-weight="600" fill="var(--accent)">+ your patch</text><text x="235" y="117" font-size="11" opacity=".7">from the agent</text>
+        <text x="395" y="98" font-weight="600">+ hidden tests</text><text x="395" y="117" font-size="11" opacity=".7">test patch</text>
+        <text x="545" y="98" font-weight="600">pytest</text><text x="545" y="117" font-size="11" opacity=".7">5 min limit</text>
+        <text x="690" y="47" font-weight="600" fill="var(--add)">FAIL_TO_PASS</text><text x="690" y="66" font-size="11" opacity=".75">broken before,</text><text x="690" y="80" font-size="11" opacity=".75">must pass now</text>
+        <text x="690" y="145" font-weight="600" fill="var(--add)">PASS_TO_PASS</text><text x="690" y="164" font-size="11" opacity=".75">worked before,</text><text x="690" y="178" font-size="11" opacity=".75">must still pass</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" marker-end="url(#a4)">
+        <line x1="140" y1="102" x2="166" y2="102"/><line x1="300" y1="102" x2="326" y2="102"/><line x1="460" y1="102" x2="486" y2="102"/>
+        <line x1="600" y1="92" x2="626" y2="62"/><line x1="600" y1="112" x2="626" y2="148"/>
+      </g>
+      <text x="380" y="215" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">both pass → solved (1) · anything else → 0 · no partial credit</text>
+    </svg>
+    </div>
+    <figcaption><b>Pass or fail, nothing in between.</b> Any change the agent makes to test files is thrown away before grading, so the only way to pass is to fix the real source code. Your score is solved tasks divided by all tasks.</figcaption>
+  </figure>
+</section>
+
+<section id="machine" class="wide">
+  <p class="kicker">Chapter 7</p>
+  <h2>The scoring machine, end to end</h2>
+  <div class="keyidea"><b>Key idea:</b> Your zip is compiled into an agent, Gemma runs on 4 GPUs, the agent works in one container, and a clean second container grades its diff. All hidden tasks share one 12-hour clock.<span class="q">Why does a task that runs out of time still get graded?</span></div>
+  <p>When you submit, Kaggle does not run your Python. It reads your YAML folder, builds the agent with Google's <b>Agent Development Kit (ADK)</b>, starts Gemma on its own GPUs, and runs every task in two fresh containers.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 780 330" role="img" aria-label="Scoring pipeline: the submission zip is validated and compiled into an ADK agent; vLLM serves Gemma on four L4 GPUs; the agent works in Container A; the diff moves to a clean Container B where the hidden tests run and produce the score.">
+      <defs><marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <text x="20" y="22" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">YOU UPLOAD</text>
+      <text x="200" y="22" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">KAGGLE SCORING HOST · 4× NVIDIA L4 (96 GB)</text>
+      <rect x="185" y="32" width="580" height="134" rx="10" fill="none" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="4 4"/>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="60" width="150" height="80" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="205" y="60" width="140" height="80" rx="8"/>
+        <rect x="375" y="60" width="160" height="80" rx="8"/>
+        <rect x="575" y="60" width="170" height="80" rx="8"/>
+        <rect x="205" y="210" width="190" height="90" rx="8" stroke-dasharray="5 4"/>
+        <rect x="445" y="210" width="190" height="90" rx="8" stroke-dasharray="5 4"/>
+        <rect x="670" y="225" width="100" height="60" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12.5" text-anchor="middle">
+        <text x="85" y="88" font-weight="600" fill="var(--accent)">submission.zip</text><text x="85" y="106" font-size="11" opacity=".7">YAML + prompts</text><text x="85" y="121" font-size="11" opacity=".7">+ LoRA (&lt; 3 GiB)</text>
+        <text x="275" y="92" font-weight="600">Check +</text><text x="275" y="108" font-weight="600">compile</text><text x="275" y="125" font-size="11" opacity=".7">→ ADK agent</text>
+        <text x="455" y="92" font-weight="600">Your agent</text><text x="455" y="110" font-size="11" opacity=".7">prompts, tools,</text><text x="455" y="124" font-size="11" opacity=".7">sub-agents, budgets</text>
+        <text x="660" y="92" font-weight="600">vLLM server</text><text x="660" y="110" font-size="11" opacity=".7">one Gemma 4 model</text><text x="660" y="124" font-size="11" opacity=".7">32K context</text>
+        <text x="300" y="238" font-weight="600">Container A</text><text x="300" y="257" font-size="11" opacity=".7">agent works here</text><text x="300" y="272" font-size="11" opacity=".7">offline · 2 CPU · 4 GB</text><text x="300" y="287" font-size="11" opacity=".7">≤ 60 min per task</text>
+        <text x="540" y="238" font-weight="600">Container B</text><text x="540" y="257" font-size="11" opacity=".7">fresh copy</text><text x="540" y="272" font-size="11" opacity=".7">+ patch + hidden tests</text><text x="540" y="287" font-size="11" opacity=".7">pytest decides</text>
+        <text x="720" y="250" font-weight="600" fill="var(--add)">Score</text><text x="720" y="268" font-size="11" opacity=".75">solved / total</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#a5)">
+        <line x1="160" y1="100" x2="201" y2="100"/>
+        <line x1="345" y1="100" x2="371" y2="100"/>
+        <line x1="535" y1="92" x2="571" y2="92"/><line x1="575" y1="112" x2="539" y2="112"/>
+        <line x1="420" y1="140" x2="340" y2="206"/><line x1="320" y1="210" x2="400" y2="144"/>
+        <line x1="395" y1="255" x2="441" y2="255" stroke="var(--accent)"/>
+        <line x1="635" y1="255" x2="666" y2="255"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="553" y="86">prompt</text><text x="553" y="128">reply</text>
+        <text x="410" y="180" text-anchor="start">tool calls ⇅ results</text>
+        <text x="418" y="246" fill="var(--accent)">git diff</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Two containers keep grading honest.</b> The agent can do anything inside Container A, but only its diff crosses to Container B. The dashed boxes repeat for every task.</figcaption>
+  </figure>
+  <div class="callout"><b>The clock that really matters: 12 hours for everything</b>The official rules give your agent <b>12 hours to finish all tasks</b>, including sandbox setup (grading time is not counted). The README's 60 minutes is only the default per-task cap. With about 120 tasks run one after another, that works out to roughly 6 minutes each, so entries set a per-task cap of about 4.5–5 minutes in <code>eval_config.yaml</code>. Community reports add a second hard edge, still unconfirmed: if prompt plus output goes over 32,768 tokens, the request fails and that task submits an empty patch.</div>
+</section>
+
+<section id="lineage">
+  <p class="kicker">Chapter 8 · the real-world standard</p>
+  <h2>The research this is built on</h2>
+  <div class="keyidea"><b>Key idea:</b> This competition is a small-model version of SWE-bench. The proven ideas are good tools, finding the code first, reproducing the bug, and trying several fixes.<span class="q">What did SWE-agent show, and which tool in our harness comes from that idea?</span></div>
+  <p>This competition is a Gemma-only, sandboxed version of the main benchmark for AI coding, <b>SWE-bench</b>. Its history tells you which ideas are proven and which are still open, and the open ones are where a paper comes from.</p>
+  <div class="lineage">
+    <div class="item"><div class="yr">2022</div><div class="t">ReAct</div><div class="why">Reasoning and tool actions in one loop. <b>This harness is a ReAct loop.</b></div></div>
+    <div class="item"><div class="yr">2023 · Princeton</div><div class="t">SWE-bench</div><div class="why">2,294 real GitHub issues from 12 Python repos, graded by hidden tests. <b>The grading in chapter 6 is taken almost directly from it.</b></div></div>
+    <div class="item"><div class="yr">2024</div><div class="t">SWE-bench Lite and Verified</div><div class="why">Lite is a cheaper 300-task subset. Verified has 500 tasks checked by humans and is the number quoted in model launches.</div></div>
+    <div class="item"><div class="yr">2024</div><div class="t">SWE-agent</div><div class="why">Showed that tool design matters (the "agent–computer interface"). <b>This harness's 150-line file view and forgiving edit tool come from that idea.</b></div></div>
+    <div class="item"><div class="yr">2024</div><div class="t">Agentless</div><div class="why">A fixed pipeline of find → fix → test instead of a free loop, cheaper and competitive. <b>A strong idea for smaller models.</b></div></div>
+    <div class="item"><div class="yr">2024–25</div><div class="t">OpenHands, mini-SWE-agent</div><div class="why">A full open agent platform, and a roughly 100-line agent that uses only bash. <b>Simple baselines are strong.</b></div></div>
+    <div class="item"><div class="yr">2024–25</div><div class="t">Code-graph search (RepoGraph, LocAgent and others)</div><div class="why">Give the agent a map of which function calls which. <b>Your three graph tools are this.</b></div></div>
+    <div class="item"><div class="yr">2024–25</div><div class="t">Training agents (SWE-Gym, SWE-smith, R2E-Gym, SWE-RL)</div><div class="why">Record agent attempts, then fine-tune on the good ones or use reinforcement learning. <b>That is what the LoRA slot allows.</b></div></div>
+    <div class="item"><div class="yr">2025–26</div><div class="t">Fresh benchmarks (SWE-bench-Live, SWE-rebench)</div><div class="why">Keep adding new issues so models cannot have memorized the fixes. <b>This dataset runs into mid-2026 for the same reason.</b></div></div>
+  </div>
+  <div class="callout info"><b>One evening of reading</b>1. SWE-bench paper, sections 1–3 → 2. SWE-agent, the interface sections → 3. Agentless → 4. the mini-SWE-agent README. After that every choice in this harness will make sense.</div>
+</section>
+
+<section id="levers" class="wide">
+  <p class="kicker">Chapter 9</p>
+  <h2>What you actually control</h2>
+  <div class="keyidea"><b>Key idea:</b> You control settings, instructions, agent structure, model choice and LoRA. You do not control the 9 tools, the model server or how old history is compressed.<span class="q">Which lever is cheapest to change, and which is most expensive?</span></div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Lever</th><th>File</th><th>What it changes</th><th>Effort</th></tr></thead>
+    <tbody>
+      <tr><td>System prompt</td><td><code>prompts/system.md</code></td><td>The agent's workflow: how it finds code, tests, and when it stops. Usually the biggest early gain.</td><td><span class="pill hi">low</span></td></tr>
+      <tr><td>Tool choice</td><td><code>tools:</code></td><td>Which of the 9 tools the agent may use. Fewer tools can mean fewer confused calls.</td><td><span class="pill hi">low</span></td></tr>
+      <tr><td>Budgets</td><td><code>eval_config.yaml</code></td><td>Time, tool calls and turns per task. Ours: 4.5 minutes and 100 tool calls, so about 120 tasks fit in the 12 hours.</td><td><span class="pill hi">low</span></td></tr>
+      <tr><td>Sampling and thinking</td><td><code>configs/sampling.yaml</code></td><td>Temperature and thinking budget. Too much thinking cuts tool calls off halfway.</td><td><span class="pill hi">low</span></td></tr>
+      <tr><td>Model size</td><td><code>model:</code></td><td>31B, 12B, E4B or E2B, all 4-bit, confirmed by the official rules. Every agent and sub-agent must use the same one. Bigger is smarter but slower, and the 12-hour clock is real time.</td><td><span class="pill md">medium</span></td></tr>
+      <tr><td>Agent design</td><td><code>sub_agents/</code></td><td>A single loop, a find-then-fix pipeline, a reviewer agent, or retries.</td><td><span class="pill md">medium</span></td></tr>
+      <tr><td>Skills</td><td><code>skills/</code></td><td>Repo-specific know-how loaded on demand, such as how FastAPI tests are laid out.</td><td><span class="pill md">medium</span></td></tr>
+      <tr><td>LoRA fine-tuning</td><td><code>adapters/</code></td><td>Teach the model better habits from successful attempts. Needs GPUs and a data pipeline.</td><td><span class="pill lo">high</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="sample" class="wide">
+  <p class="kicker">Chapter 10</p>
+  <h2>The sample submission, line by line</h2>
+  <div class="keyidea"><b>Key idea:</b> The sample is a working but untuned starting point. Its budget is only a smoke test, and its LoRA files are placeholders.<span class="q">Which single file did we change for our first submission, and why?</span></div>
+  <p>The real <code>agent.yaml</code> from the starter kit, saved in <code>data/agent/sample_submission/</code>:</p>
+<pre><span class="k">name</span>: swe_baseline_agent
+<span class="k">model</span>: gemma-4-31b-it-qat-w4a16-ct      <span class="c"># the one base model for the whole submission</span>
+<span class="k">adapter</span>: main_lora                       <span class="c"># LoRA folder under adapters/</span>
+<span class="k">instruction</span>: !include prompts/system.md  <span class="c"># the job description</span>
+<span class="k">tools</span>:                                   <span class="c"># the toolbox</span>
+  - run_command      <span class="c"># bash in /workspace</span>
+  - read_file        <span class="c"># 150-line window</span>
+  - edit_file        <span class="c"># search-and-replace, forgiving match</span>
+  - write_file
+  - get_status       <span class="c"># free: budget left</span>
+  - submit_patch     <span class="c"># free: ends the task</span>
+  - get_code_neighbors
+  - search_similar_code
+  - get_code_subgraph
+  - <span class="k">agent_tool</span>:                          <span class="c"># a helper agent used like a tool</span>
+      config_path: sub_agents/code_analyzer.yaml
+      skip_summarization: true          <span class="c"># its reading stays out of the main context</span>
+<span class="k">generate_content_config</span>: !include configs/sampling.yaml</pre>
+  <div class="grid2">
+    <div class="card"><h3>What the design does</h3><ul>
+      <li>A <b>coder</b> agent owns the loop and makes the edits.</li>
+      <li>A read-only <b>analyzer</b> helper explores code and reports the file, the cause and a suggested fix, so its long reads never fill the coder's context.</li>
+      <li>The prompt pushes for speed: under 8–10 turns, targeted tests only, never touch test files.</li>
+    </ul></div>
+    <div class="card"><h3>What is only a placeholder</h3><ul>
+      <li>The budget is 10 tool calls and 1 minute. That proves it runs, nothing more.</li>
+      <li>Both LoRA adapters are rank 4 on one layer (217 KB): dummies that show the format.</li>
+      <li>Temperature 0.2 and a 4,096-token thinking budget are reasonable starting points.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="data" class="wide">
+  <p class="kicker">Chapter 11</p>
+  <h2>What is in the data</h2>
+  <div class="keyidea"><b>Key idea:</b> 129 practice tasks come with their answers, but only 71 work fairly in Kaggle notebooks, and the hidden tasks come from different projects.<span class="q">Why would a prompt full of FastAPI tips not help on the leaderboard?</span></div>
+  <p>Counted from <code>tasks.jsonl</code>:</p>
+  <div class="stats">
+    <div class="stat"><b>129</b><span>practice tasks with answers</span></div>
+    <div class="stat"><b>13</b><span>median lines changed</span></div>
+    <div class="stat"><b>1</b><span>median files touched</span></div>
+    <div class="stat"><b>0</b><span>tasks with hints</span></div>
+  </div>
+  <div class="bars" role="img" aria-label="Tasks per repository: FastAPI 67, Rich 48, Requests 13, httpx 1.">
+    <div class="bar"><span>fastapi/fastapi</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="n">67</span></div>
+    <div class="bar"><span>Textualize/rich</span><div class="track"><div class="fill" style="width:71.6%"></div></div><span class="n">48</span></div>
+    <div class="bar"><span>psf/requests</span><div class="track"><div class="fill" style="width:19.4%"></div></div><span class="n">13</span></div>
+    <div class="bar"><span>encode/httpx</span><div class="track"><div class="fill" style="width:1.5%"></div></div><span class="n">1</span></div>
+  </div>
+  <p>Because the real answers are included, treat these 129 tasks as your <b>practice set</b>. With the answers in hand you can also measure whether the agent found the right file, which is exactly the kind of number a paper needs.</p>
+  <div class="callout"><b>Two facts we confirmed</b>1. <b>The hidden tasks come from other projects.</b> Kaggle staff: "None of the repos in the training tasks are present in the test set." So build general bug-fixing skill; tips specific to FastAPI or Rich will not help on the leaderboard.<br>2. <b>Only 71 of the 129 practice tasks are fair</b> in Kaggle notebooks. In the other 58, even the real fix fails or no fix passes, because of missing packages or tests that hit the installed library. Our <code>controls</code> run found this; we use only the 71 for practice.</div>
+</section>
+
+<section id="methods" class="wide">
+  <p class="kicker">Chapter 12 · reverse-engineering what works</p>
+  <h2>Proven methods, and which ones fit Gemma</h2>
+  <div class="keyidea"><b>Key idea:</b> Small models do better with clear constraints: find the code first, keep the context small, reproduce the bug, and avoid open-ended wandering.<span class="q">Why does a find-then-fix pipeline suit a 32K context better than one long conversation?</span></div>
+  <p>The best open coding agents are open source, and thousands of their recorded attempts are public. Studying them is how you "reverse engineer" a method here. Across the research, the same lessons keep appearing:</p>
+  <ul>
+    <li><b>Find the code before changing it.</b> Localization comes first.</li>
+    <li><b>Reproduce the bug before fixing it.</b> A small script that fails before the fix and passes after it is the best check there is.</li>
+    <li><b>Weaker models do better with a fixed pipeline than a free loop.</b></li>
+    <li><b>Try several fixes and pick the best one.</b> This was the biggest single gain in several papers.</li>
+    <li><b>Keep the context short and clean.</b> Garbled tool calls and repeated calls are how small models usually fail.</li>
+  </ul>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 780 260" role="img" aria-label="Comparison: a free loop keeps one growing context that can overflow 32K tokens; an Agentless-style pipeline splits the work into localize, fix and review stages, each starting with a small fresh context and passing only a short handoff.">
+      <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <text x="20" y="22" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">A · FREE LOOP (the sample submission)</text>
+      <rect x="20" y="36" width="170" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="105" y="62" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" text-anchor="middle">One agent</text>
+      <text x="105" y="80" fill="currentColor" opacity=".7" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">does everything</text>
+      <rect x="220" y="56" width="520" height="22" rx="4" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+      <rect x="220" y="56" width="430" height="22" rx="4" fill="var(--accent)" fill-opacity=".35"/>
+      <rect x="650" y="56" width="90" height="22" rx="4" fill="var(--del)" fill-opacity=".6"/>
+      <text x="230" y="50" fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11">context keeps growing: every file read, every test output</text>
+      <text x="740" y="96" fill="var(--del)" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">32K limit → empty patch</text>
+      <line x1="20" y1="122" x2="760" y2="122" stroke="currentColor" stroke-opacity=".2"/>
+      <text x="20" y="146" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">B · PIPELINE (Agentless-style, a SequentialAgent)</text>
+      <g fill="none" stroke-width="1.5">
+        <rect x="20" y="160" width="190" height="64" rx="8" stroke="currentColor"/>
+        <rect x="290" y="160" width="190" height="64" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="560" y="160" width="190" height="64" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" text-anchor="middle">
+        <text x="115" y="186" font-size="13" font-weight="600">1 · Localize</text><text x="115" y="204" font-size="11" opacity=".7">graph tools, read only</text>
+        <text x="385" y="186" font-size="13" font-weight="600" fill="var(--accent)">2 · Fix</text><text x="385" y="204" font-size="11" opacity=".7">reproduce, edit, test</text>
+        <text x="655" y="186" font-size="13" font-weight="600" fill="var(--add)">3 · Review</text><text x="655" y="204" font-size="11" opacity=".7">read diff, submit</text>
+      </g>
+      <g fill="var(--accent)" fill-opacity=".35"><rect x="20" y="232" width="60" height="10" rx="2"/><rect x="290" y="232" width="80" height="10" rx="2"/><rect x="560" y="232" width="50" height="10" rx="2"/></g>
+      <g stroke="currentColor" stroke-width="1.5" marker-end="url(#a7)"><line x1="210" y1="192" x2="286" y2="192"/><line x1="480" y1="192" x2="556" y2="192"/></g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle"><text x="248" y="182">file:line</text><text x="518" y="182">patch</text></g>
+      <text x="760" y="252" fill="currentColor" opacity=".7" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="end">each stage starts fresh; only a short note is passed on</text>
+    </svg>
+    </div>
+    <figcaption><b>The difference is the context, not the tools.</b> Both designs use the same 9 tools. In A, one agent piles everything into a single conversation until it overflows. In B, each stage starts fresh and passes only a short handoff (the file and line, then the patch). That is why Agentless-style pipelines suit a model with a 32K window.</figcaption>
+  </figure>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Method</th><th>Its core idea</th><th>What to copy into YAML and prompts</th></tr></thead>
+    <tbody>
+      <tr><td>SWE-agent</td><td>Short, well-designed tools; steps: find, reproduce, edit, re-run, submit</td><td>The step list and its "keep output short" rules. Already reflected in this harness's tools.</td></tr>
+      <tr><td>mini-SWE-agent</td><td>About 100 lines, bash only, very strong with good models</td><td>Its short prompt templates: a clean baseline to compare against.</td></tr>
+      <tr><td>Agentless</td><td>Localize → generate a few fixes → filter with tests</td><td>A <code>SequentialAgent</code> of localizer → fixer → reviewer.</td></tr>
+      <tr><td>OpenHands</td><td>Phased prompt: read, explore, reproduce, fix, verify, review</td><td>The phase wording for the fixer's prompt.</td></tr>
+      <tr><td>AutoCodeRover</td><td>Search code by structure (class, method), not by text</td><td>Use the three graph tools in the localize stage only.</td></tr>
+      <tr><td>R2E-Gym, CodeMonkeys</td><td>Generate several candidates; pick with tests first, judgment second</td><td>A <code>ParallelAgent</code> of 2–3 fixers plus a selector, if time allows.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Things other competitors have already found</h3>
+  <p class="note">From community GitHub repos and notebooks. Unofficial and sometimes contradictory, so treat them as leads to verify.</p>
+  <ul>
+    <li><b>Write commands as prose in prompts.</b> Prompts that contained literal shell commands led Gemma to garble 31% of its tool names; describing the same steps in words cut that to 5%.</li>
+    <li><b>Low temperature caused loops.</b> At 0.2, Gemma repeated the same call up to 23 times. Around 0.6–1.0 behaved better.</li>
+    <li><b>Thinking costs time.</b> One entry with thinking turned on exceeded the runtime and got no score.</li>
+    <li><b>Results are noisy.</b> A change of ±0.03 on the leaderboard can be luck, so measure on the practice set before believing it.</li>
+    <li><b>LoRA evidence is mixed.</b> Some say LoRA teams lead; one pilot scored lower than its baseline. It also slows serving by 8–21%.</li>
+  </ul>
+  <div class="callout tip"><b>Top 5 to try, ranked by gain per hour of work</b>1. Fix the time, context and tool-call basics: prose prompts and capped output (thinking stays on: turning it off cost accuracy in forum tests; temperature changes measured as mostly noise). 2. A three-stage localize → fix → review pipeline. 3. A hard rule that the agent reproduces the bug first, plus a syntax check after every edit (our E3 runs showed reproduce-first can delay the first edit; see chapter 18). 4. Two or three parallel fix attempts with a test-based selector, if the time budget allows. 5. LoRA, only after 1–4 work.</div>
+  <h3>Where to study real agent runs</h3>
+  <ul>
+    <li><a href="https://github.com/SWE-bench/experiments">SWE-bench/experiments</a>: full transcripts and logs of every leaderboard submission. Compare how Agentless, SWE-agent and OpenHands work through the same task.</li>
+    <li>Hugging Face transcript datasets (SWE-smith, SWE-rebench / Nebius OpenHands runs). Useful later for LoRA, if the competition rules allow outside data.</li>
+  </ul>
+</section>
+
+<p class="part">Part 3 · You</p>
+
+<section id="worth" class="wide">
+  <p class="kicker">Chapter 13</p>
+  <h2>Is it worth it for you right now?</h2>
+  <div class="keyidea"><b>Key idea:</b> Your main goal is the skills. The method you practise here (measure, analyse failures, change one thing, prove it) transfers directly to any agent you build at work.<span class="q">Which skill from this project would you explain first in an interview?</span></div>
+  <p>Short answer: <b>yes, for learning and for your profile. Treat prize money as unlikely and anything above that as a bonus.</b></p>
+  <div class="verdict">
+    <div><div class="lbl">Learning value</div><div class="val g">High</div><p>It covers the parts of agent engineering most e-commerce work never forces you to do: hard evaluation, failure analysis, context limits, small open models.</p></div>
+    <div><div class="lbl">Leaderboard chance</div><div class="val g">Wide open</div><p>On Oct 17 the top score is 0.24 and most teams sit at 0.15–0.18. The public set is about 58 tasks, so one solved task is worth about 0.017. Careful work can still reach the top tier.</p></div>
+    <div><div class="lbl">Prize chance</div><div class="val y">Low</div><p>Three prizes among about 3,040 teams. The paper track is far smaller (about 240 teams) and has three separate awards.</p></div>
+  </div>
+  <h3>How it lines up with your work and the certification</h3>
+  <p>Google Cloud's <b>Professional Agentic Architect</b> certification (beta launched Sept 2026) covers ADK, multi-agent orchestration, evaluation and agent deployment. This competition is built on ADK, so a lot of the effort counts twice.</p>
+  <div class="table-wrap">
+  <table class="matrix">
+    <thead><tr><th>Skill</th><th>Your e-commerce agents</th><th>This competition</th><th>Agentic Architect cert</th></tr></thead>
+    <tbody>
+      <tr><td>Tool / function design</td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td></tr>
+      <tr><td>Multi-agent orchestration with ADK</td><td><span class="dot h" aria-label="some"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td></tr>
+      <tr><td>Evaluation and failure analysis</td><td><span class="dot h" aria-label="some"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td></tr>
+      <tr><td>Prompting for long, reliable tasks</td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot h" aria-label="some"></span></td></tr>
+      <tr><td>Context window management</td><td><span class="dot h" aria-label="some"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot h" aria-label="some"></span></td></tr>
+      <tr><td>Sandboxing and agent safety</td><td><span class="dot" aria-label="little"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot f" aria-label="strong"></span></td></tr>
+      <tr><td>Serving and fine-tuning open models</td><td><span class="dot" aria-label="little"></span></td><td><span class="dot f" aria-label="strong"></span></td><td><span class="dot" aria-label="little"></span></td></tr>
+      <tr><td>Cloud deployment (Cloud Run, Agent Runtime, MCP, A2A)</td><td><span class="dot h" aria-label="some"></span></td><td><span class="dot" aria-label="little"></span></td><td><span class="dot f" aria-label="strong"></span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Filled = strong overlap, half = some, empty = little. The first column is a guess about your current work; adjust it to match.</p>
+  <h3>For the job search</h3>
+  <ul>
+    <li><b>Concrete proof beats claims.</b> "Ranked in the top X% of 3,000 teams on a Google DeepMind coding-agent benchmark" and "wrote a paper on agent failure modes" are specific, checkable lines for an AI engineer CV.</li>
+    <li><b>Public work.</b> A clean GitHub repo with your configs, evaluation scripts and write-up gives interviewers something to discuss.</li>
+    <li><b>The gap it fills.</b> E-commerce agents show you can ship. This shows you can measure and improve agents rigorously, which is the skill that separates senior AI-engineer roles.</li>
+  </ul>
+  <div class="callout"><b>The real cost</b>Roughly 10–12 hours a week for 6–7 weeks, with the paper due Nov 12. If the job search gets intense, cut LoRA training first and keep the paper.</div>
+</section>
+
+<section id="kaggle-gpu" class="wide">
+  <p class="kicker">Chapter 14</p>
+  <h2>Working entirely on Kaggle GPUs</h2>
+  <div class="keyidea"><b>Key idea:</b> We practise on the same 4×L4 machines used for scoring. GPU quota (30 hours a week, L4 counting double) is the scarce resource, so every run must be worth it.<span class="q">Why does the bug-checking notebook run on CPU while the agent runs on GPU?</span></div>
+  <p>Your laptop has no NVIDIA GPU, which is fine. You edit files locally and let Kaggle do the heavy work in two different places.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 780 270" role="img" aria-label="Workflow: edit configs on your laptop; run practice tasks in a Kaggle GPU notebook; read the results and improve; when ready, submit the zip once a day to Kaggle's scoring host, which runs hidden tasks on four L4 GPUs and updates the leaderboard.">
+      <defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <text x="270" y="22" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">PRACTICE LOOP · many times a week</text>
+      <text x="270" y="180" fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">SCORING · once a day</text>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="90" width="170" height="90" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="270" y="32" width="200" height="96" rx="8"/>
+        <rect x="560" y="32" width="200" height="96" rx="8"/>
+        <rect x="270" y="190" width="200" height="70" rx="8"/>
+        <rect x="560" y="190" width="200" height="70" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12.5" text-anchor="middle">
+        <text x="95" y="118" font-weight="600" fill="var(--accent)">Your laptop</text><text x="95" y="138" font-size="11" opacity=".7">edit YAML + prompts</text><text x="95" y="153" font-size="11" opacity=".7">git, Docker,</text><text x="95" y="168" font-size="11" opacity=".7">read logs</text>
+        <text x="370" y="58" font-weight="600">Kaggle notebook</text><text x="370" y="78" font-size="11" opacity=".7">L4×4, ~15 h/week</text><text x="370" y="94" font-size="11" opacity=".7">Gemma + harness on</text><text x="370" y="109" font-size="11" opacity=".7">10–30 practice tasks</text>
+        <text x="660" y="58" font-weight="600">Results</text><text x="660" y="78" font-size="11" opacity=".7">tasks solved,</text><text x="660" y="94" font-size="11" opacity=".7">patches, full</text><text x="660" y="109" font-size="11" opacity=".7">agent transcripts</text>
+        <text x="370" y="218" font-weight="600">Kaggle scoring</text><text x="370" y="237" font-size="11" opacity=".7">4× L4, hidden tasks</text>
+        <text x="660" y="218" font-weight="600" fill="var(--add)">Leaderboard</text><text x="660" y="237" font-size="11" opacity=".7">your rank</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#a6)">
+        <line x1="180" y1="110" x2="266" y2="85"/>
+        <line x1="470" y1="80" x2="556" y2="80"/>
+        <path d="M660,32 C660,4 95,4 95,86"/>
+        <line x1="180" y1="160" x2="266" y2="218"/>
+        <line x1="470" y1="225" x2="556" y2="225"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="225" y="88">run</text>
+        <text x="380" y="14" fill="var(--accent)">change one thing, run again</text>
+        <text x="212" y="205">submit zip</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Two separate GPU budgets.</b> Practice runs use your weekly notebook quota. Leaderboard scoring runs on Kaggle's own 4× L4 machine. Change one thing at a time so you know what helped.</figcaption>
+  </figure>
+  <div class="callout"><b>Good news: you can practice on the scoring hardware</b>Notebooks attached to this competition can use the same <b>4× L4 machines</b> used for scoring. They use quota at twice the normal rate, so your 30 hours a week become about <b>15 hours of L4×4 time</b> (quota resets Oct 24). L4 sessions run with internet turned off, the same as scoring, and are only allowed for this competition's work. The older T4×2 and P100 machines still cost the normal rate and are fine for small tests.</div>
+  <div class="callout info"><b>Measured on our first runs (Oct 18)</b>Kaggle gave us 4 L4 GPUs as requested. Loading Gemma 31B took about <b>7 minutes</b>; the agent then needed about <b>2.8 minutes per easy bug</b>. A 5-bug run used about 46 minutes of quota. One trap: the harness needs <b>Python 3.12</b>, but Kaggle's default is now 3.13, so each notebook must pin the same environment image as the official starter.</div>
+</section>
+
+<section id="paper">
+  <p class="kicker">Chapter 15</p>
+  <h2>The paper</h2>
+  <div class="keyidea"><b>Key idea:</b> A 3,000-word write-up judged on novelty, quality (does it generalize), relevance, verifiability and clarity. A careful, honest measurement study is a strong entry.<span class="q">Which of our experiments answers a question nobody has answered yet?</span></div>
+  <p>The official brief is one sentence: <i>"Submit a research paper advancing the state of the art for agentic software engineering."</i> It is due <b>Nov 12</b>.</p>
+  <div class="callout info"><b>The official requirements</b>A <b>Kaggle Writeup</b> of at most <b>3,000 words</b>: title and subtitle, abstract, introduction, methods and experiments, related work with citations. A public notebook with code is optional, and so is an arXiv-style PDF. The work must be unpublished, but the track is non-archival, so you can still submit it to a conference later. Drafts not submitted by the deadline are ignored.</div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Criterion (0–5 each, equal weight)</th><th>What the judges ask</th></tr></thead>
+    <tbody>
+      <tr><td>Novelty</td><td>New insight, or a deeper understanding of existing methods</td></tr>
+      <tr><td>Quality</td><td>Does the approach generalize beyond this competition?</td></tr>
+      <tr><td>Relevance</td><td>Impact on software engineering and agent research</td></tr>
+      <tr><td>Verifiability</td><td>Enough detail to understand and reproduce the work</td></tr>
+      <tr><td>Clarity</td><td>Clearly written and presented</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Three awards, with winners shown at a Google event at NeurIPS 2026:</p>
+  <ul>
+    <li><b>Overall Best Paper</b> ($15,000): the highest average score on the five criteria.</li>
+    <li><b>Best New Resource</b> ($10,000): something new others can use, such as a dataset built from the provided embeddings, a tool or a library.</li>
+    <li><b>Best New Application</b> ($10,000): a new use for the code graphs or embeddings beyond bug fixing, for example writing TPU kernels, or applying them to a different benchmark. This one rewards creative applications, which suits an agent builder.</li>
+  </ul>
+  <p> The hosts list four encouraged topics: fine-tuning and RL for coding agents, code graphs and embeddings, new tasks and benchmarks, and LLM reasoning over graphs. They say papers that use the released <b>code graph and embedding data</b> are "highly encouraged".</p>
+  <p>A strong small paper is an <b>honest, measured comparison</b>, not a giant new system. Questions this harness makes easy to study:</p>
+  <ul>
+    <li><b>Loop or pipeline?</b> A free agent loop against a find → fix → test pipeline, for each Gemma size.</li>
+    <li><b>Do code graphs help small models?</b> With and without the three graph tools, measured against the real answers.</li>
+    <li><b>Thinking versus acting.</b> Thinking budget against tasks solved and cut-off tool calls.</li>
+    <li><b>Why agents fail.</b> Hand-label 50 failed attempts: wrong file, right file but wrong fix, broke other tests, ran out of time. This is cheap, useful and publishable.</li>
+    <li><b>An open gap.</b> No SWE-bench score for Gemma has been published. A careful measurement of Gemma 4 as a coding agent under real limits is new in itself.</li>
+  </ul>
+</section>
+
+<section id="plan" class="wide">
+  <p class="kicker">Chapter 16</p>
+  <h2>Plan and dates</h2>
+  <div class="keyidea"><b>Key idea:</b> The paper is due before the leaderboard closes, so experiments come first, writing second, and final tuning last. The detailed experiment plan is in chapter 18.<span class="q">What happens on Nov 12, Nov 25 and Dec 2?</span></div>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 130" role="img" aria-label="Timeline: start October 17; paper due November 12; team merger deadline November 25; final agent submission December 2; certification after that.">
+      <line x1="30" y1="60" x2="730" y2="60" stroke="currentColor" stroke-width="2" stroke-opacity=".4"/>
+      <line x1="30" y1="60" x2="412" y2="60" stroke="var(--accent)" stroke-width="4"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor" text-anchor="middle">
+        <circle cx="30" cy="60" r="7" fill="var(--accent)"/><text x="30" y="36" font-weight="600" text-anchor="start">Oct 17</text><text x="30" y="92" text-anchor="start" opacity=".7">start</text>
+        <circle cx="412" cy="60" r="7" fill="var(--del)"/><text x="412" y="36" font-weight="600" fill="var(--del)">Nov 12</text><text x="412" y="92" opacity=".8">paper due</text><text x="412" y="108" opacity=".6">day 26</text>
+        <circle cx="560" cy="60" r="6" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><text x="560" y="36" font-weight="600">Nov 25</text><text x="560" y="92" opacity=".8">team merge</text><text x="560" y="108" opacity=".6">day 39</text>
+        <circle cx="640" cy="60" r="7" fill="var(--add)"/><text x="640" y="36" font-weight="600" fill="var(--add)">Dec 2</text><text x="640" y="92" opacity=".8">final agent</text><text x="640" y="108" opacity=".6">day 46</text>
+        <text x="730" y="36" font-weight="600" text-anchor="end">Dec–Jan</text><text x="730" y="92" opacity=".8" text-anchor="end">certification</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>The paper comes first.</b> Run experiments early, write by early November, tune the leaderboard after that, then prepare for the certification with ADK already familiar. Not to scale after Dec 2.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div class="card"><h3>Week 1 · Oct 17–23 · Setup and E0–E3.1</h3><ul>
+      <li>✅ Built our practice notebooks from the official starter notebook.</li>
+      <li>✅ Checked all 129 practice tasks: 71 are fair (repeated twice more, stable).</li>
+      <li>✅ 30-bug practice set; baseline 11/30 (done Oct 18). Leaderboard 0.12.</li>
+      <li>✅ E0, E2 (kept), E1, E3, E3.1; methodology audit; held-out set drawn.</li>
+      <li>Do the reading list from chapter 8.</li>
+    </ul></div>
+    <div class="card"><h3>Week 2 · Oct 24–30 · E5, ORACLE, E6</h3><ul>
+      <li>Free checks first (build, nudge, graph vs grep, analysis).</li>
+      <li>6 GPU runs: E5 twice, ORACLE, an E3.1 repeat, E6 (chapter 19).</li>
+    </ul></div>
+    <div class="card"><h3>Week 3 · Oct 31–Nov 6 · Confirm</h3><ul>
+      <li>E2 repeat, the held-out check (E2 and the best version, back to back), a few replicates.</li>
+      <li>Start writing.</li>
+    </ul></div>
+    <div class="card"><h3>Week 4 · Nov 7–12 · Write</h3><ul>
+      <li>Problem, setup, results tables, failure analysis.</li>
+      <li>Submit the paper, then switch to leaderboard tuning until Dec 2.</li>
+    </ul></div>
+  </div>
+  <div class="callout"><b>Phase 2: learning to train, from scratch</b>After the agent works well, we learn model training step by step: what training is, pretraining vs. fine-tuning, LoRA, a tiny hands-on run, then a LoRA for Gemma on its own successful fixes, and finally a short look at RL. Training data comes only from Gemma's own runs or openly licensed sources, never from Claude or GPT outputs.</div>
+</section>
+
+<section id="results" class="wide">
+  <p class="kicker">Chapter 17 · Oct 18</p>
+  <h2>What our first runs taught us</h2>
+  <div class="keyidea"><b>Key idea:</b> On 30 fair bugs the unchanged agent solved 11. Most failures were running out of time, from slow steps (see the E1 update in chapter 18), not wrong answers.<span class="q">Name two of the five ways the agent failed, and which change targets each one.</span></div>
+  <p>Before changing anything, we ran the official example agent on <b>30 fair practice bugs</b>, chosen to range from tiny to large fixes so they look like real work. The only change was a realistic time limit of 4.5 minutes per bug. It fixed <b>11 of 30 (37%)</b>. That is our first honest number, and every future change will be measured against it on these same 30 bugs.</p>
+  <div class="bars" role="img" aria-label="Of 30 bugs: 11 solved, 15 ran out of time, 3 finished with a wrong fix, 1 crashed on the context limit.">
+    <div class="bar"><span>Solved</span><div class="track"><div class="fill" style="width:36.7%;background:var(--add)"></div></div><span class="n">11</span></div>
+    <div class="bar"><span>Ran out of time</span><div class="track"><div class="fill" style="width:50%;background:var(--warn)"></div></div><span class="n">15</span></div>
+    <div class="bar"><span>Finished, wrong fix</span><div class="track"><div class="fill" style="width:10%;background:var(--del)"></div></div><span class="n">3</span></div>
+    <div class="bar"><span>Context overflow</span><div class="track"><div class="fill" style="width:3.3%;background:var(--del)"></div></div><span class="n">1</span></div>
+  </div>
+
+  <h3>The main lesson: Gemma is mostly slow, not mostly wrong</h3>
+  <p>Fifteen of the nineteen failures ended because the clock ran out, not because Gemma gave a bad answer, and seven of those never changed a single line. When we measured every step of every transcript, a clear pattern appeared. On bugs it failed, Gemma spent about <b>16 seconds per step</b>, against about 9 seconds on bugs it solved. The difference is <b>thinking</b>: before each action, Gemma writes private reasoning, and on failed bugs that reasoning was more than twice as long. Sometimes a single burst of thinking lasted over two minutes. Thinking itself is not bad, but here it eats the time that should go to editing and testing.</p>
+
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 760 200" role="img" aria-label="Bug rich_3180, time per step: step 1 took 5.5 seconds, step 2 4.2 seconds, step 3 27 seconds, step 4 131.5 seconds of thinking before a single test.">
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+        <text x="10" y="37">1 · read _wrap.py</text><text x="10" y="77">2 · read cells.py</text><text x="10" y="117">3 · read _loop.py</text><text x="10" y="157">4 · think, then test</text>
+      </g>
+      <g>
+        <rect x="160" y="20" width="24" height="26" rx="3" fill="var(--accent)"/>
+        <rect x="160" y="60" width="18" height="26" rx="3" fill="var(--accent)"/>
+        <rect x="160" y="100" width="116" height="26" rx="3" fill="var(--accent)"/>
+        <rect x="160" y="140" width="564" height="26" rx="3" fill="var(--warn)"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="currentColor">
+        <text x="190" y="37">5.5 s</text><text x="184" y="77">4.2 s</text><text x="282" y="117">27 s</text>
+        <text x="714" y="157" text-anchor="end" fill="var(--surface)" font-weight="600">131.5 s of thinking</text>
+      </g>
+      <text x="160" y="192" font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" opacity=".7">It had already found the right file and the bug by step 3. The time limit hit soon after step 4.</text>
+    </svg>
+    </div>
+    <figcaption><b>Where the time went on one failed bug.</b> Three quick, useful steps, then one enormous silent thinking step where Gemma traced the code in its head instead of running it. This single pattern explains many of our timeouts.</figcaption>
+  </figure>
+
+  <h3>The five ways it failed</h3>
+  <p>Reading all nineteen failures, each one falls into one of five groups. <b>Big fixes</b> (6 bugs): Gemma knew the plan, but a fix spread over 24–80 lines in several files cannot be written in 4.5 minutes at this speed. <b>Vague bug reports</b> (6): the report was a few words and a link Gemma cannot open, so it re-read the same files again and again without ever committing to a guess. <b>Overthinking</b> (3): the long silent reasoning shown above. <b>Wrong fix</b> (3): it finished, but the change did not match what the hidden test checks, for example an error message worded slightly differently. <b>Trusting old tests</b> (1): it found the right file in ten seconds, saw that the existing tests already passed, and decided nothing was broken, when in fact those tests expected the old, buggy output.</p>
+
+  <h3>Two surprises</h3>
+  <p>First, the <b>code graph tools were almost never used</b> (2 calls in 30 bugs) <b>and the helper agent never</b>, even though the official example offers both. This matters for the paper, because the hosts especially encourage work that uses the graph data. Second, Gemma <b>almost never tested its own fix</b>. Solved bugs averaged under one test run, and failed bugs almost none. Good engineers check their work; our agent mostly does not.</p>
+
+  <h3>What this means for the next step</h3>
+  <p>The cheapest, most promising change is to <b>limit how long Gemma thinks</b> before each action. It is one line in a config file, and it attacks the biggest cause of failure. After that come instruction changes: make the first edit early, test ideas by running small code snippets instead of reasoning in the head, warn that old tests may expect the old behaviour, and stop exploring after a set number of file reads. We will change <b>one thing at a time</b> and re-run the same 30 bugs, so that each improvement can be measured. Before running anything, we are researching what other competitors measured, how the harness handles thinking and time internally, and Google's official Gemma 4 guidance, so the plan is built on evidence rather than guesses.</p>
+  <div class="callout"><b>Update (Oct 18, after E1)</b>Limiting thinking did not reduce timeouts. Time goes to many ordinary steps, not to rare long thinking bursts (chapter 18).</div>
+  <div class="callout info"><b>Why so careful?</b>Agents are random: the same bug can pass on one run and fail on the next (rich_3043 did exactly that). A change from 11 to 13 out of 30 might be luck. Part of the plan is deciding how to tell a real improvement from noise before we trust it.</div>
+</section>
+
+<p class="part">Part 4 · The road ahead</p>
+
+<section id="exp-plan" class="wide">
+  <p class="kicker">Chapter 18</p>
+  <h2>The experiment plan</h2>
+  <div class="keyidea"><b>Key idea:</b> Each experiment changes exactly one thing, all measured on the same 30 bugs and the same machines, and kept only if they beat the noise.<span class="q">Why do we run the unchanged baseline a second time before changing anything?</span></div>
+  <p>Our first results showed what to fix, but not how much a score moves by luck. Agents are random: the same bug can pass on one run and fail on the next. So the plan starts by measuring that randomness (E0), then changes one thing at a time, starting with the cheapest changes that attack the biggest problem, which is speed. Each experiment builds on the changes kept before it, so improvements add up and we always know which change caused what.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Step</th><th>The one change</th><th>Why</th><th>Evidence before we start</th><th>Needed?</th></tr></thead>
+    <tbody>
+      <tr><td>E0 ✅</td><td>Nothing: repeat the baseline</td><td>Measure the noise, our yardstick</td><td><b>Done:</b> 12/30 vs 11/30; 3 bugs flipped</td><td><span class="pill hi">essential</span></td></tr>
+      <tr><td>E2 ✅</td><td>Output limit 16,384 → 8,192</td><td>Stops the context crash that throws away a finished fix</td><td><b>Done, kept:</b> crashes 4 → 0; 13/30 solved, no net loss</td><td><span class="pill hi">essential</span></td></tr>
+      <tr><td>E1 ✖</td><td>Thinking budget 4096 → 2048</td><td>We thought overthinking caused timeouts; E1 showed it is the number of steps</td><td><b>Done, not kept:</b> net +1, timeouts unchanged</td><td><span class="pill hi">essential</span></td></tr>
+      <tr><td>E3 ◑</td><td>Better instructions (prompt v2: <b>14/30, inconclusive</b>)</td><td>7 bugs were never edited; wandering on vague reports</td><td>SWE-agent, mini-SWE-agent, Anthropic; forum "edit by call 12" result</td><td><span class="pill hi">essential</span></td></tr>
+      <tr><td>E3.1 ◑</td><td>Prompt v2 with the early-edit rule made explicit</td><td>Fix the rule E3 ignored</td><td><b>Done, not adopted:</b> 15/30, rule only partly followed; repeat planned</td><td><span class="pill hi">essential</span></td></tr>
+      <tr><td>E4 ✖</td><td>Remove the unused helper agent</td><td>Simpler might be faster</td><td><b>Cancelled without a GPU run:</b> the helper was called once in 185 task attempts</td><td><span class="pill lo">dropped</span></td></tr>
+      <tr><td>E5</td><td>Finder step (no edit tools), then fixer step</td><td>Build the rule into the structure (<a href="#e5e6">chapter 19</a>)</td><td>Agentless, SWE-Gym; no same-model comparison published</td><td><span class="pill hi">paper core</span></td></tr>
+      <tr><td>ORACLE</td><td>E2 plus the correct files given (practice only)</td><td>Is finding the code the bottleneck?</td><td>SHERLOC: given locations help small models most</td><td><span class="pill hi">paper core</span></td></tr>
+      <tr><td>E6</td><td>E5 with a graph-tool finder</td><td>Does a small model use graph tools when a step requires them?</td><td>LocAgent (fine-tuned models); 16 graph calls in our 185 task attempts</td><td><span class="pill hi">paper core</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Methodology audit (Oct 19)</h3>
+  <p>An independent reviewer checked every step against research standards (SWE-bench task validation, "Adding Error Bars to Evals", the NeurIPS checklist, Anthropic's agent-eval guidance). The direction passed: error analysis first, one change at a time, a decision rule written down before running. Three gaps were fixed the same day:</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Problem found</th><th>Fix</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>The same 30 bugs wrote the rules and scored them</td><td>30 held-out bugs, drawn with a recorded seed</td><td>Shows improvements are not fitted to the practice bugs</td></tr>
+      <tr><td>No error bars</td><td>Paired test and 95% confidence interval for every comparison</td><td>With 30 bugs and one run, only effects of about +10 percentage points are visible; so far none is</td></tr>
+      <tr><td>All results treated alike</td><td>Exploratory vs confirmatory labels</td><td>Only predictions written down first count as proof</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>How a result is judged</h3>
+  <p>The new run is compared bug by bug with the current best version, pooled over its three near-identical runs (Run 1, E0, E2). A <b>gain</b> is a bug it now solves that the best version never did; a <b>loss</b> is the reverse. A change is kept if gains minus losses is at least 3, or if it clearly fixes what it targeted (for example at least 5 fewer timeouts, more than two identical runs differed by) without losing bugs. Bugs that pass only sometimes are ignored, because they reveal luck rather than skill. The <a href="https://claude.ai/artifact/KHCVq6UnMYXgGpLk3SAQ3T">experiment plan diagrams</a> show this as a flowchart.</p>
+  <div class="callout info"><b>Timing and cost</b>E0–E3.1 ran in the week of Oct 18. Each run costs about 4.3 hours of the 30-hour weekly quota, so a week holds about 6 runs. The week of Oct 24 runs E5, ORACLE, an E3.1 repeat and E6 (<a href="#e5e6">chapter 19</a>); the week of Oct 31 runs an E2 repeat, the held-out check and a few replicates. Kept versions also go to the leaderboard, which costs no quota but allows 1 submission per day.</div>
+  <div class="callout tip"><b>What E0 taught us (Oct 18)</b>Running the identical agent twice gave 11 and 12 solved, with 3 of 30 bugs flipping. So about 10% of results are luck, and any change must beat that before we believe it. The same failure pattern appeared in both runs (slow, overthinking steps; 7 bugs never edited), so our error analysis is solid. Context crashes went from 1 to 4, which is why E2 now runs before E1.</div>
+  <div class="callout tip"><b>What E2 taught us (Oct 18)</b>Halving the output limit removed every task-ending crash (4 → 0) without costing any bugs, so it is kept. A side finding: when Gemma finally used the graph search, it searched for the issue number instead of a function name. (We first thought one task overran its time limit, 572 s against 270 s; that figure included about 300 s of grading, which does not count, so it was a false alarm.) That is evidence for the graph-tool experiment (E6).</div>
+  <div class="callout"><b>What E1 taught us (Oct 18)</b>Halving the thinking budget did cap the huge thinking bursts (the longest step fell from about 4,500 to 2,262 tokens), but only about 2% of steps ever think that long. Timeouts stayed at 15 and the score moved only +1, so the change was not kept. The real lesson: time is lost to many ordinary steps (about 25 steps of about 10 seconds each), not to rare bursts. A diagnosis can be right about the worst cases and still wrong about where most of the cost is, which is exactly why we measure. It points to E3, which aims to cut the number of steps.</div>
+  <div class="callout"><b>What E3 taught us (Oct 19)</b>Prompt v2 gave the best score yet, 14 of 30, and lost none of the reliably solved bugs. But reading the transcripts showed the "first edit by step 8" rule was mostly ignored: Gemma started writing reproduction scripts in <code>/tmp</code> first, so real edits came later (153 s instead of 108 s on failed bugs), and 8 bugs ended with no source change. A rule in the prompt is a request, not a guarantee; checking whether the model actually followed it is as important as the score. Our first leaderboard result also arrived: 0.12 for the baseline, about a third of its practice score, because the hidden tasks are harder and from other projects.</div>
+  <h3>What E3.1 taught us (Oct 19)</h3>
+  <p>We changed two lines to say plainly that a <code>/tmp</code> script is not an edit.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>E2</th><th>E3</th><th>E3.1</th></tr></thead>
+    <tbody>
+      <tr><td>Solved / 30</td><td>13</td><td>14</td><td>15</td></tr>
+      <tr><td>Bugs where Gemma wrote <code>/tmp</code> scripts</td><td>0</td><td>21</td><td>17</td></tr>
+      <tr><td>First real edit (median)</td><td>84 s</td><td>141 s</td><td>125 s</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>Two lessons</b>First, rewording a prompt is a weak lever on a habit the model has: the extra solves did not come from the rule, and the gain is within the noise (net +1 against the reference). Changing the agent's structure (E5) is stronger. Second, the two prompt-v2 runs (14, 15) both beat the three standard runs (11, 12, 13), so they get a <b>repeat</b> next week: in research you repeat a promising result before you believe it. The repeated task checks also came back: 128 of 129 tasks gave the same verdict three times.</div>
+</section>
+
+<section id="e5e6" class="wide">
+  <p class="kicker">Chapter 19</p>
+  <h2>E5 and E6, explained</h2>
+  <div class="keyidea"><b>Key idea:</b> Writing a rule in the prompt did not change how Gemma behaves. E5 builds the rule into the agent's structure instead: a first step that can only look, then a second step that fixes. E6 asks whether that first step works better with the code-map (graph) tools.<span class="q">Why can a "finder" step that has no edit tools enforce "find first" when a sentence in the prompt could not?</span></div>
+
+  <h3>The problem we are solving</h3>
+  <p>In E3 and E3.1 the prompt told Gemma: find the code, edit it early, don't write test scripts first. It moved its test scripts to <code>/tmp</code> but still wrote them first on most bugs. Our saved patches also show where failed bugs go wrong: most never edit the project's code at all.</p>
+  <div class="bars" role="img" aria-label="Of 85 failed bug attempts across 5 runs: 50 never edited the project's code, 14 edited the wrong files, 21 edited the right files but the fix was wrong.">
+    <div class="bar"><span>No source edit</span><div class="track"><div class="fill" style="width:59%;background:var(--del)"></div></div><span class="n">50</span></div>
+    <div class="bar"><span>Wrong files</span><div class="track"><div class="fill" style="width:16%;background:var(--warn)"></div></div><span class="n">14</span></div>
+    <div class="bar"><span>Right file, wrong fix</span><div class="track"><div class="fill" style="width:25%;background:var(--accent)"></div></div><span class="n">21</span></div>
+  </div>
+  <p class="note">85 failed attempts across 5 runs (Run 1, E0, E2, E3, E3.1), judged by which project files the final patch touched (corrected definition: test and reproduction scripts don't count). About 3 in 4 failures happen before the fix itself: Gemma never edits the project's code, or edits the wrong place.</p>
+
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 900 330" role="img" aria-label="Today one agent has all tools and often writes test scripts before editing. In E5 a finder step with no edit tools hands the file, function and plan to a fixer step with the same tools as today; both steps share one 4.5-minute clock.">
+      <defs><marker id="a19" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g font-family="JetBrains Mono, monospace" font-size="12" letter-spacing=".06em">
+        <text x="20" y="22" fill="var(--muted)">TODAY · E2 · ONE AGENT</text>
+        <text x="20" y="176" fill="var(--accent)">E5 · FIND, THEN FIX</text>
+      </g>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="20" y="52" width="120" height="56" rx="8"/>
+        <rect x="190" y="42" width="260" height="76" rx="8"/>
+        <rect x="520" y="30" width="210" height="40" rx="8" stroke="var(--warn)" stroke-dasharray="5 4"/>
+        <rect x="520" y="90" width="210" height="40" rx="8" stroke="var(--add)"/>
+        <rect x="20" y="202" width="120" height="56" rx="8"/>
+        <rect x="190" y="192" width="200" height="76" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="540" y="192" width="200" height="76" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="790" y="208" width="95" height="44" rx="8" stroke="var(--add)"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <text x="80" y="85" font-weight="600">Bug report</text>
+        <text x="320" y="74" font-weight="600">One Gemma agent</text>
+        <text x="320" y="96" font-size="11" opacity=".75">all 9 tools · can edit at any step</text>
+        <text x="625" y="55" font-size="12" fill="var(--warn)">/tmp test scripts first</text>
+        <text x="625" y="115" font-size="12" fill="var(--add)">edit → submit_patch</text>
+        <text x="80" y="235" font-weight="600">Bug report</text>
+        <text x="290" y="218" font-weight="600" fill="var(--accent)">Step 1 · Finder</text>
+        <text x="290" y="238" font-size="11" opacity=".75">read · search · grep</text>
+        <text x="290" y="256" font-size="11" fill="var(--del)">no edit tools</text>
+        <text x="640" y="218" font-weight="600" fill="var(--accent)">Step 2 · Fixer</text>
+        <text x="640" y="238" font-size="11" opacity=".75">same tools as E2</text>
+        <text x="640" y="256" font-size="11" fill="var(--add)">edit → submit_patch</text>
+        <text x="837" y="235" font-size="12" fill="var(--add)">patch</text>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="start">
+        <text x="740" y="55" fill="var(--warn)">17 of 30 bugs in E3.1</text>
+        <text x="740" y="115">graded diff</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#a19)">
+        <line x1="140" y1="80" x2="186" y2="80"/>
+        <line x1="450" y1="68" x2="516" y2="52"/>
+        <line x1="450" y1="94" x2="516" y2="108"/>
+        <line x1="140" y1="230" x2="186" y2="230"/>
+        <line x1="390" y1="230" x2="536" y2="230"/>
+        <line x1="740" y1="230" x2="786" y2="230"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="463" y="220">hands over</text>
+        <text x="465" y="250" font-size="10" opacity=".75">file · function · plan</text>
+      </g>
+      <g stroke="var(--muted)" stroke-width="1.5" fill="none">
+        <line x1="190" y1="290" x2="740" y2="290"/>
+        <line x1="190" y1="284" x2="190" y2="296"/>
+        <line x1="740" y1="284" x2="740" y2="296"/>
+      </g>
+      <text x="465" y="314" fill="var(--muted)" font-family="JetBrains Mono, monospace" font-size="11.5" text-anchor="middle">one shared clock for both steps: 4.5 minutes and 100 tool calls</text>
+    </svg>
+    </div>
+    <figcaption><b>The one change in E5.</b> The finder has no edit tools, so "find first" is built into its toolset rather than requested in words (it could still write through a shell command; we count that). The fixer gets today's tools (minus the helper agent, used once in 185 task attempts) plus the finder's notes. Both steps spend the same 4.5 minutes, so a slow finder leaves less time to fix.</figcaption>
+  </figure>
+
+  <h3>What the competition allows and expects</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Rule</th><th>What it means for E5 and E6</th></tr></thead>
+    <tbody>
+      <tr><td>Settings file (YAML) only, no code</td><td>We can't add tools or logic. We can arrange agents and choose each one's tools. That is exactly what E5 changes.</td></tr>
+      <tr><td>One model for every agent</td><td>Finder and fixer are both Gemma 4 31B with the same settings.</td></tr>
+      <tr><td>12 hours for about 120 hidden bugs</td><td>About 6 minutes per bug including setup; we give the agent 4.5 minutes, shared by both steps. The harness has no per-step limit, so the finder's length is set only by its prompt.</td></tr>
+      <tr><td>Hidden bugs come from other projects</td><td>Nothing specific to FastAPI or rich. Only general behaviour counts.</td></tr>
+      <tr><td>Graph tools provided; graph use "highly encouraged" for the paper</td><td>E6 tests whether a small model can actually use them.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Checked in the harness source: the <code>SequentialAgent</code> type is allowed, each agent can have its own tools, and both designs pass the official validator. One quirk: if the fixer stops without submitting, the harness nudges it and the whole pipeline restarts from the finder, so the fixer's prompt must insist on <code>submit_patch</code>.</p>
+
+  <h3>Why we expect it to work: the research</h3>
+  <div class="lineage">
+    <div class="item"><span class="yr">2024 · FSE 2025</span><div class="t">Agentless</div><div class="why">Fixed steps (find the file, then the function, then repair) matched complex agents at a fraction of the cost. <b>It never compared the same model with and without the steps.</b></div></div>
+    <div class="item"><span class="yr">2024 · ICML 2025</span><div class="t">SWE-Gym</div><div class="why">Open models of 7B–32B did far better in a fixed workflow than as a free agent (32B: 19% vs 3%). <b>It did not check whether the model followed the steps.</b></div></div>
+    <div class="item"><span class="yr">2025 · NeurIPS 2025</span><div class="t">AgentIF</div><div class="why">Models follow rules stated in agent prompts poorly. <b>This matches our E3 and E3.1.</b></div></div>
+    <div class="item"><span class="yr">2025 · ACL 2025</span><div class="t">LocAgent</div><div class="why">Graph-guided search finds the right code, but after fine-tuning; removing plain search cost about 18 points, removing graph traversal only 2–5. <b>Our prediction for E6 comes from this.</b></div></div>
+    <div class="item"><span class="yr">2024–2025</span><div class="t">CodexGraph, RepoGraph</div><div class="why">Untuned open models struggle to use graph tools. <b>Gemma made 16 graph calls across 185 task attempts.</b></div></div>
+    <div class="item"><span class="yr">2026 · EMNLP 2026</span><div class="t">SHERLOC</div><div class="why">Handing a good location to the fixing agent helped small and mid-size models most. <b>This is why the ORACLE run matters.</b></div></div>
+  </div>
+  <div class="callout tip"><b>The gap we fill</b>No published work tests, on the same small model with the same tools, whether a rule works better in the prompt or in the structure, and checks from the transcripts whether the model actually followed it. Nobody has tested this under a hard time limit either. Our E3/E3.1 results are already the "prompt" half.</div>
+
+  <h3>The experiment map</h3>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 900 260" role="img" aria-label="Starting from E2, E3.1 delivers the rule by prompt, E5 delivers it by structure, ORACLE gives the correct location as the best case, and E6 adds graph tools to E5's finder.">
+      <defs><marker id="b19" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="20" y="102" width="150" height="56" rx="8"/>
+        <rect x="330" y="16" width="250" height="56" rx="8" stroke="var(--muted)"/>
+        <rect x="330" y="102" width="250" height="56" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="330" y="188" width="250" height="56" rx="8" stroke-dasharray="5 4"/>
+        <rect x="680" y="102" width="200" height="56" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle">
+        <text x="95" y="126" font-weight="600">E2 · kept</text>
+        <text x="95" y="145" font-size="11" opacity=".75">one agent, 13/30</text>
+        <text x="455" y="40" font-weight="600">E3.1 · rule in prompt</text>
+        <text x="455" y="59" font-size="11" opacity=".75">done: 15/30, rule half-followed</text>
+        <text x="455" y="126" font-weight="600" fill="var(--accent)">E5 · finder → fixer</text>
+        <text x="455" y="145" font-size="11" opacity=".75">rule built into structure</text>
+        <text x="455" y="212" font-weight="600">ORACLE · location given</text>
+        <text x="455" y="231" font-size="11" opacity=".75">practice only: the best case</text>
+        <text x="780" y="126" font-weight="600" fill="var(--accent)">E6 · graph finder</text>
+        <text x="780" y="145" font-size="11" opacity=".75">does Gemma use them?</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#b19)">
+        <line x1="170" y1="118" x2="326" y2="50"/>
+        <line x1="170" y1="130" x2="326" y2="130"/>
+        <line x1="170" y1="142" x2="326" y2="210"/>
+        <line x1="580" y1="130" x2="676" y2="130"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="236" y="72">by prompt</text>
+        <text x="250" y="122">by structure</text>
+        <text x="236" y="196">answer key</text>
+        <text x="628" y="122">+ graph</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Each arrow changes one thing.</b> E3.1 and E5 carry the same intent, so comparing them answers "prompt or structure?". ORACLE shows how much a perfect finder could add. E6 is compared with E5, so the graph tools are judged on their own.</figcaption>
+  </figure>
+
+  <h3>The predictions, written down before running</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Prediction</th><th>Measured how</th><th>What would prove it wrong</th></tr></thead>
+    <tbody>
+      <tr><td>H1a · structure changes behaviour</td><td>Of the bugs where Gemma wrote any file, how many started by editing the real code instead of a test script (corrected: scripts anywhere, not only <code>/tmp</code>)</td><td>E5 is not at least 25 percentage points (about 7–8 more bugs out of 30) above E3.1, in both E5 runs</td></tr>
+      <tr><td>H1b · no more empty patches</td><td>Bugs ending with no source edit</td><td>More than E2's 6, in either E5 run</td></tr>
+      <tr><td>H2 · finding is the bottleneck</td><td>ORACLE solves (correct location given)</td><td>14 or fewer, under 3 above our average of 12</td></tr>
+      <tr><td>H3a · a graph finder uses graph tools</td><td>Graph calls per bug (today almost 0)</td><td>Most bugs still get no graph calls</td></tr>
+      <tr><td>H3b · the graph finder is no better than plain search (dropped if check 3 fails)</td><td>Correct file found: E6 finder vs E5 finder</td><td>E6 finds the right file more often (a surprise worth reporting)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The score (bugs solved) is reported for every arm with a paired test and a 95% interval, but with 30 bugs only large changes are visible. The predictions above measure <b>behaviour</b>, which moves more clearly than the score and is what the paper is about.</p>
+
+  <h3>Free checks before any GPU is spent</h3>
+  <div class="howto">
+    <div><b>1 · It builds</b>E5 and E6 pass the official validator and compile, on this laptop.</div>
+    <div><b>2 · The nudge</b>Simulate the fixer stopping early and confirm what restarts.</div>
+    <div><b>3 · Graph vs grep</b>On a free CPU notebook, does the graph search find the right file as often as <code>grep</code>? If not, E6 becomes "graph first, then grep".</div>
+    <div><b>4 · Analysis ready</b>The new measures run on old transcripts and reproduce the failure split above (35 / 29 / 21 under the first definition, 50 / 14 / 21 after the correction).</div>
+  </div>
+
+  <h3>The six GPU runs (week of Oct 24)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>#</th><th>Run</th><th>Launches only when</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>E5, first run</td><td>Checks 1, 2 and 4 pass</td></tr>
+      <tr><td>2</td><td>ORACLE, first run</td><td>Check 4 passes</td></tr>
+      <tr><td>3</td><td>E3.1 repeat (the prompt-only comparison)</td><td>Any time</td></tr>
+      <tr><td>4</td><td>E5 repeat</td><td>Run 1 had no harness failures</td></tr>
+      <tr><td>5</td><td>E6, or a third E5 run if ORACLE solved 14 or fewer</td><td>Check 3 decided the E6 version</td></tr>
+      <tr><td>6</td><td>E6 repeat, or ORACLE repeat if E6 was dropped</td><td>As written before launch</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Each run costs about 4.3 hours of the 30-hour weekly quota. About 4 hours are held back for one retry of a failed run (leaderboard submissions use no quota). Every launch also needs your "yes" in chat. The held-out check (E2 and the best version, back to back) comes in the week of Oct 31.</p>
+
+  <h3>Research standards we follow</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Standard</th><th>What we do</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Fair tasks only</td><td>Every bug checked with the real fix and with no fix, three times</td><td>SWE-bench</td></tr>
+      <tr><td>Untouched test set</td><td>30 held-out bugs, used once before the paper</td><td>SWE-agent; Blum &amp; Hardt</td></tr>
+      <tr><td>Predictions written first</td><td>Hypotheses and keep rules committed before any run</td><td>Pre-registration; NeurIPS checklist</td></tr>
+      <tr><td>One change at a time</td><td>E5 vs E2, E6 vs E5, ORACLE vs E2</td><td>Ablations in Agentless, LocAgent</td></tr>
+      <tr><td>Measure behaviour, not only the score</td><td>Compliance, correct file found, time per step, from transcripts</td><td>Error analysis (Husain; Anthropic)</td></tr>
+      <tr><td>Honest statistics</td><td>Paired tests, 95% intervals, two runs for the main arms (E5, E3.1)</td><td>Miller 2024, "Adding Error Bars to Evals"</td></tr>
+      <tr><td>Label certainty</td><td>Exploratory vs confirmatory in the paper</td><td>NeurIPS reproducibility guidance</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout"><b>Risks we already know</b>The finder could use up the time (we measure its share and revise its prompt as a new, separately counted version). A nudge restarts the finder (we count nudges). The graph tools only take function names, not keywords, so a graph-only finder may not know where to start (check 3 tests this for free).</div>
+  <h3>Status (Oct 24)</h3>
+  <p>You approved the design on Oct 23 and chose to confirm E5 before E6. All free checks are done and the first two GPU runs are going.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Check or run</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Check 1 · validator</td><td><span class="pill hi">passed</span> E5 and E6 pass the competition's own validator; a copy with a stray brace is rejected</td></tr>
+      <tr><td>Check 2 · simulation</td><td><span class="pill hi">passed</span> the finder's notes and the task reach the fixer; one nudge re-runs the finder (a known cost we count)</td></tr>
+      <tr><td>Check 3 · graph vs grep</td><td><span class="pill md">failed</span> graph search found the right file on 8 of 30 bugs, grep on 11. So E6 becomes "graph first, then grep"</td></tr>
+      <tr><td>Check 4 · measurements</td><td><span class="pill hi">passed</span> reproduces the original failure split (later corrected by the code review to 50 / 14 / 21)</td></tr>
+      <tr><td>Prompts</td><td><span class="pill hi">approved</span> by you</td></tr>
+      <tr><td>Run 1 · ORACLE</td><td><span class="pill md">14/30</span> told the right file, Gemma still failed mostly on the fix itself. By our rule, E6 waits.</td></tr>
+      <tr><td>Run 2 · E5</td><td><span class="pill md">10/30</span> more bugs started with real code (corrected: 10 of 13), but the finder used 77% of the time (prompt limit ignored). Stop rule → E5b.</td></tr>
+      <tr><td>Run 3 · E3.1 repeat</td><td><span class="pill md">13/30</span> scripts again moved to /tmp as the prompt said; real code first on 9 of 24 (corrected), close to run 1</td></tr>
+      <tr><td>Run 4 · E5b</td><td><span class="pill md">12/30</span> finder now takes 11 s instead of 177 s; every first write is real code; score back to E2's level</td></tr>
+      <tr><td>Run 5 · E5b repeat</td><td><span class="pill md">11/30</span> repeats run 4: finder 11 s, every first write real code; score unchanged</td></tr>
+      <tr><td>Run 6 · ORACLE repeat</td><td><span class="pill md">13/30</span> repeats run 1: told the right file, only 4 of 33 failures (over both runs) are about the wrong place</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>Correction (Oct 24, after the code review)</b>An independent review of our measurement code found that we counted any file outside <code>/tmp</code> as "real code". But today's agent usually writes its test script at the top of the repository (<code>reproduce_issue.py</code>), and the E3.1 prompt told Gemma to put scripts in <code>/tmp</code>. So the rule changed <i>where</i> scripts were saved, not <i>whether</i> Gemma wrote them first. We fixed the definition (real code = a file inside the project's package folders), recomputed every run, and withdrew the claim that the prompt rule "backfired". The corrected picture: first write was real code on 26% of bugs without the rule, 38% with it (not significant), and 60% with the finder → fixer structure (significant, p = 0.0001). Structure still beats asking, but less dramatically than we first reported.</div>
+  <h3>Where the six runs leave us (Oct 24 night)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>E2 (kept)</th><th>E3.1 ×2 (rule in prompt)</th><th>E5 (finder → fixer)</th><th>E5b (one-step finder)</th><th>ORACLE (told the file)</th></tr></thead>
+    <tbody>
+      <tr><td>Solved / 30</td><td>13</td><td>15 · 13</td><td>10</td><td>12 · 11</td><td>14 · 13</td></tr>
+      <tr><td>First write was real code (corrected)</td><td>18 of 70 (26%), 3 runs</td><td>19 of 50 (38%)</td><td>10 of 13</td><td>24 of 44 (55%)</td><td>22 of 50 (44%)</td></tr>
+      <tr><td>Time spent finding (median)</td><td>—</td><td>—</td><td>177 s</td><td>11 s · 11 s</td><td>—</td></tr>
+      <tr><td>Ended with no source edit (corrected)</td><td>11</td><td>6 · 10</td><td>18</td><td>12 · 12</td><td>6 · 8</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Asking is followed literally.</b> With the "edit first, scripts in /tmp" rule, Gemma moved its scripts to /tmp as told, but started with real code only a little more often (38% vs 26%, not significant).</li>
+    <li><b>Enforcing works better.</b> With the finder → fixer structure, 60% of bugs started with real code (significant). The fixer still writes a test script first on about 40%. When the finder's length was left to the prompt (E5), it was ignored; when it was limited by structure (E5b), it took 11 seconds.</li>
+    <li><b>But the score does not rise.</b> E5b only matches E2 in both runs. Told the right file, ORACLE still solves 13–14, and none of its failures edited only the wrong files. At 4.5 minutes the hard part is writing a correct fix in time, not finding where. All six runs are inside the noise on score; the behaviour results are clear.</li>
+  </ul>
+  <h3>What runs 1 and 2 taught us</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Failed bugs</th><th>E2 (today's agent)</th><th>ORACLE (told the right file)</th><th>E5 (finder → fixer)</th></tr></thead>
+    <tbody>
+      <tr><td>Never edited</td><td>11</td><td>6</td><td>18</td></tr>
+      <tr><td>Edited the wrong files</td><td>3</td><td>0</td><td>0.5</td></tr>
+      <tr><td>Right files, wrong fix</td><td>3</td><td>10</td><td>1.5</td></tr>
+      <tr><td>Solved / 30</td><td>13</td><td>14</td><td>10</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>ORACLE:</b> knowing where the bug is removed "wrong file" failures and halved "never edited" (corrected numbers), but those bugs then failed on the fix itself or ran out of time. At 4.5 minutes, finding the bug is not the main bottleneck; fixing it correctly in time is.</li>
+    <li><b>E5:</b> the structure changed behaviour: 10 of 13 bugs started with real code (corrected numbers). The prompt's "stop after about 8 tool calls" was ignored (median 11), so the finder used 77% of the time and 17 bugs never got a fix. The same lesson as E3.1, now inside the pipeline.</li>
+    <li><b>E5b (your choice):</b> the finder gets no tools and answers in one reply from the issue and the file list, so its time is limited by the structure itself, like the first step of Agentless.</li>
+  </ul>
+  <div class="callout tip"><b>What check 3 taught us</b>Starting from the code names in each issue, the graph search put the right file in its top 5 on 8 of 30 bugs; plain <code>grep</code> did on 11. That matches LocAgent's prediction that plain search matters more than the graph for an untuned model. But the two found different bugs (graph alone 4, grep alone 7, either 15), which is why E6 now asks the finder to use the graph first and then grep, instead of the graph alone.</div>
+  <div class="callout info"><b>The number E5 must beat</b>Before launch we wrote down: on at least 63% of bugs where Gemma writes a file, the first write must be real code, in both E5 runs. Corrected numbers: today's agent manages about 26% (it usually starts with <code>reproduce_issue.py</code>), E3.1 38%; E5 reached 77%, E5b 55%.</div>
+  <div class="callout stop"><b>Update (Oct 31): held-out result</b>On 41 new bugs, E5b's fixer started with real code on 11 bugs vs 10 for E2 (p = 0.50), so the practice-set effect did not replicate. The finder stayed fast (14 s), confirming that limits built into structure hold, but the fixer kept its habit of writing a test script first. ORACLE solved 12 vs E2's 14. See the field notes, section 31.</div>
+</section>
+
+<section id="after" class="wide">
+  <p class="kicker">Chapter 20</p>
+  <h2>After E6: the road to December</h2>
+  <div class="keyidea"><b>Key idea:</b> Nothing from the experiments is wasted. Their results become the paper, and every bug Gemma solves along the way becomes training data for the LoRA phase.<span class="q">Where will the training data for our LoRA come from, and why not from Claude?</span></div>
+  <h3>1. Write the paper (about Nov 1–12)</h3>
+  <p>By the end of October we will have a measured story: how noisy agent scores are, which practice tasks are even fair to test on, which changes helped a small model and by how much, and whether graph tools help it find code. That is exactly what the judges reward: new insight, honest measurement and enough detail to reproduce it. The paper is a Kaggle Writeup of at most 3,000 words, and its centre is E5 and E6: whether a rule works better in the prompt or in the agent's structure, and whether a small model uses graph tools when a step requires them (the hosts asked for graph work). Our task-fairness list and analysis scripts could also be offered as a small resource for other teams.</p>
+  <h3>2. Phase 2: learn training, then a LoRA for Gemma (November)</h3>
+  <p>This is where you learn model training from scratch, in small steps: what training is, how fine-tuning differs from pretraining, how LoRA trains a small add-on instead of the whole model, a tiny practice run on a small model, and finally a LoRA for Gemma. The training data is the transcripts of bugs Gemma solved during our own experiments, showing it examples of its own best behaviour. We will not use Claude or GPT outputs, because their terms forbid training other models on them. The LoRA is then judged with the same experiment loop as everything else. Forum evidence on LoRA is mixed, so this is a learning goal first and a score bet second.</p>
+  <h3>3. Final stretch (Nov 13 – Dec 2)</h3>
+  <p>With the paper submitted, the focus moves to the leaderboard: submit the best versions daily, check that each run stays safely inside the 12-hour limit, and choose which submissions count at the end. Nov 25 is also the last day to join or merge teams, if you ever want to team up.</p>
+  <h3>4. After the competition</h3>
+  <p>Make the repo public with a clear write-up as a portfolio piece, and move on to the Google Cloud Professional Agentic Architect certification in December–January, which builds on the same ADK knowledge.</p>
+  <div class="callout"><b>If time gets tight</b>Keep E5, ORACLE and the paper. E6 is next. Then shrink the LoRA phase to the learning steps only.</div>
+</section>
+
+<section id="skills-map" class="wide">
+  <p class="kicker">Chapter 21</p>
+  <h2>What you will learn, and where you will use it</h2>
+  <div class="keyidea"><b>Key idea:</b> Each phase of the project teaches one skill that agent teams use every day, at work and in the certification.<span class="q">Which of these skills do you already use in your e-commerce agents, and which are new?</span></div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Skill</th><th>Where in this project</th><th>Where you use it at work</th></tr></thead>
+    <tbody>
+      <tr><td>Building fair evaluations</td><td>Bug-checking run, fixed practice set</td><td>Test sets for any agent: support bots, shopping assistants</td></tr>
+      <tr><td>Measuring noise</td><td>E0, the repeat run</td><td>Knowing whether a new prompt really helped or got lucky</td></tr>
+      <tr><td>Error analysis from transcripts</td><td>Reading and grouping the 19 failures</td><td>Debugging why a production agent fails</td></tr>
+      <tr><td>Controlled experiments</td><td>E1–E6, one change each</td><td>Shipping agent changes with evidence instead of guesses</td></tr>
+      <tr><td>Speed and context budgets</td><td>Thinking budget, output limit, 32K window</td><td>Latency and cost control for LLM features</td></tr>
+      <tr><td>Prompt design for tool use</td><td>E3</td><td>Reliable tool calling in any agent</td></tr>
+      <tr><td>Agent architecture (ADK)</td><td>E5, E6</td><td>Multi-agent design; the Agentic Architect certification</td></tr>
+      <tr><td>Fine-tuning with LoRA</td><td>Phase 2</td><td>Adapting open models to your own domain</td></tr>
+      <tr><td>Research writing</td><td>The paper</td><td>Design docs, technical write-ups, interviews</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="glossary">
+  <p class="kicker">Reference</p>
+  <h2>Glossary</h2>
+  <dl class="gloss">
+    <dt>Agent</dt><dd>A language model running in a loop, choosing tool actions and reading their results.</dd>
+    <dt>Tool call</dt><dd>A structured request (JSON) the model writes and a program executes.</dd>
+    <dt>Harness</dt><dd>The program around the model that runs tools, enforces budgets and grades results. Here, <code>swegemma</code>.</dd>
+    <dt>ADK</dt><dd>Google's Agent Development Kit. Your YAML is compiled into ADK agents.</dd>
+    <dt>Commit</dt><dd>One saved snapshot of a repository's history.</dd>
+    <dt>Patch / diff</dt><dd>A list of lines removed and added. The agent's final answer.</dd>
+    <dt>Gold patch</dt><dd>The real developer's fix. A reference answer, never shown to the agent.</dd>
+    <dt>FAIL_TO_PASS</dt><dd>Hidden tests that fail on the old code and must pass after the fix.</dd>
+    <dt>PASS_TO_PASS</dt><dd>Tests that already passed and must keep passing.</dd>
+    <dt>Resolution rate</dt><dd>Solved tasks ÷ all tasks. The leaderboard score.</dd>
+    <dt>Localization</dt><dd>Finding which file and function to change. Most failures start here.</dd>
+    <dt>Context window</dt><dd>How much text the model can see at once. 32,768 tokens here.</dd>
+    <dt>Thinking budget</dt><dd>How many tokens Gemma may spend reasoning before it acts.</dd>
+    <dt>W4A16 / QAT</dt><dd>Weights stored in 4 bits, maths in 16 bits. Quantization-aware training keeps quality high at that size.</dd>
+    <dt>vLLM</dt><dd>A fast server that runs the model, split across the 4 GPUs.</dd>
+    <dt>LoRA</dt><dd>Small add-on weights that fine-tune a large model cheaply. Rank (r) sets their size.</dd>
+    <dt>Trajectory</dt><dd>The full transcript of one agent attempt: thoughts, tool calls, results.</dd>
+    <dt>Ablation</dt><dd>An experiment that removes or changes one part to measure its effect.</dd>
+    <dt>Paired test</dt><dd>Compares two runs bug by bug, so only bugs whose result changed count. We use the exact McNemar test.</dd>
+    <dt>Confidence interval</dt><dd>The range the true effect probably lies in (95% sure). If it includes 0, the change may be luck.</dd>
+    <dt>Percentage points</dt><dd>A difference between two percentages. 40% to 50% is +10 points, which on 30 bugs is 3 more solved.</dd>
+    <dt>Held-out set</dt><dd>30 bugs never looked at while tuning, used once to check that improvements are not fitted to the practice bugs.</dd>
+    <dt>Replicate</dt><dd>Running the same version again to see whether a result repeats.</dd>
+    <dt>Pooled reference</dt><dd>Several near-identical runs of the kept version counted together (now Run 1, E0, E2), so one lucky run does not set the bar.</dd>
+    <dt>Flaky bug</dt><dd>A bug the same agent solves in some runs and not others. It shows luck, not skill.</dd>
+    <dt>Exploratory vs confirmatory</dt><dd>Exploratory: found by looking around. Confirmatory: predicted in writing first, then tested. Only the second counts as proof.</dd>
+    <dt>Arm</dt><dd>One version being compared in an experiment (for example E2, E5, ORACLE).</dd>
+    <dt>SequentialAgent</dt><dd>An ADK agent that runs its sub-agents one after another. E5 uses it for finder, then fixer.</dd>
+    <dt>ORACLE run</dt><dd>A practice-only run where the agent is told the correct files, to measure the best case for bug-finding.</dd>
+    <dt>Nudge</dt><dd>The harness's automatic "please continue" message when the agent stops without calling <code>submit_patch</code>.</dd>
+  </dl>
+</section>
+
+</main>
+<footer>Built from the competition's official pages (read through Kaggle's MCP server), HARNESS_README.md, sample_submission/, tasks.jsonl and leaderboard, plus our own runs and designs, Oct 17–19, 2026. Points marked as community findings are unofficial. Certification details from <a href="https://support.google.com/cloud-certification/answer/18080541?hl=en">Google Cloud's certification FAQ</a>.</footer>
+</div>

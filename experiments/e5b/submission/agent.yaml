@@ -1,0 +1,6 @@
+name: e5b_pipeline
+agent_class: SequentialAgent
+description: Find where the fix belongs, then fix it.
+sub_agents:
+  - config_path: sub_agents/localizer.yaml
+  - config_path: sub_agents/fixer.yaml

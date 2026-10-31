@@ -1,0 +1,6 @@
+instance_id,gold_resolved,agent_resolved,seconds,tool_calls,llm_calls,patch_lines,error,trace
+fastapi_14786,True,True,63.9,9,11,10,,/kaggle/working/results/traces/trace_fastapi_14786.json
+rich_3043,True,True,277.5,16,18,19,,/kaggle/working/results/traces/trace_rich_3043.json
+rich_4077,True,True,187.7,16,18,13,,/kaggle/working/results/traces/trace_rich_4077.json
+rich_3882,True,True,85.6,11,13,13,,/kaggle/working/results/traces/trace_rich_3882.json
+fastapi_14479,True,False,218.4,25,28,12,,/kaggle/working/results/traces/trace_fastapi_14479.json

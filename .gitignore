@@ -1,0 +1,14 @@
+.env
+data/
+__pycache__/
+.claude/settings.local.json
+*.zip
+results/
+.venv-harness/
+.superpowers/
+
+# Not publishable under the competition rules (Rules section 4a); kept locally only.
+experiments/*/patches/
+experiments/oracle/hints.json
+experiments/oracle/hints_*.json
+notebooks/**/*.ipynb

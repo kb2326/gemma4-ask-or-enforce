@@ -1,0 +1,31 @@
+instance_id,gold_resolved,agent_resolved,seconds,tool_calls,llm_calls,patch_lines,error,trace
+fastapi_11194,True,True,274.5,20,20,82,,/kaggle/working/results/traces/trace_fastapi_11194.json
+fastapi_13537,True,True,258.2,27,29,22,,/kaggle/working/results/traces/trace_fastapi_13537.json
+fastapi_13920,True,False,274.7,26,26,40,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_13920.json
+fastapi_14306,True,False,274.7,28,31,30,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_14306.json
+fastapi_14458,True,True,274.5,13,16,31,,/kaggle/working/results/traces/trace_fastapi_14458.json
+fastapi_14479,True,False,274.2,19,22,13,,/kaggle/working/results/traces/trace_fastapi_14479.json
+fastapi_14786,True,True,50.5,8,10,10,,/kaggle/working/results/traces/trace_fastapi_14786.json
+fastapi_14794,True,True,145.4,14,17,21,,/kaggle/working/results/traces/trace_fastapi_14794.json
+fastapi_14986,True,False,263.1,30,30,62,"Sandbox execution error: litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceededError: OpenAIException - This model's maximum context length is 32768 tokens. However, you re",/kaggle/working/results/traces/trace_fastapi_14986.json
+fastapi_15280,True,False,274.9,27,27,31,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_15280.json
+fastapi_15589,True,False,275.0,25,25,45,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_15589.json
+fastapi_9555,True,True,227.3,17,19,103,,/kaggle/working/results/traces/trace_fastapi_9555.json
+fastapi_9753,True,False,275.7,21,24,124,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_9753.json
+rich_2725,True,True,257.6,12,14,26,,/kaggle/working/results/traces/trace_rich_2725.json
+rich_2943,True,True,122.4,23,25,13,,/kaggle/working/results/traces/trace_rich_2943.json
+rich_3043,True,True,259.9,23,25,19,,/kaggle/working/results/traces/trace_rich_3043.json
+rich_3180,True,False,270.9,3,3,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3180.json
+rich_3278,True,False,270.9,6,6,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3278.json
+rich_3454,True,True,174.8,22,27,12,,/kaggle/working/results/traces/trace_rich_3454.json
+rich_3472,True,False,270.9,35,35,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3472.json
+rich_3506,True,False,270.9,8,8,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3506.json
+rich_3518,True,True,213.4,30,33,13,,/kaggle/working/results/traces/trace_rich_3518.json
+rich_3675,True,False,166.3,15,17,16,,/kaggle/working/results/traces/trace_rich_3675.json
+rich_3772,True,False,270.9,13,13,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3772.json
+rich_3777,True,False,108.0,19,19,0,"Sandbox execution error: litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceededError: OpenAIException - This model's maximum context length is 32768 tokens. However, you re",/kaggle/working/results/traces/trace_rich_3777.json
+rich_3905,True,True,273.8,48,48,48,,/kaggle/working/results/traces/trace_rich_3905.json
+rich_3942,True,False,238.5,12,12,0,"Sandbox execution error: litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceededError: OpenAIException - This model's maximum context length is 32768 tokens. However, you re",/kaggle/working/results/traces/trace_rich_3942.json
+rich_3953,True,False,169.9,11,11,35,"Sandbox execution error: litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceededError: OpenAIException - This model's maximum context length is 32768 tokens. However, you re",/kaggle/working/results/traces/trace_rich_3953.json
+rich_4076,True,False,273.3,42,42,34,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_4076.json
+rich_4077,True,False,241.7,20,22,13,,/kaggle/working/results/traces/trace_rich_4077.json

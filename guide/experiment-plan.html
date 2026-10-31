@@ -1,0 +1,294 @@
+<title>Gemma Agent Experiment Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same system as the field guide; one column of three wide diagrams, each with a short reading guide. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#17202b; --muted:#5a6676; --line:#d9dee6;
+  --accent:#1d5fd1; --accent-soft:#e6eefc;
+  --add:#1a7f45; --add-soft:#e3f4ea; --del:#b4322a; --del-soft:#fbe7e5; --warn:#9a6200; --warn-soft:#fdf3dc;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+h1,h2{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,4.6vw,2.9rem);letter-spacing:-.02em}
+h2{font-size:1.55rem;margin-bottom:10px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 14px;max-width:70ch}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch;margin-top:12px}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+section{margin-top:52px}
+figure{margin:18px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 16px 14px}
+figure .scroll{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:700px;color:var(--fg)}
+figcaption{font-size:14.5px;color:var(--muted);margin-top:12px;max-width:78ch}
+figcaption b{color:var(--fg)}
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:620px}
+th,td{text-align:left;vertical-align:top;padding:8px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td:first-child{font-family:var(--mono);font-weight:600;white-space:nowrap}
+dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 18px;margin:14px 0 0;font-size:15.5px}
+dt{font-family:var(--mono);font-weight:600}
+dd{margin:0}
+@media (max-width:560px){dl{grid-template-columns:minmax(0,1fr)} dd{margin-bottom:8px}}
+.bars{display:grid;gap:8px;margin:14px 0;max-width:640px}
+.bar{display:grid;grid-template-columns:170px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:15px}
+@media (max-width:560px){.bar{grid-template-columns:minmax(0,1fr) 70px}.bar .track{grid-column:1/-1;grid-row:2}}
+.track{height:16px;background:var(--bg);border:1px solid var(--line);border-radius:3px;overflow:hidden;display:flex}
+.seg{height:100%}
+.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:14px;font-size:14px;color:var(--muted)}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.hi{background:var(--add-soft);color:var(--add)} .md{background:var(--warn-soft);color:var(--warn)}
+h3{font-family:var(--display);font-size:1.15rem;margin:22px 0 8px}
+.callout{border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0;font-size:16px}
+.callout b:first-child{display:block;font-family:var(--display)}
+.callout.stop{border-color:var(--del);background:var(--del-soft)}
+.ok{background:var(--add-soft);color:var(--add)} .no{background:var(--del-soft);color:var(--del)} .mid{background:var(--warn-soft);color:var(--warn)}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="kicker">Gemma 4 Developer Agent · Plan · updated Oct 31, 2026</p>
+  <h1>The experiment plan, as pictures</h1>
+  <p class="lede">Three diagrams and a budget: the order of experiments, the loop every experiment follows, the rule that decides whether a change is kept, and where next week's GPU hours go. Full text: <code>docs/superpowers/specs/2026-10-18-experiment-plan-design.md</code> and, for E5 and E6, <code>2026-10-19-e5-e6-structure-vs-prompt-design.md</code>.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Run</th><th>Solved / 30</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Run 1 · E0</td><td>11 · 12</td><td>Same agent twice: 3 bugs flipped. This is the noise.</td></tr>
+      <tr><td>E2</td><td>13</td><td><b>Kept.</b> Output limit 8,192 stopped context crashes (4 → 0).</td></tr>
+      <tr><td>E1</td><td>12</td><td>Not kept. Less thinking did not reduce timeouts.</td></tr>
+      <tr><td>E3 · E3.1</td><td>14 · 15</td><td>Not adopted. Best scores, but the "edit early" rule was only partly followed. A repeat is planned.</td></tr>
+      <tr><td>ORACLE · E5</td><td>14 · 10</td><td>Oct 24. Told the right file: +1 over E2. Finder → fixer: worse, because the finder used 77% of the time.</td></tr>
+      <tr><td>E3.1 r2 · E5b</td><td>13 · 12</td><td>Oct 24. The prompt rule is followed literally (scripts moved to /tmp). One-step finder: fast, score back to E2's level.</td></tr>
+      <tr><td>E5b r2 · ORACLE r2</td><td>11 · 13</td><td>Oct 24. Both repeats agree with their first runs.</td></tr>
+      <tr><td>Leaderboard</td><td>0.12 · 0.12</td><td>Baseline, then E2: same score, as expected inside the ±0.09 noise. Top score 0.24.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>Correction (Oct 24, after the code review)</b>An independent review of our measurement code found that we counted any file outside <code>/tmp</code> as "real code". But today's agent usually writes its test script at the top of the repository (<code>reproduce_issue.py</code>), and the E3.1 prompt told Gemma to put scripts in <code>/tmp</code>. So the rule changed <i>where</i> scripts were saved, not <i>whether</i> Gemma wrote them first. We fixed the definition (real code = a file inside the project's package folders), recomputed every run, and withdrew the claim that the prompt rule "backfired". The corrected picture: first write was real code on 26% of bugs without the rule, 38% with it (not significant), and 60% with the finder → fixer structure (significant, p = 0.0001). Structure still beats asking, but less dramatically than we first reported.</div>
+  <h3>This week (Oct 24)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Check or run</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Check 1 · validator</td><td><span class="pill hi">passed</span> E5 and E6 pass the competition's own validator; a copy with a stray brace is rejected</td></tr>
+      <tr><td>Check 2 · simulation</td><td><span class="pill hi">passed</span> the finder's notes and the task reach the fixer; one nudge re-runs the finder (a known cost we count)</td></tr>
+      <tr><td>Check 3 · graph vs grep</td><td><span class="pill md">failed</span> graph search found the right file on 8 of 30 bugs, grep on 11. So E6 becomes "graph first, then grep"</td></tr>
+      <tr><td>Check 4 · measurements</td><td><span class="pill hi">passed</span> reproduces the original failure split (later corrected by the code review to 50 / 14 / 21)</td></tr>
+      <tr><td>Prompts</td><td><span class="pill hi">approved</span> by you</td></tr>
+      <tr><td>Run 1 · ORACLE</td><td><span class="pill md">14/30</span> told the right file, Gemma still failed mostly on the fix itself. By our rule, E6 waits.</td></tr>
+      <tr><td>Run 2 · E5</td><td><span class="pill md">10/30</span> more bugs started with real code (corrected: 10 of 13), but the finder used 77% of the time (prompt limit ignored). Stop rule → E5b.</td></tr>
+      <tr><td>Run 3 · E3.1 repeat</td><td><span class="pill md">13/30</span> scripts again moved to /tmp as the prompt said; real code first on 9 of 24 (corrected), close to run 1</td></tr>
+      <tr><td>Run 4 · E5b</td><td><span class="pill md">12/30</span> finder now takes 11 s instead of 177 s; every first write is real code; score back to E2's level</td></tr>
+      <tr><td>Run 5 · E5b repeat</td><td><span class="pill md">11/30</span> repeats run 4: finder 11 s, every first write real code; score unchanged</td></tr>
+      <tr><td>Run 6 · ORACLE repeat</td><td><span class="pill md">13/30</span> repeats run 1: told the right file, only 4 of 33 failures (over both runs) are about the wrong place</td></tr>
+    </tbody>
+  </table>
+  </div>
+</header>
+
+<section>
+  <p class="kicker">Diagram 1 · The order</p>
+  <h2>The experiments, one change each</h2>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 900 330" role="img" aria-label="Week of Oct 18, done: E0 repeat baseline, E2 output limit 8192 kept, E1 thinking budget not kept, E3 and E3.1 prompt not adopted. Week of Oct 24: E5 finder then fixer, ORACLE with the correct location given, E6 graph finder, then the held-out check in the week of Oct 31, plus a repeat of E3.1 as the prompt-only comparison.">
+      <defs><marker id="p1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" opacity=".65" letter-spacing=".05em">
+        <text x="10" y="22">WEEK OF OCT 18 · DONE</text>
+        <text x="10" y="200">WEEK OF OCT 24 · ABOUT 6 RUNS · THEN OCT 31</text>
+      </g>
+      <g fill="none" stroke-width="1.5">
+        <rect x="10" y="34" width="190" height="96" rx="8" stroke="var(--warn)" stroke-width="2"/>
+        <rect x="225" y="34" width="190" height="96" rx="8" stroke="var(--add)" stroke-width="2.5"/>
+        <rect x="440" y="34" width="190" height="96" rx="8" stroke="currentColor"/>
+        <rect x="655" y="34" width="190" height="96" rx="8" stroke="currentColor"/>
+        <rect x="10" y="212" width="190" height="96" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="225" y="212" width="190" height="96" rx="8" stroke="currentColor" stroke-dasharray="5 4"/>
+        <rect x="440" y="212" width="190" height="96" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="655" y="212" width="190" height="96" rx="8" stroke="currentColor" stroke-opacity=".5"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">
+        <text x="105" y="58" font-size="13" font-weight="600" fill="var(--warn)">E0 · repeat baseline</text>
+        <text x="105" y="80" font-size="11" opacity=".75">change nothing</text><text x="105" y="96" font-size="11" opacity=".75">measures the noise</text><text x="105" y="118" font-size="10.5" fill="var(--add)">done: 3 of 30 flipped</text>
+
+        <text x="320" y="58" font-size="13" font-weight="600" fill="var(--add)">E2 · output 8192</text>
+        <text x="320" y="80" font-size="11" opacity=".75">output limit</text><text x="320" y="96" font-size="11" opacity=".75">16,384 → 8,192</text><text x="320" y="118" font-size="10.5" fill="var(--add)">KEPT: crashes 4 → 0</text>
+
+        <text x="535" y="58" font-size="13" font-weight="600">E1 · thinking 2048</text>
+        <text x="535" y="80" font-size="11" opacity=".75">thinking budget</text><text x="535" y="96" font-size="11" opacity=".75">4096 → 2048</text><text x="535" y="118" font-size="10.5" fill="var(--del)">not kept: net +1</text>
+
+        <text x="750" y="58" font-size="13" font-weight="600">E3 / E3.1 · prompt</text>
+        <text x="750" y="80" font-size="11" opacity=".75">"edit early" rule</text><text x="750" y="96" font-size="11" opacity=".75">written in the prompt</text><text x="750" y="118" font-size="10.5" fill="var(--warn)">14 · 15, rule half-followed</text>
+
+        <text x="105" y="236" font-size="13" font-weight="600" fill="var(--accent)">E5 · finder → fixer</text>
+        <text x="105" y="258" font-size="11" opacity=".75">finder has</text><text x="105" y="274" font-size="11" opacity=".75">no edit tools</text><text x="105" y="296" font-size="10.5" fill="var(--accent)">paper core · 2 runs</text>
+
+        <text x="320" y="236" font-size="13" font-weight="600">ORACLE</text>
+        <text x="320" y="258" font-size="11" opacity=".75">correct location given</text><text x="320" y="274" font-size="11" opacity=".75">(practice only)</text><text x="320" y="296" font-size="10.5" opacity=".6">is finding the bottleneck?</text>
+
+        <text x="535" y="236" font-size="13" font-weight="600" fill="var(--accent)">E6 · graph finder</text>
+        <text x="535" y="258" font-size="11" opacity=".75">E5 + graph tools</text><text x="535" y="274" font-size="11" opacity=".75">free CPU check first</text><text x="535" y="296" font-size="10.5" fill="var(--accent)">paper core · 2 runs</text>
+
+        <text x="750" y="236" font-size="13" font-weight="600" opacity=".7">Oct 31 · held-out</text>
+        <text x="750" y="258" font-size="11" opacity=".6">E2 and the best</text><text x="750" y="274" font-size="11" opacity=".6">version, back to back</text><text x="750" y="296" font-size="10.5" opacity=".6">then the paper</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#p1)">
+        <line x1="200" y1="82" x2="221" y2="82"/><line x1="415" y1="82" x2="436" y2="82"/><line x1="630" y1="82" x2="651" y2="82"/>
+        <path d="M750,130 V168 H105 V208"/>
+        <line x1="200" y1="260" x2="221" y2="260"/><line x1="415" y1="260" x2="436" y2="260"/><line x1="630" y1="260" x2="651" y2="260" stroke-opacity=".5"/>
+      </g>
+      <text x="428" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" text-anchor="middle" opacity=".75">quota resets Oct 24 · prompt rules failed, so the rule moves into the structure</text>
+    </svg>
+    </div>
+    <figcaption><b>Read left to right, top row first.</b> E0 changes nothing on purpose: it shows how much the score moves by luck alone. Every later box changes exactly one thing and is measured on the same 30 practice bugs. A change that is not kept is simply skipped, and the next box builds on the last kept version (E2). E4, dropping the unused helper agent, was cancelled without a run: the helper was called once in 185 task attempts. A repeat of E3.1 also runs that week, as the prompt-only comparison for E5.</figcaption>
+  </figure>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Step</th><th>Why it comes here</th><th>What you learn</th></tr></thead>
+    <tbody>
+      <tr><td>E0</td><td>Without knowing the noise, no later result can be trusted</td><td>How random agents are, and how to measure it</td></tr>
+      <tr><td>E2</td><td>A crash throws away a finished fix; E0 showed 4 crashes, so it moved ahead of E1</td><td>Context windows and output limits in practice</td></tr>
+      <tr><td>E1</td><td>We thought overthinking caused timeouts; E1 showed it is the number of steps</td><td>Speed vs. reasoning trade-off in LLM agents</td></tr>
+      <tr><td>E3 · E3.1</td><td>Addresses never-edited and wandering bugs</td><td>Prompt design, and checking whether a rule was followed</td></tr>
+      <tr><td>E4</td><td>Cancelled: the helper was called once in 185 task attempts, so removing it changes nothing measurable</td><td>Deciding from data without spending GPU</td></tr>
+      <tr><td>E5</td><td>The prompt rule failed; build it into the structure (Agentless, SWE-Gym)</td><td>Agent architecture in ADK (also in your certification)</td></tr>
+      <tr><td>ORACLE</td><td>Gives the correct location to measure the best case</td><td>Breaking failures down by cause</td></tr>
+      <tr><td>E6</td><td>The hosts want graph-tool research; Gemma almost never uses the tools</td><td>Designing a clean experiment worth publishing</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <p class="kicker">Diagram 2 · The loop</p>
+  <h2>What happens in every experiment</h2>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 900 280" role="img" aria-label="Experiment loop: change one thing in the repo, build and run the 30 practice bugs on 4 L4 GPUs, measure solved bugs and transcript metrics, compare per bug against the reference, decide. If adopted: new reference, leaderboard submission and a write-up. If not: keep the last winner. Then the next experiment starts.">
+      <defs><marker id="p2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke-width="1.5">
+        <rect x="10" y="30" width="155" height="84" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="190" y="30" width="155" height="84" rx="8" stroke="currentColor"/>
+        <rect x="370" y="30" width="155" height="84" rx="8" stroke="currentColor"/>
+        <rect x="550" y="30" width="155" height="84" rx="8" stroke="currentColor"/>
+        <rect x="730" y="30" width="160" height="84" rx="8" stroke="currentColor" stroke-width="2"/>
+        <rect x="535" y="160" width="175" height="76" rx="8" stroke="var(--add)" stroke-width="2"/>
+        <rect x="725" y="160" width="165" height="76" rx="8" stroke="var(--del)" stroke-width="2"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">
+        <text x="87" y="56" font-size="13" font-weight="600" fill="var(--accent)">1 · Change</text><text x="87" y="76" font-size="11" opacity=".75">one thing in</text><text x="87" y="92" font-size="11" opacity=".75">submission/</text>
+        <text x="267" y="56" font-size="13" font-weight="600">2 · Run</text><text x="267" y="76" font-size="11" opacity=".75">same 30 bugs</text><text x="267" y="92" font-size="11" opacity=".75">must show 4× L4</text>
+        <text x="447" y="56" font-size="13" font-weight="600">3 · Measure</text><text x="447" y="76" font-size="11" opacity=".75">solved + timeouts,</text><text x="447" y="92" font-size="11" opacity=".75">sec/step, crashes</text>
+        <text x="627" y="56" font-size="13" font-weight="600">4 · Compare</text><text x="627" y="76" font-size="11" opacity=".75">bug by bug vs.</text><text x="627" y="92" font-size="11" opacity=".75">the reference</text>
+        <text x="810" y="56" font-size="13" font-weight="600">5 · Decide</text><text x="810" y="76" font-size="11" opacity=".75">keep it or not</text><text x="810" y="92" font-size="11" opacity=".75">(diagram 3)</text>
+        <text x="622" y="184" font-size="13" font-weight="600" fill="var(--add)">Kept</text><text x="622" y="204" font-size="11" opacity=".75">new reference ·</text><text x="622" y="220" font-size="11" opacity=".75">leaderboard · write-up</text>
+        <text x="807" y="184" font-size="13" font-weight="600" fill="var(--del)">Not kept</text><text x="807" y="204" font-size="11" opacity=".75">stay on the last</text><text x="807" y="220" font-size="11" opacity=".75">kept version</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#p2)">
+        <line x1="165" y1="72" x2="186" y2="72"/><line x1="345" y1="72" x2="366" y2="72"/><line x1="525" y1="72" x2="546" y2="72"/><line x1="705" y1="72" x2="726" y2="72"/>
+        <path d="M780,114 V140 H622 V156" stroke="var(--add)"/>
+        <line x1="840" y1="114" x2="840" y2="156" stroke="var(--del)"/>
+        <path d="M622,236 V262 H87 V118"/>
+      </g>
+      <path d="M807,236 V262 H622" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="340" y="256" font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" text-anchor="middle" opacity=".75">next experiment</text>
+    </svg>
+    </div>
+    <figcaption><b>The same five steps every time.</b> Because every run uses the same 30 bugs and the same machines, the only difference between two runs is the one thing we changed. Kept changes also go to the leaderboard (1 per day, no GPU quota) as a second opinion on unseen projects.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <p class="kicker">Diagram 3 · The rule</p>
+  <h2>How we decide to keep a change</h2>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 820 310" role="img" aria-label="Decision rule: compare the new run with the reference. If gains minus losses is at least 3, keep it. Otherwise, if the targeted metric moved more than it did between two identical runs (or the effect is mechanical) and gains minus losses is at least 0, keep it. Otherwise do not keep it; a promising result gets a repeat run before any claim.">
+      <defs><marker id="p3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <rect x="10" y="118" width="170" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <polygon points="300,100 395,155 300,210 205,155" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <polygon points="570,100 665,155 570,210 475,155" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <rect x="470" y="14" width="340" height="60" rx="8" fill="none" stroke="var(--add)" stroke-width="2"/>
+      <rect x="470" y="238" width="340" height="60" rx="8" fill="none" stroke="var(--del)" stroke-width="2"/>
+      <g font-family="JetBrains Mono, monospace" text-anchor="middle" fill="currentColor">
+        <text x="95" y="146" font-size="12.5" font-weight="600" fill="var(--accent)">New run vs.</text><text x="95" y="164" font-size="12.5" font-weight="600" fill="var(--accent)">reference</text><text x="95" y="182" font-size="10.5" opacity=".7">bug by bug</text>
+        <text x="300" y="150" font-size="11.5">gains − losses</text><text x="300" y="167" font-size="11.5" font-weight="600">≥ 3 ?</text>
+        <text x="570" y="142" font-size="11">target metric</text><text x="570" y="158" font-size="11">beats the noise and</text><text x="570" y="174" font-size="11">gains − losses ≥ 0 ?</text>
+        <text x="640" y="40" font-size="13" font-weight="600" fill="var(--add)">KEEP</text><text x="640" y="60" font-size="11" opacity=".75">becomes the new reference</text>
+        <text x="640" y="264" font-size="13" font-weight="600" fill="var(--del)">DON'T KEEP</text><text x="640" y="284" font-size="11" opacity=".75">promising? repeat it before any claim</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#p3)">
+        <line x1="180" y1="155" x2="201" y2="155"/>
+        <path d="M300,100 V44 H466" stroke="var(--add)"/>
+        <line x1="395" y1="155" x2="471" y2="155"/>
+        <line x1="570" y1="100" x2="570" y2="78" stroke="var(--add)"/>
+        <line x1="570" y1="210" x2="570" y2="234" stroke="var(--del)"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor">
+        <text x="308" y="66" fill="var(--add)">yes</text><text x="420" y="148">no</text><text x="578" y="92" fill="var(--add)">yes</text><text x="578" y="226" fill="var(--del)">no</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Two ways to be kept.</b> Either clearly more bugs solved (top path), or the change fixes exactly what it targeted, like fewer timeouts, without losing bugs (middle path). The bar of 3 comes from the noise: single runs of identical agents differ by a few bugs, so anything smaller could be luck.</figcaption>
+  </figure>
+  <dl>
+    <dt>Reference</dt><dd>The last kept version, pooled over the near-identical runs we have (now Run 1, E0 and E2).</dd>
+    <dt>Gain</dt><dd>A bug the new version solves that the reference never solved.</dd>
+    <dt>Loss</dt><dd>A bug the new version fails that the reference always solved.</dd>
+    <dt>Flaky</dt><dd>A bug the reference solved in some of its runs but not all (1 or 2 of 3). Ignored, because it tells us nothing.</dd>
+    <dt>Target metric</dt><dd>What the change aims at, for example timeouts for E1 or context crashes for E2. Since Oct 19 it must move more than it did between two identical runs, unless the effect is mechanical.</dd>
+    <dt>Statistics (Oct 19)</dt><dd>Every comparison also reports an exact paired test and a 95% confidence interval. Kept versions are checked once on a separate held-out set of 30 tasks.</dd>
+  </dl>
+</section>
+
+<section>
+  <p class="kicker">Budget</p>
+  <h2>Next week's GPU quota</h2>
+  <p>One 30-bug run takes about 2.2 hours on 4× L4, which counts as about 4.3 hours of the 30-hour weekly quota. The quota resets on Oct 24 at 05:30 IST, so the week holds about 6 runs. This week's last 2.9 hours stay unused.</p>
+  <div class="bars" role="img" aria-label="Of 30 hours in the week of Oct 24: E5 two runs 8.6 hours, ORACLE 4.3, E3.1 repeat 4.3, E6 two runs 8.6, retry reserve for a failed run 4.2.">
+    <div class="bar"><span>E5 (2 runs)</span><div class="track"><div class="seg" style="width:28.7%;background:var(--accent)"></div></div><span class="n">8.6 h</span></div>
+    <div class="bar"><span>ORACLE</span><div class="track"><div class="seg" style="width:14.3%;background:var(--accent)"></div></div><span class="n">4.3 h</span></div>
+    <div class="bar"><span>E3.1 repeat</span><div class="track"><div class="seg" style="width:14.3%;background:var(--warn)"></div></div><span class="n">4.3 h</span></div>
+    <div class="bar"><span>E6 (2 runs)</span><div class="track"><div class="seg" style="width:28.7%;background:var(--accent)"></div></div><span class="n">8.6 h</span></div>
+    <div class="bar"><span>Retry reserve</span><div class="track"><div class="seg" style="width:14%;background:var(--muted)"></div></div><span class="n">4.2 h</span></div>
+  </div>
+  <p>Runs 5 and 6 depend on earlier results, by rules written down in advance: if ORACLE shows finding is not the bottleneck, E6 gives way to more E5 or ORACLE runs. No run outside this list, and each launch needs your "yes". Leaderboard submissions cost no quota (1 per day).</p>
+</section>
+
+<section>
+  <p class="kicker">Result</p>
+  <h2>Held-out week: what the 41 new bugs said (Oct 31)</h2>
+  <p>All four arms ran once on 41 bugs never used while designing, from one locked commit, with the tests and code fixed in advance. No task crashed. Solved: E2 14, E3.1 13, E5b 10, ORACLE 12.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Test</th><th>What it asks</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>C1</td><td>Does Gemma follow a literal rule ("put scratch scripts in /tmp")?</td><td><span class="pill ok">pass</span> 20 of 20 with the rule, 0 of 25 without</td></tr>
+      <tr><td>C2 (main)</td><td>Does a finder with no tools make the fixer start with real code?</td><td><span class="pill no">fail</span> 11 of 41 vs 10 of 41, p = 0.50. Not replicated</td></tr>
+      <tr><td>C3</td><td>Does handing over the right files barely help?</td><td><span class="pill mid">not tested</span> the fixed order stops at C2. As an estimate: ORACLE 12 vs 14 solved</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout stop"><b>The main claim did not hold</b>On the 30 practice bugs the no-tool finder seemed to make the fixer start with real code (55% vs 26%). On new bugs it did not (35% vs 29%). The finder worked as designed (14 s), but the fixer kept its habit of writing a test script first. The practice result was most likely inflated by designing E5b on those same 30 bugs.</div>
+  <p>The spare run was not used: it could not change the verdict. The paper (Draft 3) now reports this honestly: asking is followed to the letter, limits hold only when built into the structure, the structural effect on behaviour did not replicate, and nothing moved the solve rate.</p>
+</section>
+
+<footer>Built from the experiment plan design (Oct 18, 2026) and the E5/E6 design (Oct 19), which draws on our 30-bug practice run, the competition's own code, forum measurements and standard agent-evaluation practice.</footer>
+</div>

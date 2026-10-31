@@ -1,0 +1,31 @@
+instance_id,gold_resolved,agent_resolved,seconds,tool_calls,llm_calls,patch_lines,error,trace
+fastapi_11194,True,False,274.5,18,19,51,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_11194.json
+fastapi_13537,True,True,274.5,15,16,70,,/kaggle/working/results/traces/trace_fastapi_13537.json
+fastapi_13920,True,False,274.8,14,14,40,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_13920.json
+fastapi_14306,True,False,274.6,18,19,118,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_14306.json
+fastapi_14458,True,True,274.8,20,21,104,,/kaggle/working/results/traces/trace_fastapi_14458.json
+fastapi_14479,True,False,94.7,8,11,12,,/kaggle/working/results/traces/trace_fastapi_14479.json
+fastapi_14786,True,True,64.7,6,10,10,,/kaggle/working/results/traces/trace_fastapi_14786.json
+fastapi_14794,True,True,194.8,17,20,127,,/kaggle/working/results/traces/trace_fastapi_14794.json
+fastapi_14986,True,False,274.9,21,20,41,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_14986.json
+fastapi_15280,True,False,271.7,33,34,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_15280.json
+fastapi_15589,True,False,271.7,22,23,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_fastapi_15589.json
+fastapi_9555,True,True,274.6,12,13,41,,/kaggle/working/results/traces/trace_fastapi_9555.json
+fastapi_9753,True,True,274.7,18,19,118,,/kaggle/working/results/traces/trace_fastapi_9753.json
+rich_2725,True,True,273.3,17,18,67,,/kaggle/working/results/traces/trace_rich_2725.json
+rich_2943,True,False,270.9,43,44,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_2943.json
+rich_3043,True,False,270.9,11,12,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3043.json
+rich_3180,True,False,273.6,18,19,20,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3180.json
+rich_3278,True,False,270.9,5,18,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3278.json
+rich_3454,True,True,120.2,10,14,12,,/kaggle/working/results/traces/trace_rich_3454.json
+rich_3472,True,False,270.9,11,12,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3472.json
+rich_3506,True,False,270.9,5,6,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3506.json
+rich_3518,True,True,133.8,12,18,13,,/kaggle/working/results/traces/trace_rich_3518.json
+rich_3675,True,False,101.3,12,15,17,,/kaggle/working/results/traces/trace_rich_3675.json
+rich_3772,True,False,273.4,7,8,61,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3772.json
+rich_3777,True,False,270.9,29,30,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3777.json
+rich_3905,True,True,112.8,17,21,18,,/kaggle/working/results/traces/trace_rich_3905.json
+rich_3942,True,False,271.0,17,18,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3942.json
+rich_3953,True,False,273.4,24,25,43,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_3953.json
+rich_4076,True,False,271.0,23,23,0,Agent exceeded session timeout (4.5 min),/kaggle/working/results/traces/trace_rich_4076.json
+rich_4077,True,True,109.8,15,19,11,,/kaggle/working/results/traces/trace_rich_4077.json

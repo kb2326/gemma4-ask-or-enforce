@@ -1,0 +1,7 @@
+name: localizer
+description: One-step localizer with no tools; answers from the issue and the file list.
+model: gemma-4-31b-it-qat-w4a16-ct
+adapter: main_lora
+instruction: !include ../prompts/localizer.md
+output_key: localization
+generate_content_config: !include ../configs/sampling.yaml

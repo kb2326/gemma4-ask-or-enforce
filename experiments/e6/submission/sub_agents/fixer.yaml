@@ -1,0 +1,17 @@
+name: fixer
+description: Edits the located code and submits the patch.
+model: gemma-4-31b-it-qat-w4a16-ct
+adapter: main_lora
+include_contents: default
+instruction: !include ../prompts/fixer.md
+tools:
+  - run_command
+  - read_file
+  - edit_file
+  - write_file
+  - get_status
+  - submit_patch
+  - get_code_neighbors
+  - search_similar_code
+  - get_code_subgraph
+generate_content_config: !include ../configs/sampling.yaml

@@ -1,0 +1,1056 @@
+<title>Week 1 Field Notes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same system as the main field guide; one reading column with wide figures and a sticky chapter rail. Green = done/safe, red = blocked/avoid, amber = caution. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#17202b; --muted:#5a6676; --line:#d9dee6;
+  --accent:#1d5fd1; --accent-soft:#e6eefc;
+  --add:#1a7f45; --add-soft:#e3f4ea; --del:#b4322a; --del-soft:#fbe7e5; --warn:#9a6200; --warn-soft:#fdf3dc;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d26; --fg:#e4e9f0; --muted:#98a4b3; --line:#2a3440;
+  --accent:#7aa7ff; --accent-soft:#1a2740;
+  --add:#5cc98a; --add-soft:#13291d; --del:#f08a80; --del-soft:#331a18; --warn:#e6b450; --warn-soft:#2e2412; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:0}.rail{display:none}}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px}
+.rail p{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.rail a{display:block;padding:3px 8px;border-radius:6px;color:var(--muted);text-decoration:none}
+.rail a:hover,.rail a:focus-visible{background:var(--accent-soft);color:var(--fg);outline:none}
+main{min-width:0}
+main > section{max-width:70ch;margin-bottom:60px}
+main > section.wide{max-width:none}
+main > section.wide > :not(figure):not(.table-wrap):not(.grid2):not(.status){max-width:70ch}
+
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.1rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.7rem;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+h3{font-size:1.12rem;font-weight:700;margin:26px 0 8px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 14px}
+ul,ol.steps{padding-left:22px;margin:0 0 14px}
+li{margin-bottom:5px}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em}
+:not(pre)>code{background:var(--accent-soft);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+.lede{font-size:1.18rem;color:var(--muted);max-width:62ch;margin-top:14px}
+.note{font-size:14.5px;color:var(--muted)}
+header.hero{grid-column:1/-1;margin-bottom:28px;max-width:900px}
+.hero .links{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:18px;font-size:15px}
+
+.status{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+@media (max-width:760px){.status{grid-template-columns:minmax(0,1fr)}}
+.status div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.status .lbl{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.status .done .lbl{color:var(--add)} .status .next .lbl{color:var(--accent)} .status .open .lbl{color:var(--warn)}
+.status ul{margin:8px 0 0;padding-left:18px;font-size:15px}
+
+figure{margin:22px 0 26px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px 16px 14px}
+figure .scroll{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:640px;color:var(--fg)}
+figcaption{font-size:14.5px;color:var(--muted);margin-top:12px;max-width:75ch}
+figcaption b{color:var(--fg)}
+
+.callout{border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0;font-size:16px}
+.callout.tip{border-color:var(--add);background:var(--add-soft)}
+.callout.info{border-color:var(--accent);background:var(--accent-soft)}
+.callout.stop{border-color:var(--del);background:var(--del-soft)}
+.callout b:first-child{display:block;font-family:var(--display)}
+
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:600px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td:first-child{font-weight:700}
+.pill{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.ok{background:var(--add-soft);color:var(--add)} .no{background:var(--del-soft);color:var(--del)} .mid{background:var(--warn-soft);color:var(--warn)} .acc{background:var(--accent-soft);color:var(--accent)}
+
+pre{font-family:var(--mono);font-size:13.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:12px 0 16px}
+pre .c{color:var(--muted)}
+.diff{font-family:var(--mono);font-size:13.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0;background:var(--surface);max-width:70ch}
+.diff div{padding:2px 14px;white-space:pre;overflow-x:auto}
+.diff .h{color:var(--muted);background:var(--bg)} .diff .p{background:var(--add-soft);color:var(--add)} .diff .m{background:var(--del-soft);color:var(--del)}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+@media (max-width:700px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.card h3{margin-top:0}
+.card ul{margin:0;font-size:15.5px;padding-left:18px}
+
+.bars{display:grid;gap:10px;margin:16px 0;max-width:640px}
+.bar{display:grid;grid-template-columns:190px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:15px}
+@media (max-width:560px){.bar{grid-template-columns:minmax(0,1fr) 64px}.bar .track{grid-column:1/-1;grid-row:2}}
+.bar .track{height:16px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{height:100%;background:var(--accent)}
+.bar .fill.w{background:var(--warn)}
+.bar .n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+
+ol.check{list-style:none;padding:0;margin:14px 0;display:grid;gap:10px}
+ol.check li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0}
+ol.check .box{width:20px;height:20px;border:2px solid var(--accent);border-radius:5px;margin-top:3px}
+ol.check .who{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+dl.gloss{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 20px;margin:0}
+@media (max-width:600px){dl.gloss{grid-template-columns:minmax(0,1fr)} dl.gloss dd{margin-bottom:10px}}
+dl.gloss dt{font-family:var(--mono);font-size:14px;font-weight:600}
+dl.gloss dd{margin:0;font-size:15.5px}
+footer{grid-column:1/-1;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <p class="kicker">Gemma 4 Developer Agent · Week 1 · Oct 17–24, 2026</p>
+  <h1>Week 1 field notes</h1>
+  <p class="lede">Everything we set up, ran and learned in the first week, explained step by step: what each piece is, why we did it, and what the results mean.</p>
+  <div class="links">
+    <a href="https://claude.ai/artifact/JeaZ6iNi6LdHp2f36njJuK">Main guide: concepts and research</a>
+    <a href="https://github.com/kb2326/gemma4-swe-agent">Your repo: kb2326/gemma4-swe-agent</a>
+    <a href="https://www.kaggle.com/code/ryanholbrook/getting-started-gemma-4-developer-agent">Official starter notebook</a>
+  </div>
+</header>
+
+<nav class="rail" aria-label="Sections">
+  <p>Sections</p>
+  <ol>
+    <li><a href="#glance">1. Day one at a glance</a></li>
+    <li><a href="#map">2. Your setup map</a></li>
+    <li><a href="#token">3. The Kaggle token</a></li>
+    <li><a href="#mcp">4. Kaggle CLI and MCP</a></li>
+    <li><a href="#github">5. GitHub as kb2326</a></li>
+    <li><a href="#rules">6. Official rules</a></li>
+    <li><a href="#paper">7. Paper track rules</a></li>
+    <li><a href="#notebook">8. The starter notebook</a></li>
+    <li><a href="#forum">9. What the forum taught us</a></li>
+    <li><a href="#quota">10. Your GPU budget</a></li>
+    <li><a href="#tomorrow">11. Day 2 plan</a></li>
+  </ol>
+  <p style="margin-top:14px">Day 2 · Oct 18</p>
+  <ol>
+    <li><a href="#d2-glance">12. Day 2 at a glance</a></li>
+    <li><a href="#d2-why">13. Why measure first</a></li>
+    <li><a href="#d2-pipeline">14. Our pipeline</a></li>
+    <li><a href="#d2-fail">15. First try failed</a></li>
+    <li><a href="#d2-controls">16. Which bugs are fair</a></li>
+    <li><a href="#d2-baseline">17. First agent run</a></li>
+    <li><a href="#d2-submit">18. First submission</a></li>
+    <li><a href="#d2-practice">19. The 30-task run</a></li>
+    <li><a href="#d2-where">20. What runs where</a></li>
+    <li><a href="#d2-paper">21. Paper awards</a></li>
+    <li><a href="#d2-learn">22. Learning to train</a></li>
+    <li><a href="#d2-e0">23. Noise measured, E2 started</a></li>
+    <li><a href="#d2-e2">24. E2 result: kept</a></li>
+    <li><a href="#d2-e1">25. E1 result: not kept</a></li>
+  </ol>
+  <p style="margin-top:14px">Day 3 · Oct 19</p>
+  <ol>
+    <li><a href="#d3-e3">26. E3 and the first score</a></li>
+    <li><a href="#d3-audit">27. Methodology audit</a></li>
+    <li><a href="#d3-e31">28. E3.1 and the task-check repeats</a></li>
+    <li><a href="#d3-plan">29. Planning E5 and E6</a></li>
+  </ol>
+  <p style="margin-top:14px">Day 4 · Oct 24</p>
+  <ol>
+    <li><a href="#d4-checks">30. Checks and the first two runs</a></li>
+    <li><a href="#glossary">31. New words</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="glance" class="wide">
+  <p class="kicker">Section 1</p>
+  <h2>Day one at a glance</h2>
+  <div class="status">
+    <div class="done"><div class="lbl">Done today</div><ul>
+      <li>Kaggle token working and saved safely</li>
+      <li>Starter files downloaded</li>
+      <li>Kaggle MCP installed, with a submit guard</li>
+      <li>Official rules read and confirmed</li>
+      <li>Official starter notebook found and saved</li>
+      <li>Private repo created as kb2326</li>
+    </ul></div>
+    <div class="next"><div class="lbl">Tomorrow</div><ul>
+      <li>Build our practice notebook</li>
+      <li>Check which practice tasks are trustworthy</li>
+      <li>First timed run of the baseline agent on L4×4</li>
+    </ul></div>
+    <div class="open"><div class="lbl">Still open</div><ul>
+      <li>Does going over 32K tokens really cost the task?</li>
+      <li>How many practice tasks fail even with the real fix?</li>
+      <li>Which paper question we pick (decide in week 3)</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="map" class="wide">
+  <p class="kicker">Section 2</p>
+  <h2>Your setup map</h2>
+  <p>Three places are involved: your PC, Kaggle and GitHub. This map shows what lives where and how the pieces talk to each other. Every later section zooms into one arrow.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 800 410" role="img" aria-label="Setup map: on your PC, the project folder, the Kaggle token, the Kaggle CLI, Claude Code with the Kaggle MCP, and git. The CLI downloads data from Kaggle, the MCP reads official pages, forum and quota and runs notebooks, and git pushes to the private kb2326 repo on GitHub. The work account is never used.">
+      <defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="4 4">
+        <rect x="10" y="24" width="290" height="376" rx="12"/>
+        <rect x="400" y="166" width="390" height="140" rx="12"/>
+        <rect x="400" y="318" width="390" height="82" rx="12"/>
+      </g>
+      <g fill="currentColor" opacity=".6" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing=".06em">
+        <text x="26" y="44">YOUR PC</text><text x="414" y="186">KAGGLE</text><text x="414" y="336">GITHUB</text>
+      </g>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="28" y="56" width="254" height="48" rx="8"/>
+        <rect x="28" y="120" width="254" height="52" rx="8" stroke="var(--warn)" stroke-width="2"/>
+        <rect x="28" y="190" width="254" height="44" rx="8"/>
+        <rect x="28" y="250" width="254" height="44" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="28" y="336" width="254" height="48" rx="8"/>
+        <rect x="420" y="194" width="350" height="40" rx="8"/>
+        <rect x="420" y="250" width="350" height="44" rx="8"/>
+        <rect x="420" y="342" width="215" height="46" rx="8" stroke="var(--add)" stroke-width="2"/>
+        <rect x="650" y="342" width="125" height="46" rx="8" stroke-dasharray="4 3" stroke-opacity=".5"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12.5" text-anchor="middle">
+        <text x="155" y="77" font-weight="600">Project folder</text><text x="155" y="94" font-size="10.5" opacity=".7">submission/ · guide/ · data/</text>
+        <text x="155" y="142" font-weight="600" fill="var(--warn)">Kaggle token (secret)</text><text x="155" y="160" font-size="10.5" opacity=".7">.env + Windows env variable</text>
+        <text x="155" y="209" font-weight="600">Kaggle CLI</text><text x="155" y="225" font-size="10.5" opacity=".7">scripts, bulk downloads</text>
+        <text x="155" y="269" font-weight="600" fill="var(--accent)">Claude Code + Kaggle MCP</text><text x="155" y="285" font-size="10.5" opacity=".7">76 Kaggle tools</text>
+        <text x="155" y="357" font-weight="600">git (this repo only)</text><text x="155" y="374" font-size="10.5" opacity=".7">signs and logs in as kb2326</text>
+        <text x="595" y="218">Competition data · leaderboard</text>
+        <text x="595" y="269">Official pages · forum · GPU quota</text><text x="595" y="285" font-size="10.5" opacity=".7">and notebook runs on L4×4</text>
+        <text x="527" y="362" font-weight="600" fill="var(--add)">kb2326/gemma4-swe-agent</text><text x="527" y="378" font-size="10.5" opacity=".7">private</text>
+        <text x="712" y="362" opacity=".55">work account</text><text x="712" y="378" font-size="10.5" opacity=".55">never used here</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" marker-end="url(#m1)">
+        <line x1="282" y1="212" x2="416" y2="214"/><line x1="282" y1="272" x2="416" y2="272"/><line x1="282" y1="360" x2="416" y2="364" stroke="var(--add)"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle">
+        <text x="349" y="205">download</text><text x="349" y="265">read · run</text><text x="349" y="353" fill="var(--add)">push</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>The whole setup on one page.</b> The token (amber) is the one secret, and it never leaves your PC except to authenticate with Kaggle. Your work GitHub account (dashed) stays logged in on this PC but is never used for this project.</figcaption>
+  </figure>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Piece</th><th>Where it lives</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Project folder</td><td><code>C:\Users\karth\Google Deepmind Hackathon</code></td><td>Everything for the competition. Also a git repo.</td></tr>
+      <tr><td><code>submission/</code></td><td>Project folder</td><td>The agent config we will improve. Today it is an exact copy of the official sample: our <b>baseline</b>.</td></tr>
+      <tr><td><code>guide/</code></td><td>Project folder</td><td>The main guide and these notes, as HTML files.</td></tr>
+      <tr><td><code>data/</code></td><td>Project folder, <b>not in git</b></td><td>Competition files, official pages, the saved starter notebook.</td></tr>
+      <tr><td><code>.mcp.json</code></td><td>Project folder</td><td>Tells Claude Code how to reach Kaggle's MCP server. Contains no secret.</td></tr>
+      <tr><td><code>.claude/settings.json</code></td><td>Project folder</td><td>The guard that makes every submit action ask you first.</td></tr>
+      <tr><td><code>.gitignore</code>, <code>.gitattributes</code></td><td>Project folder</td><td>What git must never commit, and the rule to keep Linux line endings.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="token">
+  <p class="kicker">Section 3</p>
+  <h2>The Kaggle token: one secret, two homes</h2>
+  <p>Your Kaggle API token is like a password. Anyone who has it can act as you on Kaggle, including spending your daily submission. It starts with <code>KGAT_</code>, the newer token format Kaggle introduced, which works with the Kaggle CLI 1.8+ (you have 2.2.4).</p>
+  <p>It now lives in two places, both on your PC only:</p>
+  <ul>
+    <li><b><code>.env</code> in the project folder.</b> Where you first saved it. Scripts can load it from here.</li>
+    <li><b>A Windows user environment variable</b> named <code>KAGGLE_API_TOKEN</code>. Every new terminal and every new Claude Code session sees it automatically, so the CLI and MCP work without setup.</li>
+  </ul>
+  <div class="callout stop"><b>Where it must never go</b>Not in git, not in <code>.mcp.json</code>, not pasted into chat. <code>.gitignore</code> excludes <code>.env</code>, and before the first commit we scanned every staged file for anything token-shaped. Nothing was found.</div>
+  <p>The MCP config uses a placeholder instead of the real value. Claude Code fills it in from the environment variable when it starts:</p>
+<pre>"Authorization": "Bearer ${KAGGLE_API_TOKEN}"   <span class="c">← placeholder, safe to commit</span></pre>
+  <p class="note">This is why Claude Code needed a restart: a program only sees environment variables that existed when it started.</p>
+</section>
+
+<section id="mcp" class="wide">
+  <p class="kicker">Section 4</p>
+  <h2>Kaggle CLI and Kaggle MCP: why we use both</h2>
+  <p><b>MCP (Model Context Protocol)</b> is a standard way to plug a service's tools into an AI agent. Kaggle runs an official MCP server. Once connected, I can call 76 Kaggle tools directly, much as Gemma will call its 9 tools in the competition.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Job</th><th>Kaggle CLI</th><th>Kaggle MCP</th></tr></thead>
+    <tbody>
+      <tr><td>Download data, view leaderboard</td><td><span class="pill ok">yes</span></td><td><span class="pill ok">yes</span></td></tr>
+      <tr><td>Read official Overview and Rules pages</td><td><span class="pill no">no</span></td><td><span class="pill ok">yes</span> This unblocked us today.</td></tr>
+      <tr><td>Read forum discussions</td><td><span class="pill no">no</span></td><td><span class="pill ok">yes</span></td></tr>
+      <tr><td>Check GPU quota</td><td><span class="pill no">no</span></td><td><span class="pill ok">yes</span></td></tr>
+      <tr><td>Start and watch notebook runs</td><td><span class="pill mid">partly</span></td><td><span class="pill ok">yes</span></td></tr>
+      <tr><td>Paper track write-ups</td><td><span class="pill no">no</span></td><td><span class="pill ok">yes</span></td></tr>
+      <tr><td>Search notebooks, list a notebook's files</td><td><span class="pill ok">yes</span></td><td><span class="pill mid">"Unauthenticated"</span> with token login</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout tip"><b>The submit guard</b>Three MCP tools can submit to the competition and use your once-a-day slot. In <code>.claude/settings.json</code> they are set to <b>always ask you first</b>, even if you later allow all other Kaggle tools.</div>
+<pre><span class="c"># Commands you can run yourself in a new terminal</span>
+kaggle competitions leaderboard gemma-4-developer-agent -s   <span class="c"># top of the leaderboard</span>
+kaggle competitions files gemma-4-developer-agent           <span class="c"># list data files</span></pre>
+</section>
+
+<section id="github" class="wide">
+  <p class="kicker">Section 5</p>
+  <h2>GitHub as kb2326, and the two traps we hit</h2>
+  <p>Your PC is logged into GitHub with two accounts: the work account (a work account) (the active one) and your personal <code>kb2326</code>. The goal was that this project only ever uses kb2326, without disturbing your work setup. Two things were set:</p>
+  <ul>
+    <li><b>Who signs commits.</b> This repo's own config says commits come from your name with the email <code>78557685+kb2326@users.noreply.github.com</code>. That is GitHub's private "no-reply" address: commits count as yours without exposing your real email.</li>
+    <li><b>Who logs in when pushing.</b> This took two fixes, shown below.</li>
+  </ul>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 800 230" role="img" aria-label="How git push logs in: the system credential manager is switched off for this repo, the standard gh helper is not used because it only serves the work account, and a custom helper fetches the kb2326 token from the Windows keyring so git reaches GitHub as kb2326.">
+      <defs><marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke-width="1.5">
+        <rect x="10" y="88" width="120" height="56" rx="8" stroke="currentColor"/>
+        <rect x="190" y="14" width="200" height="60" rx="8" stroke="var(--del)" stroke-dasharray="5 4"/>
+        <rect x="190" y="158" width="200" height="60" rx="8" stroke="var(--del)" stroke-dasharray="5 4"/>
+        <rect x="430" y="88" width="170" height="56" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="650" y="88" width="140" height="56" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g stroke="var(--del)" stroke-width="2"><line x1="200" y1="20" x2="380" y2="68"/><line x1="200" y1="164" x2="380" y2="212"/></g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12.5" text-anchor="middle">
+        <text x="70" y="113" font-weight="600">git push</text><text x="70" y="130" font-size="10.5" opacity=".7">needs a login</text>
+        <text x="290" y="38" font-weight="600" fill="var(--del)">Trap 1: Windows login manager</text><text x="290" y="56" font-size="10.5" opacity=".75">opened a pop-up · now off here</text>
+        <text x="290" y="182" font-weight="600" fill="var(--del)">Trap 2: standard gh helper</text><text x="290" y="200" font-size="10.5" opacity=".75">only serves the work account</text>
+        <text x="515" y="111" font-weight="600" fill="var(--accent)">Custom helper</text><text x="515" y="128" font-size="10.5" opacity=".7">reads kb2326 token</text>
+        <text x="720" y="111" font-weight="600" fill="var(--add)">GitHub</text><text x="720" y="128" font-size="10.5" opacity=".7">as kb2326</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#m2)">
+        <line x1="130" y1="116" x2="426" y2="116"/>
+        <line x1="600" y1="116" x2="646" y2="116" stroke="var(--add)"/>
+        <path d="M110,88 C130,50 160,44 186,44" stroke-dasharray="4 3" stroke-opacity=".5"/>
+        <path d="M110,144 C130,182 160,188 186,188" stroke-dasharray="4 3" stroke-opacity=".5"/>
+      </g>
+      <text x="515" y="166" fill="currentColor" opacity=".7" font-family="JetBrains Mono, monospace" font-size="10.5" text-anchor="middle">fetched from the Windows keyring</text>
+      <text x="515" y="181" fill="currentColor" opacity=".7" font-family="JetBrains Mono, monospace" font-size="10.5" text-anchor="middle">each time · never saved to disk</text>
+    </svg>
+    </div>
+    <figcaption><b>Two default paths blocked, one custom path open.</b> Git normally asks a "credential helper" for a login. Both defaults would have used the wrong account or stalled, so this repo has its own helper that always answers with kb2326.</figcaption>
+  </figure>
+  <h3>What went wrong, in plain terms</h3>
+  <ol class="steps">
+    <li><b>Trap 1.</b> Git for Windows ships its own login manager, set for the whole computer. It ran first and tried to open a sign-in window, so the command hung. We switched it off for this repo only. <b>If you saw a GitHub sign-in pop-up today, it is safe to close it.</b></li>
+    <li><b>Trap 2.</b> The <code>gh</code> tool can hand logins to git, but only for its <i>active</i> account, which is your work account. Asked for kb2326, it returned nothing.</li>
+    <li><b>The fix.</b> A one-line helper in this repo's config. When git needs a login, it runs <code>gh auth token --user kb2326</code>, which reads kb2326's token from the Windows keyring (the secure password store), and passes it to git. We verified it: plain <code>git push</code> reaches the private repo as kb2326.</li>
+  </ol>
+  <div class="callout info"><b>Why not just switch the active account?</b>Switching with <code>gh auth switch</code> changes it for every project on the PC, so your work repos would start pushing as kb2326. The repo-local helper keeps the two worlds separate.</div>
+  <h3>The first commit</h3>
+  <p>Commit <code>967a63c</code> holds 13 files: the baseline <code>submission/</code>, the README, the guide, <code>.mcp.json</code>, the submit guard, <code>.gitignore</code> and <code>.gitattributes</code>. The repo is <b>private</b>, and we plan to make it public for the paper, where the "Verifiability" criterion rewards shared code.</p>
+  <p class="note">About <code>.gitattributes</code>: Windows ends text lines with two invisible characters (CRLF) and Linux with one (LF). Submissions run on Linux, where Windows line endings can break scripts, so this file keeps LF in the repo.</p>
+</section>
+
+<section id="rules" class="wide">
+  <p class="kicker">Section 6</p>
+  <h2>Official rules: what we thought vs. what is true</h2>
+  <p>Kaggle renders its rule pages with JavaScript, so earlier we only had community reports. The MCP read the real pages (saved in <code>data/official/</code>). Three community claims turned out to be wrong or incomplete.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Question</th><th>What we had heard</th><th>Official answer</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Which models?</td><td>"Only 31B works"</td><td>31B, 12B, E4B or E2B. Every agent and sub-agent must use the same one.</td><td><span class="pill no">claim wrong</span></td></tr>
+      <tr><td>Time limit?</td><td>"About 5 min per task"</td><td><b>12 hours for all tasks together</b>, including sandbox setup, not counting grading. Per-task caps are optional.</td><td><span class="pill mid">right in practice</span></td></tr>
+      <tr><td>Practice hardware?</td><td>"Free T4 GPUs only"</td><td>Notebooks attached to this competition can use the <b>same 4×L4 machines</b> used for scoring, internet off, at 2× quota cost.</td><td><span class="pill ok">better than thought</span></td></tr>
+      <tr><td>Outside data?</td><td>Unknown</td><td>Allowed if public and free for everyone.</td><td><span class="pill ok">allowed</span></td></tr>
+      <tr><td>Using Claude or GPT outputs to train Gemma?</td><td>Unknown</td><td>Staff: allowed only within each model's license terms. Claude's and GPT's terms forbid it, so in practice no.</td><td><span class="pill no">off the table</span></td></tr>
+      <tr><td>Winners' code</td><td>Unknown</td><td>Must be released under an open-source license (Apache 2.0) with reproducible instructions.</td><td><span class="pill acc">plan for it</span></td></tr>
+      <tr><td>Prizes</td><td>$65K total</td><td>$37,000 / $18,000 / $10,000 for places 1–3.</td><td><span class="pill acc">confirmed</span></td></tr>
+      <tr><td>Key dates</td><td>Dec 2 final</td><td>Entry and team merge: Nov 25. Final: Dec 2. Paper: Nov 12. All at 11:59 PM UTC, which is 5:29 AM the next day in India.</td><td><span class="pill acc">confirmed</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>Why 12 hours matters so much</b>About 120 tasks run one after another inside 12 hours, so each task gets roughly 6 minutes on average. If the whole run goes over, the submission gets no score. That is why we will cap each task at about 4.5–5 minutes in <code>submission/eval_config.yaml</code>.</div>
+</section>
+
+<section id="paper">
+  <p class="kicker">Section 7</p>
+  <h2>Paper track rules</h2>
+  <ul>
+    <li><b>Format:</b> a Kaggle Writeup of at most <b>3,000 words</b> with a title and subtitle, abstract, introduction, methods and experiments, and related work with citations. A public notebook and an arXiv-style PDF are optional extras.</li>
+    <li><b>Originality:</b> the work must be unpublished. The track is non-archival, so you can still send the paper to a conference later.</li>
+    <li><b>Judging:</b> five criteria, 0–5 each, equal weight: <b>Novelty</b>, <b>Quality</b> (does it generalize?), <b>Relevance</b>, <b>Verifiability</b> (could someone reproduce it?) and <b>Clarity</b>.</li>
+    <li><b>Awards:</b> Best Paper $15,000, Best New Resource $10,000 and Best New Application $10,000, shown at a Google event such as a NeurIPS expo workshop.</li>
+    <li><b>Hint from the hosts:</b> papers that use the released <b>code graph and embedding data</b> are "highly encouraged".</li>
+    <li><b>Deadline:</b> Nov 12, 11:59 PM UTC. Drafts that are saved but not submitted are ignored.</li>
+  </ul>
+  <div class="callout tip"><b>Why this suits us</b>About 240 teams compete for three awards here, against about 3,040 teams in the main track. Our favourite question, whether the graph tools help a small model find the right code, is exactly the kind of work the hosts asked for.</div>
+</section>
+
+<section id="notebook" class="wide">
+  <p class="kicker">Section 8</p>
+  <h2>The official starter notebook, step by step</h2>
+  <p>Written by Kaggle staff (Ryan Holbrook) and voted up more than 1,500 times. It runs on an L4 machine with internet off and attaches the competition data, a <b>wheelhouse</b> dataset (the harness packages) and the four Gemma 4 models. A copy is saved in <code>data/official/</code>. Our practice notebook will be built from it.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 780 260" role="img" aria-label="The starter notebook's six steps: install the harness from the wheelhouse, load tasks and the agent, try the graph tools, start the vLLM server, run and grade tasks in the subprocess sandbox, and validate and zip the submission.">
+      <defs><marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="20" width="220" height="78" rx="8"/><rect x="280" y="20" width="220" height="78" rx="8"/><rect x="550" y="20" width="220" height="78" rx="8"/>
+        <rect x="550" y="160" width="220" height="78" rx="8"/><rect x="280" y="160" width="220" height="78" rx="8" stroke="var(--accent)" stroke-width="2.5"/><rect x="10" y="160" width="220" height="78" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" text-anchor="middle">
+        <text x="120" y="50" font-size="13" font-weight="600">1 · Install harness</text><text x="120" y="70" font-size="11" opacity=".7">offline, from the wheelhouse</text>
+        <text x="390" y="50" font-size="13" font-weight="600">2 · Load tasks + agent</text><text x="390" y="70" font-size="11" opacity=".7">choose the model here</text>
+        <text x="660" y="50" font-size="13" font-weight="600">3 · Try graph tools</text><text x="660" y="70" font-size="11" opacity=".7">neighbors, similar code</text>
+        <text x="660" y="190" font-size="13" font-weight="600">4 · Start vLLM</text><text x="660" y="210" font-size="11" opacity=".7">Gemma across 4 GPUs</text>
+        <text x="390" y="190" font-size="13" font-weight="600" fill="var(--accent)">5 · Run + grade tasks</text><text x="390" y="210" font-size="11" opacity=".7">subprocess sandbox</text>
+        <text x="120" y="190" font-size="13" font-weight="600" fill="var(--add)">6 · Validate + zip</text><text x="120" y="210" font-size="11" opacity=".7">→ submission.zip</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#m3)">
+        <line x1="230" y1="59" x2="276" y2="59"/><line x1="500" y1="59" x2="546" y2="59"/>
+        <line x1="660" y1="98" x2="660" y2="156"/>
+        <line x1="550" y1="199" x2="504" y2="199"/><line x1="280" y1="199" x2="234" y2="199"/>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Six cells, top to bottom.</b> Step 5 (blue) is where our experiments happen. Step 6 (green) produces the file you upload.</figcaption>
+  </figure>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Step</th><th>What it really does</th><th>Why it matters to us</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Install</td><td>Installs <code>swegemma</code>, <code>adk-submission</code>, vLLM and friends from the wheelhouse dataset, because the notebook has no internet.</td><td>Answers our day-one question: the harness lives in the wheelhouse, not the competition data.</td></tr>
+      <tr><td>2 · Load</td><td>Reads the 129 tasks and copies the sample agent. One variable, <code>MODEL_NAME</code>, picks the model; it is set to <b>12B</b>. For anything but 31B it strips the dummy LoRA adapters.</td><td>The cheapest place to switch models while experimenting.</td></tr>
+      <tr><td>3 · Graph tools</td><td>Loads a repo's code graph and calls the same functions behind <code>get_code_neighbors</code>, <code>search_similar_code</code> and <code>get_code_subgraph</code>.</td><td>A playground for the paper question about graph tools.</td></tr>
+      <tr><td>4 · vLLM</td><td>Starts the model server with the same settings as scoring: 32,768-token context, the Gemma 4 tool-call parser, split across 4 GPUs. Takes a few minutes.</td><td>Practice and scoring behave the same way.</td></tr>
+      <tr><td>5 · Run + grade</td><td>Runs the agent on tasks (2 by default), then grades each patch. Prints solved or not, tool calls used and time taken.</td><td>Gives us the numbers we need: time per task and solved rate.</td></tr>
+      <tr><td>6 · Package</td><td>Checks for symlinks, file types and the 3 GiB limit, then builds <code>submission.zip</code>.</td><td>Catches mistakes before you spend a daily submission.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout info"><b>One important difference from scoring</b>Kaggle notebooks cannot run Docker, so the notebook uses the <b>subprocess sandbox</b>: plain folders and processes instead of containers. Scoring uses Docker. Section 9 explains why that difference matters.</div>
+</section>
+
+<section id="forum" class="wide">
+  <p class="kicker">Section 9</p>
+  <h2>What the forum taught us</h2>
+  <h3>1. Some practice tasks fail even with the real fix</h3>
+  <p>One competitor applied the developers' real fixes (the gold patches) to 6 practice tasks in the notebook environment. Only 2 passed. Some FastAPI tests import packages missing from the notebook (<code>dirty_equals</code>, <code>inline_snapshot</code>), and some Requests and httpx tests ran the <i>installed</i> library instead of the edited code. Staff said Docker scoring does not show these failures; the subprocess sandbox does.</p>
+  <p>So before trusting any practice score, we run a <b>positive control</b>: give every task its known-correct answer and see whether it passes.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 780 180" role="img" aria-label="Positive control: apply the gold patch to each practice task and run its tests; if it passes, the task is trustworthy and kept; if it fails, the environment is broken for that task and it is dropped.">
+      <defs><marker id="m4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke-width="1.5">
+        <rect x="10" y="60" width="130" height="60" rx="8" stroke="currentColor"/>
+        <rect x="180" y="60" width="180" height="60" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="400" y="60" width="130" height="60" rx="8" stroke="currentColor"/>
+        <rect x="580" y="10" width="190" height="64" rx="8" stroke="var(--add)" stroke-width="2"/>
+        <rect x="580" y="106" width="190" height="64" rx="8" stroke="var(--del)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" text-anchor="middle">
+        <text x="75" y="86" font-size="13" font-weight="600">Practice task</text><text x="75" y="104" font-size="11" opacity=".7">one of 129</text>
+        <text x="270" y="86" font-size="13" font-weight="600" fill="var(--accent)">+ gold patch</text><text x="270" y="104" font-size="11" opacity=".7">the known-correct fix</text>
+        <text x="465" y="86" font-size="13" font-weight="600">Run tests</text><text x="465" y="104" font-size="11" opacity=".7">no agent, no GPU</text>
+        <text x="675" y="38" font-size="13" font-weight="600" fill="var(--add)">Pass → keep</text><text x="675" y="57" font-size="11" opacity=".75">trustworthy task</text>
+        <text x="675" y="134" font-size="13" font-weight="600" fill="var(--del)">Fail → drop</text><text x="675" y="153" font-size="11" opacity=".75">environment is broken</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" marker-end="url(#m4)">
+        <line x1="140" y1="90" x2="176" y2="90"/><line x1="360" y1="90" x2="396" y2="90"/>
+        <line x1="530" y1="80" x2="576" y2="48"/><line x1="530" y1="100" x2="576" y2="134"/>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Test the test before testing the agent.</b> If a task cannot pass with the perfect answer, an agent failing it tells us nothing. This runs on CPU only and costs no GPU quota.</figcaption>
+  </figure>
+  <h3>2. Distillation from Claude or GPT is off the table</h3>
+  <p>A grandmaster asked whether teams may train Gemma on transcripts from paid models. Staff answered: only within each model's license terms. Anthropic's and OpenAI's terms forbid using outputs to train other models, so our LoRA plan uses only Gemma's own successful runs or openly licensed data. This matches what we planned from the start.</p>
+  <h3>3. The L4×4 machines are busy</h3>
+  <p>Pinned threads cover queue delays, "Kaggle Error" submissions and runs that took 15 hours to score. Lesson: start runs early, never on deadline day.</p>
+  <h3>4. Threads to read next</h3>
+  <ul>
+    <li><b>"Stronger models barely beat Gemma 4 31B in this harness."</b> Someone tested much stronger models on the 124 public tasks, and they barely did better. The harness and its limits may be the real bottleneck, which is good material for the paper.</li>
+    <li><b>"Gemma 4 agent experiments: sampling, thinking, time limits, tool ablations."</b> Someone else's early experiments, so we don't repeat them.</li>
+    <li><b>"The public leaderboard has exactly 58 tasks."</b> So one solved task moves your score by about 0.017.</li>
+    <li><b>"The top of the leaderboard is dominated by those who trained LoRAs."</b> A claim we will weigh against the mixed evidence in the main guide.</li>
+  </ul>
+</section>
+
+<section id="quota" class="wide">
+  <p class="kicker">Section 10</p>
+  <h2>Your GPU budget</h2>
+  <p>Read live from Kaggle today: <b>30 hours</b> of GPU a week, <b>none used yet</b>, resetting on <b>Oct 24</b>. L4×4 machines count double.</p>
+  <div class="bars" role="img" aria-label="Weekly GPU quota 30 hours; if spent on L4x4 that is 15 hours of runtime; tomorrow's plan uses about 2 hours of L4x4, which is 4 hours of quota.">
+    <div class="bar"><span>Weekly quota</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="n">30 h</span></div>
+    <div class="bar"><span>As L4×4 runtime</span><div class="track"><div class="fill" style="width:50%"></div></div><span class="n">15 h</span></div>
+    <div class="bar"><span>Tomorrow (≈2 h L4×4)</span><div class="track"><div class="fill w" style="width:13.3%"></div></div><span class="n">4 h</span></div>
+  </div>
+  <p class="note">The positive control runs on CPU and costs nothing. Only the agent run uses GPU quota.</p>
+</section>
+
+<section id="tomorrow" class="wide">
+  <p class="kicker">Section 11</p>
+  <h2>Day 2 plan</h2>
+  <div class="callout tip"><b>Done on Oct 18</b>Every step below was completed. Results are in the Day 2 sections that follow.</div>
+  <p>Each step lists who does it. I explain as we go and ask before anything that uses quota or touches your Kaggle account.</p>
+  <ol class="check">
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">You · 2 minutes</div>Open the <a href="https://www.kaggle.com/code/ryanholbrook/getting-started-gemma-4-developer-agent">starter notebook</a> in your browser and skim it with section 8 of these notes beside it.</div></li>
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">Me</div>Build our practice notebook from the official one. Step 5 becomes a loop over many tasks that writes a results table.</div></li>
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">Me, CPU only, your approval</div>Run the positive control on all 129 tasks and save the list of trustworthy tasks.</div></li>
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">Me, about 2 h of L4×4, your approval</div>Run the unchanged baseline agent on 3 trustworthy tasks with a 5-minute cap. Measure time per task, tool calls and solved or not.</div></li>
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">Together</div>Read one full agent transcript, step by step. This is the best way to see how Gemma actually thinks and fails.</div></li>
+    <li><span class="box" aria-hidden="true"></span><div><div class="who">Me</div>Commit the notebook and results to your repo and update these notes.</div></li>
+  </ol>
+  <div class="callout info"><b>Nothing runs on its own</b>The practice notebook is pushed to Kaggle as a <b>private</b> notebook under your account. It only runs when you say so, and no competition submission happens tomorrow.</div>
+</section>
+
+<section id="d2-glance" class="wide">
+  <p class="kicker">Day 2 · Section 12</p>
+  <h2>Day 2 at a glance</h2>
+  <div class="status">
+    <div class="done"><div class="lbl">Done</div><ul>
+      <li>Fixed a failed first try (wrong Python version)</li>
+      <li>Checked all 129 practice bugs: <b>71 are fair</b></li>
+      <li>First agent run: <b>4 of 5</b> easy bugs fixed</li>
+      <li>First leaderboard submission sent</li>
+    </ul></div>
+    <div class="next"><div class="lbl">Running then, done since</div><ul>
+      <li>30-task practice run on L4 (started 12:44): 11/30 solved (§19)</li>
+      <li>Leaderboard submission: scored 0.12 (§26)</li>
+    </ul></div>
+    <div class="open"><div class="lbl">Next</div><ul>
+      <li>Read the 30 transcripts and sort the failures</li>
+      <li>Compare practice score with leaderboard score</li>
+      <li>First improvement experiment</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="d2-why">
+  <p class="kicker">Section 13</p>
+  <h2>Why we measure before changing anything</h2>
+  <p>We cannot tell whether a change helps unless we know the score <b>before</b> the change, measured on the <b>same tasks</b>. A doctor runs tests before prescribing; this is the same idea. Engineers call it <b>eval-driven development</b>, and it is how serious agent teams work.</p>
+  <ol class="steps">
+    <li><b>Check the ruler.</b> Make sure each practice bug can actually pass. (Section 16)</li>
+    <li><b>Take a first reading.</b> Run the unchanged agent. (Sections 17 and 19)</li>
+    <li><b>Get the real number.</b> Submit to the leaderboard, which uses hidden tasks. (Section 18)</li>
+    <li><b>Read the failures.</b> Transcripts show <i>why</i> Gemma fails, which tells us what to fix first.</li>
+    <li><b>Change one thing, measure again,</b> on the same tasks. Keep only what helps.</li>
+  </ol>
+  <div class="callout info"><b>Where each step comes from</b>The notebook flow is adapted from the official starter notebook. Checking each task with its real fix is how SWE-bench itself validates tasks. The forum showed why it is needed here. Measuring one change at a time is also what the paper's Verifiability criterion rewards.</div>
+</section>
+
+<section id="d2-pipeline" class="wide">
+  <p class="kicker">Section 14</p>
+  <h2>Our pipeline: one repo, four notebooks</h2>
+  <p>All notebooks are generated by one script, <code>notebooks/build_notebooks.py</code>, and they all read the agent from your repo's <code>submission/</code> folder. So <b>what we test is exactly what we submit</b>.</p>
+  <figure>
+    <div class="scroll">
+    <svg viewBox="0 0 800 290" role="img" aria-label="Pipeline: the repo's submission folder feeds the build script, which generates four notebooks: controls on CPU producing the trusted task list, baseline and practice30 on L4 producing results and transcripts, and submit on L4 producing the leaderboard submission.">
+      <defs><marker id="m5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="10" y="105" width="170" height="80" rx="8" stroke="var(--accent)" stroke-width="2.5"/>
+        <rect x="215" y="115" width="160" height="60" rx="8"/>
+        <rect x="420" y="10" width="200" height="50" rx="8"/>
+        <rect x="420" y="80" width="200" height="50" rx="8"/>
+        <rect x="420" y="150" width="200" height="50" rx="8"/>
+        <rect x="420" y="220" width="200" height="50" rx="8" stroke="var(--add)" stroke-width="2"/>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="12.5" text-anchor="middle">
+        <text x="95" y="135" font-weight="600" fill="var(--accent)">Your repo</text><text x="95" y="153" font-size="10.5" opacity=".7">submission/ (the agent)</text><text x="95" y="168" font-size="10.5" opacity=".7">practice30.json</text>
+        <text x="295" y="141" font-weight="600">build script</text><text x="295" y="158" font-size="10.5" opacity=".7">writes 4 notebooks</text>
+        <text x="520" y="31" font-weight="600">controls · CPU</text><text x="520" y="48" font-size="10.5" opacity=".7">grade real fix + no fix</text>
+        <text x="520" y="101" font-weight="600">baseline · L4</text><text x="520" y="118" font-size="10.5" opacity=".7">agent on 5 easy bugs</text>
+        <text x="520" y="171" font-weight="600">practice30 · L4</text><text x="520" y="188" font-size="10.5" opacity=".7">agent on 30 mixed bugs</text>
+        <text x="520" y="241" font-weight="600" fill="var(--add)">submit · L4</text><text x="520" y="258" font-size="10.5" opacity=".7">build + validate zip</text>
+      </g>
+      <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="start">
+        <text x="650" y="39">71 fair bugs</text><text x="650" y="109">4/5 solved</text><text x="650" y="179">11/30 solved</text><text x="650" y="249" fill="var(--add)">leaderboard</text>
+      </g>
+      <g stroke="currentColor" stroke-width="1.5" fill="none" marker-end="url(#m5)">
+        <line x1="180" y1="145" x2="211" y2="145"/>
+        <line x1="375" y1="140" x2="416" y2="35"/><line x1="375" y1="143" x2="416" y2="105"/><line x1="375" y1="147" x2="416" y2="175"/><line x1="375" y1="150" x2="416" y2="245"/>
+        <line x1="620" y1="35" x2="644" y2="35"/><line x1="620" y1="105" x2="644" y2="105"/><line x1="620" y1="175" x2="644" y2="175"/><line x1="620" y1="245" x2="644" y2="245" stroke="var(--add)"/>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>One source, four jobs.</b> Change the agent in <code>submission/</code>, rebuild, and every notebook picks it up. Results come back to the repo under <code>experiments/</code>.</figcaption>
+  </figure>
+</section>
+
+<section id="d2-fail">
+  <p class="kicker">Section 15</p>
+  <h2>The first try failed, and why</h2>
+  <p>Both notebooks crashed in the first cell. The log said: <code>cp312 … is not a supported wheel on this platform</code>.</p>
+  <ul>
+    <li><b>Cause:</b> the harness packages are built for <b>Python 3.12</b> (<code>cp312</code> in the file names). Kaggle recently switched its default environment to <b>Python 3.13</b>, so the install was rejected.</li>
+    <li><b>Fix:</b> pin the exact environment image the official notebook uses (Python 3.12.13), in each notebook's <code>kernel-metadata.json</code>.</li>
+    <li><b>Guard:</b> the first cell now stops in seconds with a plain message if Python is ever wrong again.</li>
+    <li><b>Cost:</b> a few minutes; it died during setup.</li>
+  </ul>
+  <div class="callout tip"><b>Lesson</b>When you copy someone's setup, copy the <b>environment</b>, not just the code. "Works on their machine, fails on mine" usually means a version difference.</div>
+</section>
+
+<section id="d2-controls" class="wide">
+  <p class="kicker">Section 16</p>
+  <h2>Which practice bugs are fair: 71 of 129</h2>
+  <p>For every practice bug, the <code>controls</code> notebook graded two patches with the harness's own grader. No AI was involved. It ran on CPU, used <b>no GPU quota</b>, and took about 20 minutes (about 11 seconds per grading).</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Project</th><th>Fair</th><th>Broken: real fix fails</th><th>Blind: passes with no fix</th></tr></thead>
+    <tbody>
+      <tr><td>FastAPI</td><td><span class="pill ok">29</span></td><td><span class="pill no">36</span></td><td><span class="pill mid">2</span></td></tr>
+      <tr><td>Rich</td><td><span class="pill ok">42</span></td><td><span class="pill no">6</span></td><td>0</td></tr>
+      <tr><td>Requests</td><td>0</td><td><span class="pill no">12</span></td><td><span class="pill mid">1</span></td></tr>
+      <tr><td>httpx</td><td>0</td><td><span class="pill no">1</span></td><td>0</td></tr>
+      <tr><td>Total</td><td><b>71</b></td><td><b>55</b></td><td><b>3</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Better than the forum's 43.</b> Kaggle's notebook environment has more of the needed packages than the public kit, so more FastAPI bugs work.</li>
+    <li><b>Requests and httpx are unusable</b> for practice: their tests run the installed library instead of the edited code.</li>
+    <li>The list is saved in your repo as <code>experiments/controls/trusted_tasks.json</code>.</li>
+  </ul>
+  <div class="callout"><b>The most important forum finding</b>Staff: <i>"None of the repos in the training tasks are present in the test set"</i>, and every hidden task passes 100% with its real fix. So the hidden bugs come from <b>different projects</b>. We must build general bug-fixing skill, never tricks for FastAPI or Rich.</div>
+</section>
+
+<section id="d2-baseline" class="wide">
+  <p class="kicker">Section 17</p>
+  <h2>First agent run: 4 of 5 easy bugs fixed</h2>
+  <p>The <b>unchanged official agent</b> (Gemma 4 31B) ran on 5 small, fair bugs on 4× L4 GPUs, with 5 minutes and 100 tool calls per bug.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Bug</th><th>Fixed?</th><th>Time</th><th>Tool calls</th></tr></thead>
+    <tbody>
+      <tr><td>fastapi_14786</td><td><span class="pill ok">yes</span></td><td>64 s</td><td>9</td></tr>
+      <tr><td>rich_3043</td><td><span class="pill ok">yes</span></td><td>278 s</td><td>16</td></tr>
+      <tr><td>rich_4077</td><td><span class="pill ok">yes</span></td><td>188 s</td><td>16</td></tr>
+      <tr><td>rich_3882</td><td><span class="pill ok">yes</span></td><td>86 s</td><td>11</td></tr>
+      <tr><td>fastapi_14479</td><td><span class="pill no">no</span></td><td>218 s</td><td>25</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Average 2.8 minutes per bug</b>, all within the limit. Loading Gemma took <b>7 minutes</b> before the first bug.</li>
+    <li>The whole run took 23 minutes, about <b>46 minutes of quota</b> (L4 counts double).</li>
+    <li><b>Not our real score:</b> these were the 5 easiest bugs. It proves the pipeline works end to end.</li>
+  </ul>
+  <h3>The one failure: right place, wrong words</h3>
+  <p>Gemma found the exact line, but the hidden test checks the error message word for word:</p>
+  <div class="diff" aria-label="Agent message versus real fix">
+    <div class="m">- Gemma:     "Query param {param_name!r} must be of one of the supported types"</div>
+    <div class="p">+ Real fix:  "Query parameter {param_name!r} must be one of the supported types"</div>
+  </div>
+  <p class="note">The bug report never gave the exact text, so this was partly bad luck. It is still a pattern to remember: tests often check exact strings.</p>
+</section>
+
+<section id="d2-submit" class="wide">
+  <p class="kicker">Section 18</p>
+  <h2>Our first leaderboard submission</h2>
+  <p>A submission is a <b>notebook whose output is <code>submission.zip</code></b>. Kaggle then runs that zip on its scoring machines against the hidden tasks. Our small <code>submit</code> notebook builds the zip from the repo and checks it with the competition's own validator first, so a broken zip cannot waste the daily submission.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>File in the zip</th><th>What it is</th><th>Changed?</th></tr></thead>
+    <tbody>
+      <tr><td><code>agent.yaml</code></td><td>Main agent: Gemma 4 31B, its 9 tools, a helper agent</td><td>No</td></tr>
+      <tr><td><code>prompts/system.md</code></td><td>Instructions: find the file, small fix, one targeted test, submit</td><td>No</td></tr>
+      <tr><td><code>sub_agents/</code>, <code>prompts/analyzer.md</code></td><td>Read-only helper that reports where the bug is</td><td>No</td></tr>
+      <tr><td><code>configs/sampling.yaml</code></td><td>Temperature 0.2, thinking budget</td><td>No</td></tr>
+      <tr><td><code>adapters/</code></td><td>Two placeholder LoRA files from the example</td><td>No</td></tr>
+      <tr><td><code>eval_config.yaml</code></td><td>Time budget per bug</td><td><span class="pill acc">Yes</span> 4.5 min and 100 tool calls (the example had 1 min and 10)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Why 4.5 minutes:</b> 12 hours for about 120 hidden bugs is about 6 minutes each, including setup. Going over means <b>no score at all</b>, so we keep a margin.</li>
+    <li><b>Expected score: about 0.10–0.18.</b> The leaderboard top is 0.24. Hidden bugs are harder than our easy five and come from other projects.</li>
+    <li><b>Why submit something this basic:</b> it is our real starting number, it proves our zip and time budget work on the real scorer, and it lets us check whether practice scores predict the leaderboard.</li>
+    <li><b>Status:</b> sent Oct 18, 12:46; scored 0.12 public (see §26).</li>
+  </ul>
+</section>
+
+<section id="d2-practice">
+  <p class="kicker">Section 19</p>
+  <h2>The 30-task practice run, unchanged on purpose</h2>
+  <p>We run the same unchanged agent on <b>30 fair bugs</b>: 13 FastAPI and 17 Rich, with fixes from 1 to 137 changed lines (median 7). This list, <code>experiments/practice30.json</code>, is now fixed: every future experiment uses exactly these 30.</p>
+  <ul>
+    <li><b>Why not reuse the 5-bug run?</b> Those were the easiest bugs, and 5 is too few: one lucky task moves the score by 20%.</li>
+    <li><b>Why no changes?</b> It is the "before" number. If a later change gets 16/30 where this gets 12/30, we know the change helped by 4 bugs.</li>
+    <li><b>What it gives us:</b> a realistic practice score, about 30 transcripts with many failures to learn from, and a check against the leaderboard score.</li>
+    <li><b>Cost:</b> about 2 hours on L4, roughly 4 hours of the 30-hour weekly quota.</li>
+  </ul>
+</section>
+
+<section id="d2-where" class="wide">
+  <p class="kicker">Section 20</p>
+  <h2>What runs where</h2>
+  <p>Your laptop is the <b>remote control</b>. The real work happens on Kaggle's machines.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Action</th><th>Tool</th><th>Runs on</th><th>If you close VS Code</th></tr></thead>
+    <tbody>
+      <tr><td>Upload and run a notebook</td><td>Kaggle CLI <code>kernels push</code></td><td>Kaggle</td><td><span class="pill ok">keeps running</span></td></tr>
+      <tr><td>Agent, tests, GPUs</td><td>Inside our notebooks</td><td>Kaggle</td><td><span class="pill ok">keeps running</span></td></tr>
+      <tr><td>Leaderboard scoring</td><td>Kaggle CLI <code>competitions submit</code></td><td>Kaggle scoring machines</td><td><span class="pill ok">keeps running</span></td></tr>
+      <tr><td>Status, results, logs</td><td>Kaggle CLI <code>kernels status</code>, <code>kernels output</code></td><td>Asks Kaggle</td><td>Ask again later</td></tr>
+      <tr><td>Rules, forum, quota</td><td>Kaggle MCP</td><td>Asks Kaggle</td><td>Ask again later</td></tr>
+      <tr><td>Watchers</td><td>A small loop that asks for status every few minutes</td><td>Your PC</td><td><span class="pill mid">stops (harmless)</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Kaggle has no "notify me when done" feature, so the watcher repeatedly asks <code>kaggle kernels status</code> and tells me when the answer changes. You can also check runs yourself on the notebook pages, or the score under the competition's Submissions tab.</p>
+</section>
+
+<section id="d2-paper" class="wide">
+  <p class="kicker">Section 21</p>
+  <h2>The paper track's three awards</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Award</th><th>Prize</th><th>What they want</th></tr></thead>
+    <tbody>
+      <tr><td>Overall Best Paper</td><td>$15,000</td><td>Highest average score on the five criteria.</td></tr>
+      <tr><td>Best New Resource</td><td>$10,000</td><td>Something new others can use: a dataset, tool or library. Their examples: a dataset built from the provided embeddings to test or train Gemma; a dashboard to find GitHub repos similar to a target repo.</td></tr>
+      <tr><td>Best New Application</td><td>$10,000</td><td>A new use for the code graphs or embeddings, beyond bug fixing. Their example: using code graphs to write TPU kernels. Applying them to a different benchmark also counts.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout tip"><b>Why Best New Application suits you</b>It rewards creative applications, which is an agent builder's strength, not training expertise. One idea from your world: use code graphs to help an agent understand an e-commerce codebase ("what breaks if I change checkout?") and measure whether it helps. Winners are shown at a Google event at NeurIPS 2026.</div>
+</section>
+
+<section id="d2-learn">
+  <p class="kicker">Section 22</p>
+  <h2>Phase 2: learning model training from scratch</h2>
+  <p>You have built agents for 1.5 years but have not trained models yet, so phase 2 starts from zero, one small step at a time:</p>
+  <ol class="steps">
+    <li><b>What training is:</b> how a model learns from examples.</li>
+    <li><b>Pretraining vs. fine-tuning:</b> building a model from zero vs. teaching an existing one a new skill.</li>
+    <li><b>LoRA:</b> fine-tuning cheaply by training a small add-on instead of the whole model.</li>
+    <li><b>Hands-on, tiny first:</b> fine-tune a small model on Kaggle, where mistakes are cheap.</li>
+    <li><b>The real thing:</b> a LoRA for Gemma trained on its own successful bug fixes.</li>
+    <li><b>RL, briefly:</b> learning from rewards such as "tests passed" instead of from examples.</li>
+  </ol>
+  <div class="callout"><b>One rule</b>We train only on Gemma's own successful runs or openly licensed data. Training on Claude's or GPT's outputs is not allowed by their terms, and staff confirmed that limit applies here.</div>
+</section>
+
+<section id="d2-e0" class="wide">
+  <p class="kicker">Section 23 · Oct 18 evening</p>
+  <h2>Noise measured, E2 started</h2>
+  <p>After writing the experiment plan, we ran <b>E0</b>: the exact same agent on the exact same 30 bugs, a second time. Nothing changed, so any difference between the two runs is pure luck. This tells us how big a difference a later change must make before we believe it.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Run 1</th><th>E0 (identical)</th></tr></thead>
+    <tbody>
+      <tr><td>Solved</td><td>11 / 30</td><td>12 / 30</td></tr>
+      <tr><td>Ran out of time</td><td>15</td><td>11</td></tr>
+      <tr><td>Context crashes</td><td>1</td><td><span class="pill no">4</span></td></tr>
+      <tr><td>Avg time per bug</td><td>237 s</td><td>233 s</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>3 of 30 bugs flipped</b> between identical runs: <code>fastapi_11194</code> and <code>rich_3043</code> became solved, <code>rich_4077</code> became unsolved. About 10% of results are luck.</li>
+    <li><b>The rule that follows:</b> a change must gain at least 3 bugs (net) before we keep it. From now on, 10 bugs count as "always solved", 3 as "flaky" (ignored) and 17 as "never solved".</li>
+    <li><b>The failure pattern repeated</b>: slow, overthinking steps on failed bugs and the same 7 never-edited bugs. The analysis from the first run holds.</li>
+    <li><b>Reading the live log:</b> the many <code>ensurepip unavailable</code> and <code>Debugger warning</code> lines are harmless. The one real error was a context crash, with the exact message our research predicted: 16,384 output tokens requested on top of a 16,385-token conversation, over the 32,768 limit.</li>
+  </ul>
+  <h3>Decision: E2 before E1</h3>
+  <p>Crashes jumped from 1 to 4, and each one throws away a whole bug's work. Crashes are mechanical, not random, and they would blur the measurement of the thinking change. So we moved <b>E2</b> (output limit) ahead of <b>E1</b> (thinking budget). It is still one change per experiment.</p>
+  <h3>E2: what exactly changed</h3>
+  <div class="diff" aria-label="E2 change in submission/configs/sampling.yaml">
+    <div class="h">submission/configs/sampling.yaml</div>
+    <div class="m">- max_output_tokens: 16384</div>
+    <div class="p">+ max_output_tokens: 8192</div>
+  </div>
+  <p>Before launching, we compared the agent files inside the E0 and E2 notebooks: of 8 files, exactly 1 line in 1 file differs. That check is what makes the result trustworthy: if E2 behaves differently, this line is the only possible cause. E2 runs as Kaggle notebook <code>gemma4-e2</code> (about 2.2 hours, about 4.3 hours of quota). Its target is <b>zero context crashes</b> without losing any always-solved bug.</p>
+</section>
+
+<section id="d2-e2" class="wide">
+  <p class="kicker">Section 24 · Oct 18, 20:35</p>
+  <h2>E2 result: the crash fix is kept</h2>
+  <p>E2 changed one line: the most text Gemma may write in one step went from 16,384 to 8,192 tokens. The goal was to stop the crashes that happen when the conversation plus the allowed answer goes over the 32,768-token limit.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Run 1</th><th>E0</th><th>E2</th></tr></thead>
+    <tbody>
+      <tr><td>Solved</td><td>11</td><td>12</td><td><span class="pill ok">13</span></td></tr>
+      <tr><td>Context crashes</td><td>1</td><td>4</td><td><span class="pill ok">0</span></td></tr>
+      <tr><td>Ran out of time</td><td>15</td><td>11</td><td>15</td></tr>
+      <tr><td>Never edited</td><td>7</td><td>7</td><td>6</td></tr>
+      <tr><td>Longest task</td><td>499 s</td><td>276 s</td><td><span class="pill mid">572 s</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Applying the keep rule</h3>
+  <ul>
+    <li><b>Gained</b> (never solved before, solved now): <code>rich_3278</code>. <b>Lost</b> (always solved before, failed now): <code>rich_2725</code>, which ran out of time. Net 0, which is inside the noise.</li>
+    <li><b>Targeted metric</b>: crashes fell from 4 to 0, a 100% drop, far above the 20% bar.</li>
+    <li><b>Verdict: kept.</b> The second path of the rule applies: the change fixed exactly what it aimed at without losing bugs overall.</li>
+  </ul>
+  <h3>Three side findings</h3>
+  <ul>
+    <li><b>The helper agent overflowed once.</b> On <code>rich_3472</code> Gemma used its helper for the first time in any run. The helper's conversation reached 24,577 tokens and, with 8,192 for its answer, went past the limit. Only that helper step failed; the task carried on.</li>
+    <li><b>Correction (Oct 19): no time overrun.</b> We first read <code>rich_3772</code>'s 572 seconds as running past the 270-second limit. In fact about 300 of those seconds were grading (its tests are slow), which does not count toward the 12-hour limit. The agent itself never exceeded about 271 seconds.</li>
+    <li><b>Graph search was misused.</b> Gemma searched for the issue number "3417" instead of a function name. The tools need clearer instructions, which is what E6 will test.</li>
+  </ul>
+  <h3>The new yardstick for E1</h3>
+  <p>We now pool all three runs. <b>9 bugs</b> were solved every time, <b>5 are flaky</b> (solved in some runs only, so ignored) and <b>16 were never solved</b>. E1, the thinking-budget change, will be judged against this split, with E2's output limit kept in place.</p>
+</section>
+
+<section id="d2-e1" class="wide">
+  <p class="kicker">Section 25 · Oct 18, 23:35</p>
+  <h2>E1 result: not kept, and why that is useful</h2>
+  <p>E1 changed one line on top of E2: the most Gemma may think before each action went from 4,096 to 2,048 tokens. The idea came from our first analysis, where failed bugs showed long silent thinking.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>Run 1</th><th>E0</th><th>E2</th><th>E1</th></tr></thead>
+    <tbody>
+      <tr><td>Solved</td><td>11</td><td>12</td><td>13</td><td>12</td></tr>
+      <tr><td>Ran out of time</td><td>15</td><td>11</td><td>15</td><td><span class="pill mid">15</span></td></tr>
+      <tr><td>Seconds per step</td><td>9.9</td><td>10.0</td><td>10.1</td><td>9.3</td></tr>
+      <tr><td>Longest single step (tokens)</td><td>4,538</td><td>4,256</td><td>4,139</td><td><span class="pill ok">2,262</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Applying the keep rule</h3>
+  <ul>
+    <li><b>Gained:</b> <code>fastapi_9753</code>, <code>rich_3777</code>. <b>Lost:</b> <code>rich_3454</code>. Net +1, which is inside the noise.</li>
+    <li><b>Targeted metric:</b> timeouts stayed at 15; time per step fell only 7%, below the 20% bar.</li>
+    <li><b>Verdict: not kept.</b> The setting goes back to 4,096, and E2 remains our current version.</li>
+  </ul>
+  <h3>Why it barely mattered</h3>
+  <p>The cap did its job: the longest step dropped from about 4,500 to 2,262 tokens. But only about 2% of all steps ever think that long, and 95% stay under about 1,000 tokens. So the time is not lost in rare thinking bursts. It is lost to many ordinary steps: about 25 steps of about 10 seconds each fill the whole 4.5 minutes.</p>
+  <div class="callout tip"><b>The lesson</b>Our first diagnosis was right about the worst cases but wrong about where most of the time goes. Only measuring revealed that. A "failed" experiment that changes your understanding is a good result: it tells us the next lever is the <b>number of steps</b>, which is exactly what E3 (better instructions: edit early, stop wandering) targets.</div>
+</section>
+
+<section id="d3-e3" class="wide">
+  <p class="kicker">Section 26 · Oct 19 morning</p>
+  <h2>E3 and our first leaderboard score</h2>
+  <h3>First leaderboard score: 0.12</h3>
+  <p>The baseline we submitted on Oct 18 (official sample, 4.5-minute budget) scored <b>0.12</b> on the hidden public tasks, inside our predicted 0.10–0.18. The same setup solved 11–12 of 30 practice bugs (37–40%), so practice overstates the leaderboard about three times. The hidden tasks come from other projects and are harder.</p>
+  <h3>E3: prompt v2</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>E2 (current)</th><th>E3</th></tr></thead>
+    <tbody>
+      <tr><td>Solved</td><td>13</td><td><span class="pill ok">14</span></td></tr>
+      <tr><td>Lost reliable bugs</td><td>1</td><td><span class="pill ok">0</span></td></tr>
+      <tr><td>No source change at all</td><td>6</td><td><span class="pill no">8</span></td></tr>
+      <tr><td>First source edit (failed bugs)</td><td>108 s</td><td><span class="pill no">153 s</span></td></tr>
+      <tr><td>Submitted on purpose</td><td>12</td><td>15</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Keep rule:</b> net +2 (two gains, no losses) is under the bar of 3, and the targeted behaviour (never editing) got worse, so it is <b>not adopted yet</b>. It is the most promising inconclusive result so far.</li>
+    <li><b>Why the early-edit rule failed:</b> Gemma took "run code to check behaviour" to heart and wrote reproduction scripts in <code>/tmp</code> before touching the source. Three bugs ended with only a scratch script and no fix. A prompt rule is a request, not a guarantee; we must check the transcripts to see whether it was followed.</li>
+    <li><b>A measurement bug, found and fixed:</b> our analysis script counted those scratch scripts as edits. It now separates real source edits from scratch files, and all earlier runs were recomputed.</li>
+  </ul>
+</section>
+
+<section id="d3-audit" class="wide">
+  <p class="kicker">Section 27 · Oct 19</p>
+  <h2>Methodology audit: are we following research standards?</h2>
+  <p>You asked whether every step so far follows research standards. Instead of grading our own work, an independent reviewer agent read the whole repo and checked each stage against published practice.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Stage</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Checking tasks with the real fix and no fix</td><td><span class="pill ok">standard</span> (as SWE-bench does)</td></tr>
+      <tr><td>Error analysis before changes</td><td><span class="pill ok">standard</span></td></tr>
+      <tr><td>Decision rule written before running</td><td><span class="pill ok">standard</span>, above typical hackathon practice</td></tr>
+      <tr><td>Overall direction: measure, prompt, structure, graph tools, LoRA</td><td><span class="pill ok">sound</span></td></tr>
+      <tr><td>Using the same 30 tasks to write rules and to score them</td><td><span class="pill no">deviation</span></td></tr>
+      <tr><td>No confidence intervals or paired tests</td><td><span class="pill no">deviation</span></td></tr>
+      <tr><td>Rule (b) without a noise check</td><td><span class="pill mid">caveat</span></td></tr>
+      <tr><td>Analysis code</td><td><span class="pill mid">caveat</span> (two more small bugs)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>What we fixed the same day (no GPU needed)</h3>
+  <ul>
+    <li><b>Held-out set:</b> 30 of the 41 unused fair tasks, drawn with a recorded random seed, never used for tuning. I had wrongly written that the remaining tasks were broken; the audit caught it, and the plan now says so.</li>
+    <li><b>Statistics:</b> a tested comparison script with an exact paired test (McNemar) and 95% confidence intervals. Result: every change so far is within the noise. E3's best score of 14 has an interval of −3 to +18 points.</li>
+    <li><b>Rule (b) calibrated:</b> a targeted metric must move more than it did between two identical runs (timeouts went 15 → 11 by luck), unless the effect is mechanical, as with E2's crash fix.</li>
+    <li><b>Analysis fixes</b>, and every run now saves the hardware and the code version it was built from.</li>
+    <li><b>Task check repeated</b> twice more to catch flaky tests.</li>
+  </ul>
+  <div class="callout tip"><b>The lesson</b>With 30 tasks and one run, only big effects are visible. That favours larger changes (agent structure, tool fixes) over small prompt wording, and it means the paper must say clearly which results are exploratory and which were tested as stated in advance.</div>
+</section>
+
+<section id="d3-e31" class="wide">
+  <p class="kicker">Section 28 · Oct 19</p>
+  <h2>E3.1 and the task-check repeats</h2>
+  <p>E3.1 was prompt v2 with two lines fixed: "the first edit must be to the source code; a script in <code>/tmp</code> does not count", and "use a one-line check, not a long reproduction script, before the first edit". It was labelled exploratory before it finished.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>E2 (current)</th><th>E3</th><th>E3.1</th></tr></thead>
+    <tbody>
+      <tr><td>Solved</td><td>13</td><td>14</td><td><span class="pill ok">15</span></td></tr>
+      <tr><td>Gains / losses vs E2</td><td>—</td><td>—</td><td>2 / 0 (p = 0.50)</td></tr>
+      <tr><td>Timeouts</td><td>15</td><td>14</td><td>12</td></tr>
+      <tr><td>No source change at all</td><td>6</td><td>8</td><td>6</td></tr>
+      <tr><td>Bugs where it wrote <code>/tmp</code> scripts</td><td>0</td><td>21</td><td><span class="pill no">17</span></td></tr>
+      <tr><td>First source edit, median</td><td>84 s</td><td>141 s</td><td><span class="pill no">125 s</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Keep rule:</b> net +1 against the reference (bar is 3), and the targeted metric only returned to E2's level. Timeouts fell by 3, under the 5 that identical runs differ by. <b>Not adopted.</b></li>
+    <li><b>Did the fix work?</b> Only partly. Scratch scripts fell from 21 to 17 bugs, but edits still come later than with the official prompt. The extra solves are not explained by the rule we wrote.</li>
+    <li><b>The interesting pattern:</b> both prompt-v2 runs (14, 15) beat all three standard runs (11, 12, 13). Against the pooled reference, E3.1's 95% interval is +2 to +19 percentage points, the first that does not cross zero. Because this run was exploratory, the standard move is to <b>repeat it</b> next week as a confirmatory test, not to adopt it now.</li>
+  </ul>
+  <h3>Task-check repeats</h3>
+  <p>We re-ran the "real fix vs no fix" check twice on CPU. 128 of 129 tasks got the same verdict all three times. The one that flipped (<code>rich_3782</code>) is in neither of our task sets, so nothing changes.</p>
+  <div class="callout tip"><b>The lesson</b>A prompt rule can change the score without changing the behaviour it targets. Always check both: the number, and whether the model did what you asked.</div>
+</section>
+
+<section id="d3-plan" class="wide">
+  <p class="kicker">Section 29 · Oct 19</p>
+  <h2>Planning E5 and E6</h2>
+  <p>With only 2.9 hours of GPU left this week (less than one 4.3-hour run), the rest of the day went into planning without spending any.</p>
+  <ul>
+    <li><b>Leaderboard:</b> E2, the kept version, was submitted. Kaggle allows 1 submission per day. It scored 0.12, the same as the baseline. That fits the noise of about ±0.09 for one score, so the crash fix neither helped nor hurt measurably on the hidden tasks.</li>
+    <li><b>Quota, corrected:</b> a week holds about 6 runs (4.3 hours each of 30), not 3 as I first said.</li>
+    <li><b>Decided from data, no GPU:</b> E4 is cancelled, because the helper agent was called once in 185 task attempts. Graph tools were called 16 times in those 185 attempts.</li>
+    <li><b>Where failures happen:</b> of 85 failed attempts across 5 runs, 35 never edited source, 29 edited the wrong files, and 21 edited the right file with a wrong fix.</li>
+    <li><b>Research:</b> a literature review found no published test of "rule in the prompt vs rule in the structure" on the same small model. That is our paper's core. A harness check confirmed both designs are allowed and pass the validator.</li>
+    <li><b>Design:</b> written, reviewed once by a builder agent, and paused until the week of Oct 24. One decision and your approval are pending.</li>
+    <li><b>Held-out check</b> moved to the week of Oct 31, just before the paper, with both runs back to back.</li>
+  </ul>
+  <div class="callout tip"><b>Read next</b>Chapter 19 of the field guide, "E5 and E6, explained", has the diagrams, the predictions and the six-run schedule.</div>
+</section>
+
+<section id="d4-checks" class="wide">
+  <p class="kicker">Section 30 · Oct 24</p>
+  <h2>Checks and the first two runs</h2>
+  <p>You approved the E5/E6 design and chose to confirm E5 before starting E6. On Oct 23 evening, with no GPU, I built the tools: the harness fingerprint check, the answer key for ORACLE, the new measurements and the per-experiment notebooks, each with tests written first. Today the quota reset to 30 hours.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Check or run</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Check 1 · validator</td><td><span class="pill ok">passed</span> E5 and E6 pass the competition's own validator; a copy with a stray brace is rejected</td></tr>
+      <tr><td>Check 2 · simulation</td><td><span class="pill ok">passed</span> the finder's notes and the task reach the fixer; one nudge re-runs the finder (a known cost we count)</td></tr>
+      <tr><td>Check 3 · graph vs grep</td><td><span class="pill mid">failed</span> graph search found the right file on 8 of 30 bugs, grep on 11. So E6 becomes "graph first, then grep"</td></tr>
+      <tr><td>Check 4 · measurements</td><td><span class="pill ok">passed</span> reproduces the original failure split (later corrected by the code review to 50 / 14 / 21)</td></tr>
+      <tr><td>Prompts</td><td><span class="pill ok">approved</span> by you</td></tr>
+      <tr><td>Run 1 · ORACLE</td><td><span class="pill mid">14/30</span> told the right file, Gemma still failed mostly on the fix itself. By our rule, E6 waits.</td></tr>
+      <tr><td>Run 2 · E5</td><td><span class="pill mid">10/30</span> more bugs started with real code (corrected: 10 of 13), but the finder used 77% of the time (prompt limit ignored). Stop rule → E5b.</td></tr>
+      <tr><td>Run 3 · E3.1 repeat</td><td><span class="pill mid">13/30</span> scripts again moved to /tmp as the prompt said; real code first on 9 of 24 (corrected), close to run 1</td></tr>
+      <tr><td>Run 4 · E5b</td><td><span class="pill mid">12/30</span> finder now takes 11 s instead of 177 s; every first write is real code; score back to E2's level</td></tr>
+      <tr><td>Run 5 · E5b repeat</td><td><span class="pill mid">11/30</span> repeats run 4: finder 11 s, every first write real code; score unchanged</td></tr>
+      <tr><td>Run 6 · ORACLE repeat</td><td><span class="pill mid">13/30</span> repeats run 1: told the right file, only 4 of 33 failures (over both runs) are about the wrong place</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout"><b>Correction (Oct 24, after the code review)</b>An independent review of our measurement code found that we counted any file outside <code>/tmp</code> as "real code". But today's agent usually writes its test script at the top of the repository (<code>reproduce_issue.py</code>), and the E3.1 prompt told Gemma to put scripts in <code>/tmp</code>. So the rule changed <i>where</i> scripts were saved, not <i>whether</i> Gemma wrote them first. We fixed the definition (real code = a file inside the project's package folders), recomputed every run, and withdrew the claim that the prompt rule "backfired". The corrected picture: first write was real code on 26% of bugs without the rule, 38% with it (not significant), and 60% with the finder → fixer structure (significant, p = 0.0001). Structure still beats asking, but less dramatically than we first reported.</div>
+  <h3>Where the six runs leave us (Oct 24 night)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th></th><th>E2 (kept)</th><th>E3.1 ×2 (rule in prompt)</th><th>E5 (finder → fixer)</th><th>E5b (one-step finder)</th><th>ORACLE (told the file)</th></tr></thead>
+    <tbody>
+      <tr><td>Solved / 30</td><td>13</td><td>15 · 13</td><td>10</td><td>12 · 11</td><td>14 · 13</td></tr>
+      <tr><td>First write was real code (corrected)</td><td>18 of 70 (26%), 3 runs</td><td>19 of 50 (38%)</td><td>10 of 13</td><td>24 of 44 (55%)</td><td>22 of 50 (44%)</td></tr>
+      <tr><td>Time spent finding (median)</td><td>—</td><td>—</td><td>177 s</td><td>11 s · 11 s</td><td>—</td></tr>
+      <tr><td>Ended with no source edit (corrected)</td><td>11</td><td>6 · 10</td><td>18</td><td>12 · 12</td><td>6 · 8</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Asking is followed literally.</b> With the "edit first, scripts in /tmp" rule, Gemma moved its scripts to /tmp as told, but started with real code only a little more often (38% vs 26%, not significant).</li>
+    <li><b>Enforcing works better.</b> With the finder → fixer structure, 60% of bugs started with real code (significant). The fixer still writes a test script first on about 40%. When the finder's length was left to the prompt (E5), it was ignored; when it was limited by structure (E5b), it took 11 seconds.</li>
+    <li><b>But the score does not rise.</b> E5b only matches E2 in both runs. Told the right file, ORACLE still solves 13–14, and none of its failures edited only the wrong files. At 4.5 minutes the hard part is writing a correct fix in time, not finding where. All six runs are inside the noise on score; the behaviour results are clear.</li>
+  </ul>
+  <h3>Runs 1 and 2: ORACLE and E5</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Failed bugs</th><th>E2 (today's agent)</th><th>ORACLE (told the right file)</th><th>E5 (finder → fixer)</th></tr></thead>
+    <tbody>
+      <tr><td>Never edited</td><td>11</td><td>6</td><td>18</td></tr>
+      <tr><td>Edited the wrong files</td><td>3</td><td>0</td><td>0.5</td></tr>
+      <tr><td>Right files, wrong fix</td><td>3</td><td>10</td><td>1.5</td></tr>
+      <tr><td>Solved / 30</td><td>13</td><td>14</td><td>10</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>ORACLE:</b> knowing where the bug is removed "wrong file" failures and halved "never edited" (corrected numbers), but those bugs then failed on the fix itself or ran out of time. At 4.5 minutes, finding the bug is not the main bottleneck; fixing it correctly in time is.</li>
+    <li><b>E5:</b> the structure changed behaviour: 10 of 13 bugs started with real code (corrected numbers). The prompt's "stop after about 8 tool calls" was ignored (median 11), so the finder used 77% of the time and 17 bugs never got a fix. The same lesson as E3.1, now inside the pipeline.</li>
+    <li><b>E5b (your choice):</b> the finder gets no tools and answers in one reply from the issue and the file list, so its time is limited by the structure itself, like the first step of Agentless.</li>
+  </ul>
+  <h3>Two bugs, caught for free</h3>
+  <p>Check 3 failed twice before it ran: my embedded analysis code used <code>__file__</code>, which notebooks lack, and I assumed every task had a shared base copy of the repo, but practice tasks store each repo as its own archive. Each was reproduced in a test first, fixed, and rerun. Both happened on a free CPU machine and cost no GPU quota, which is exactly why the plan runs cheap checks before expensive runs.</p>
+  <h3>What we learned before any GPU run</h3>
+  <ul>
+    <li><b>The prompt rule (corrected):</b> with E3.1's prompt Gemma moved its test scripts to /tmp, as told, but started with real code only on 38% of bugs, against 26% without the rule. The first version of this note said the rule "backfired"; that was a measurement mistake, fixed after the code review.</li>
+    <li><b>Graph search alone is weaker than grep</b> (8 vs 11 of 30), but they find different bugs (15 together). So E6 becomes "graph first, then grep".</li>
+    <li><b>The queue:</b> ORACLE waited about 1.5 hours for a 4× L4 machine; queue time costs no quota. E5 started soon after.</li>
+  </ul>
+</section>
+
+<section id="d5-heldout" class="wide">
+  <p class="kicker">Section 31 · Oct 31</p>
+  <h2>The held-out week</h2>
+  <p>An independent methodology review tightened the tests before any run (amendment A10): a fixed order C1 → C2 → C3 that stops at the first failure, a whole-task McNemar test for C2, and a "less than +15 points" bound for C3. Then all four notebooks were built from one commit. Kaggle allows only two GPU sessions at once, so E2 and E3.1 ran first (10:41 IST) and E5b and ORACLE after (15:12 IST).</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Test</th><th>What it asks</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>C1</td><td>Does Gemma follow a literal rule ("put scratch scripts in /tmp")?</td><td><span class="pill ok">pass</span> 20 of 20 with the rule, 0 of 25 without</td></tr>
+      <tr><td>C2 (main)</td><td>Does a finder with no tools make the fixer start with real code?</td><td><span class="pill no">fail</span> 11 of 41 vs 10 of 41, p = 0.50. Not replicated</td></tr>
+      <tr><td>C3</td><td>Does handing over the right files barely help?</td><td><span class="pill mid">not tested</span> the fixed order stops at C2. As an estimate: ORACLE 12 vs 14 solved</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li><b>Why "fail" is still a result:</b> we wrote the test down before seeing the data, so the result counts either way. Without the held-out test we would have published a finding that does not hold.</li>
+    <li><b>What held up:</b> literal rules are obeyed exactly (both sets), and a time limit holds only when it is structural (E5 finder 177 s vs E5b 11-14 s).</li>
+    <li><b>What did not:</b> the finder → fixer split did not change the fixer's habit on new bugs; no arm moved the solve rate.</li>
+    <li><b>Paper:</b> Draft 3 is written from these results; every table is generated from the CSVs by <code>analysis/paper_tables.py</code>.</li>
+  </ul>
+</section>
+
+<section id="glossary">
+  <p class="kicker">Section 32</p>
+  <h2>New words</h2>
+  <dl class="gloss">
+    <dt>API token</dt><dd>A long secret string that lets programs act as you on a website, like a password made for programs.</dd>
+    <dt>Environment variable</dt><dd>A named value the operating system hands to every program it starts. Programs started earlier don't see new ones.</dd>
+    <dt>MCP</dt><dd>Model Context Protocol: a standard way to plug a service's tools into an AI agent.</dd>
+    <dt>Project scope</dt><dd>A setting that applies to one folder only, not your whole computer.</dd>
+    <dt>Credential helper</dt><dd>A small program git asks for a username and password when talking to GitHub.</dd>
+    <dt>Keyring</dt><dd>Windows' secure store for passwords and tokens.</dd>
+    <dt>No-reply email</dt><dd>A GitHub address that credits commits to you without revealing your real email.</dd>
+    <dt>CRLF / LF</dt><dd>Invisible line-ending characters: Windows uses two, Linux one.</dd>
+    <dt>Baseline</dt><dd>The unchanged starting version that every improvement is measured against.</dd>
+    <dt>Wheelhouse</dt><dd>A folder of pre-downloaded Python packages, for installing without internet.</dd>
+    <dt>Subprocess sandbox</dt><dd>Running the agent's work in plain folders and processes when Docker is unavailable.</dd>
+    <dt>Gold patch</dt><dd>The real developer's fix for a task.</dd>
+    <dt>Positive control</dt><dd>A check that gives the known-correct answer to make sure the test itself works.</dd>
+    <dt>Distillation</dt><dd>Training a smaller model on a bigger model's outputs.</dd>
+    <dt>Quota</dt><dd>How much GPU time Kaggle lets you use per week.</dd>
+    <dt>Eval-driven development</dt><dd>Measure first, change one thing, measure again, keep what helps.</dd>
+    <dt>Negative control</dt><dd>A check that gives no fix at all, to make sure the test can fail.</dd>
+    <dt>Practice set</dt><dd>A fixed list of tasks (our 30) used for every experiment so results stay comparable.</dd>
+    <dt>Packaging notebook</dt><dd>The small notebook that builds and validates <code>submission.zip</code>.</dd>
+    <dt>Docker image</dt><dd>A saved snapshot of a whole software environment, here including Python 3.12.</dd>
+    <dt>Watcher</dt><dd>A small loop on your PC that asks Kaggle for a run's status every few minutes.</dd>
+    <dt>Pending submission</dt><dd>A submission waiting in Kaggle's queue or being scored.</dd>
+    <dt>Paired test</dt><dd>Compares two runs bug by bug, so only bugs whose result changed count. We use the exact McNemar test.</dd>
+    <dt>Confidence interval</dt><dd>The range the true effect probably lies in (95% sure). If it includes 0, the change may be luck.</dd>
+    <dt>Percentage points</dt><dd>A difference between two percentages. 40% to 50% is +10 points, which on 30 bugs is 3 more solved.</dd>
+    <dt>Held-out set</dt><dd>30 bugs never looked at while tuning, used once to check that improvements are not fitted to the practice bugs.</dd>
+    <dt>Replicate</dt><dd>Running the same version again to see whether a result repeats.</dd>
+    <dt>Pooled reference</dt><dd>Several near-identical runs of the kept version counted together (now Run 1, E0, E2), so one lucky run does not set the bar.</dd>
+    <dt>Flaky bug</dt><dd>A bug the same agent solves in some runs and not others. It shows luck, not skill.</dd>
+    <dt>Exploratory vs confirmatory</dt><dd>Exploratory: found by looking around. Confirmatory: predicted in writing first, then tested. Only the second counts as proof.</dd>
+    <dt>Arm</dt><dd>One version being compared in an experiment (for example E2, E5, ORACLE).</dd>
+    <dt>SequentialAgent</dt><dd>An ADK agent that runs its sub-agents one after another. E5 uses it for finder, then fixer.</dd>
+    <dt>ORACLE run</dt><dd>A practice-only run where the agent is told the correct files, to measure the best case for bug-finding.</dd>
+    <dt>Gate</dt><dd>A free check that must pass before an expensive run starts. Ours are checks 1–4.</dd>
+    <dt>Nudge</dt><dd>The harness's automatic "please continue" message when the agent stops without calling <code>submit_patch</code>.</dd>
+  </dl>
+</section>
+
+</main>
+<footer>Written Oct 17–24, 2026, from the work done in this session: official Kaggle pages and forum read through the Kaggle MCP server, the official starter notebook, and the repo setup. Forum findings are other competitors' reports, not official statements, except where a staff answer is quoted.</footer>
+</div>

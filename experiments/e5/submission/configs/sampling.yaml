@@ -1,0 +1,6 @@
+temperature: 0.2
+top_p: 0.95
+max_output_tokens: 8192   # E2: was 16384; prompt + output must stay under the 32,768-token limit
+thinking_config:
+  thinking_budget: 4096   # E1 tried 2048: not kept (net +1, timeouts unchanged)
+  include_thoughts: true

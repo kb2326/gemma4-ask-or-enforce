@@ -1,0 +1,7 @@
+# Per-task budgets for the scored run.
+# The scorer gives 12 hours for all tasks (~120), including setup and the vLLM start,
+# so each task gets ~6 minutes on average. 4.5 minutes leaves a safety margin.
+evaluation:
+  timeout_seconds: 120     # one shell command may run at most 2 minutes
+  max_tool_calls: 100
+  max_time_minutes: 4.5

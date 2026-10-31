@@ -1,0 +1,13 @@
+name: localizer
+description: Read-only step that finds where the fix belongs.
+model: gemma-4-31b-it-qat-w4a16-ct
+adapter: main_lora
+instruction: !include ../prompts/localizer.md
+output_key: localization
+tools:
+  - read_file
+  - run_command
+  - search_similar_code
+  - get_code_neighbors
+  - get_code_subgraph
+generate_content_config: !include ../configs/sampling.yaml

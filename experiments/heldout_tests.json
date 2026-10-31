@@ -1,0 +1,73 @@
+{
+ "runs": [
+  "e2_h41",
+  "e3_1_h41",
+  "e5b_h41",
+  "oracle_h41"
+ ],
+ "tasks": 41,
+ "dropped": [],
+ "C1": {
+  "e31_tmp_share": 1.0,
+  "e2_tmp_share": 0.0,
+  "p": 3.154702679037085e-13,
+  "passed": true,
+  "status": "pass"
+ },
+ "C2": {
+  "b": 5,
+  "c": 4,
+  "p": 0.5,
+  "passed": false,
+  "e5b_source_first": 11,
+  "e2_source_first": 10,
+  "sensitivity_writers_fisher_p": 0.367660371287335,
+  "localizer_median_s": 13.8,
+  "localizer_check": true,
+  "status": "fail"
+ },
+ "C3": {
+  "diff": -0.049,
+  "upper": 0.024,
+  "passed": true,
+  "oracle_wrong_files_only_share": 0.0,
+  "status": "not tested (sequence stopped at C2)"
+ },
+ "estimates": {
+  "E5b-E3.1": {
+   "diff": -0.049,
+   "ci95": [
+    -0.22,
+    0.122
+   ]
+  },
+  "E5b-ORACLE": {
+   "diff": -0.024,
+   "ci95": [
+    -0.146,
+    0.098
+   ]
+  },
+  "E3.1-E2": {
+   "diff": 0.073,
+   "ci95": [
+    -0.073,
+    0.22
+   ]
+  }
+ },
+ "per_repo_source_first": {
+  "fastapi": {
+   "E2": 4,
+   "E3.1": 5,
+   "E5b": 6,
+   "ORACLE": 7
+  },
+  "rich": {
+   "E2": 6,
+   "E3.1": 8,
+   "E5b": 5,
+   "ORACLE": 5
+  }
+ }
+}
