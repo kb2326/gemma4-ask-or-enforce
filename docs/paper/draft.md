@@ -241,6 +241,6 @@ tasks with tests fixed in advance.
 ## Reproducibility
 
 Code, configurations, prompts, the pre-registration log with its amendment and corrections, and per-task results
-(task IDs and our own measurements only) are in a public repository **[link]**; a public Kaggle notebook rebuilds
+(task IDs and our own measurements only) are in a public repository (https://github.com/kb2326/gemma4-ask-or-enforce); a public Kaggle notebook rebuilds
 every arm and recomputes the tables from the competition data on Kaggle **[link]**. Competition data, transcripts and
 gold-derived files are not redistributed.
