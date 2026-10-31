@@ -234,5 +234,5 @@ development effects on held-out tasks with tests fixed in advance.
 
 Code, configurations, prompts, the pre-registration log with its amendment and corrections, and per-task results
 (task IDs and our own measurements only) are in a public repository (https://github.com/kb2326/gemma4-ask-or-enforce);
-a public Kaggle notebook recomputes every table and test from those results **[link]**. Competition data,
+a public Kaggle notebook recomputes every table and test from those results (https://www.kaggle.com/code/karthickbalaje/asking-vs-adding-a-stage-reproduce-tables). Competition data,
 transcripts and gold-derived files are not redistributed.
